@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthorsComponent } from './components/authors.component';
 
 import { AuthorsRoutingModule } from './authors-routing.module';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { AuthorsRoutingModule } from './authors-routing.module';
   imports: [
     CommonModule,
     AuthorsRoutingModule,
+    MatTableModule,
   ]
 })
 export class AuthorsModule { }
