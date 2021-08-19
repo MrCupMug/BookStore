@@ -16,10 +16,15 @@ mat-toolbar {
 }
 
 .container {
+  position: absolute;
   height: 100%;
   text-align: center;
 }
 
 .sidenav {
   width: 200px;
+}
+
+.sidebar-link {
+  cursor: pointer;
 }
