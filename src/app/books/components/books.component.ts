@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { BooksService } from '../services/books.service';
+import { IBooksCard } from '../interfaces/books-interface';
+
 @Component({
   selector: 'app-books',
   templateUrl: './books.component.html',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksComponent implements OnInit {
 
-  constructor() { }
+  public bookCards: IBooksCard[] = this.booksService.getBooks();
+
+  constructor(
+              private readonly booksService: BooksService,
+  ) { }
 
   ngOnInit() {
   }
