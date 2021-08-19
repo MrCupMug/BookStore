@@ -5,6 +5,11 @@
   flex-wrap: wrap;
 }
 
+.card:hover {
+  cursor: pointer;
+  box-shadow: 8px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
 .book-main-data {
   margin: 0;
   height: 100px;

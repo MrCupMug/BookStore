@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { GenresService } from '../services/genres.service';
+import { IGenres } from '../interfaces/genres-interface';
+
 @Component({
   selector: 'app-genres',
   templateUrl: './genres.component.html',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenresComponent implements OnInit {
 
-  constructor() { }
+  public genres: IGenres[] = this.genresService.getGenres();
+
+  constructor(
+              private readonly genresService: GenresService,
+  ) { }
 
   ngOnInit() {
   }
+
+  
 
 }

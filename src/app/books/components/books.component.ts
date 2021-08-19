@@ -19,4 +19,9 @@ export class BooksComponent implements OnInit {
   ngOnInit() {
   }
 
+  // Here to add dialog window
+  public showAdditionalInfo(event: any) {
+    alert(event.title);
+  }
+
 }

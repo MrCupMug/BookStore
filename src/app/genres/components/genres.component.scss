@@ -1,0 +1,23 @@
+.container {
+  margin: 13% auto;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.genre-card {
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 0 30px;
+  border-radius: 5px;
+  background-color: blue;
+}
+
+.genre-card:hover {
+  background-color: rgb(38, 38, 155);
+}
+
+.genre-card h3 {
+  color: white;
+}

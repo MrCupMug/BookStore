@@ -3,8 +3,10 @@
 }
 
 .icon {
-  border: none;
   background: none;
+  outline: none;
+  border: 0;
+  cursor: pointer;
 }
 
 mat-toolbar {
@@ -27,4 +29,9 @@ mat-toolbar {
 
 .sidebar-link {
   cursor: pointer;
+}
+
+h2 {
+  outline: none;
+  border: 0;
 }
