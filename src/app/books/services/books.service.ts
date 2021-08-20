@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IBooksCard } from '../interfaces/books-interface';
+import { IBooksCard } from '../interfaces/books.interface';
 
 @Injectable({
   providedIn: 'root'

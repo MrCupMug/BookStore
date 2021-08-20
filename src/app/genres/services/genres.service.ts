@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IGenres } from '../interfaces/genres-interface';
+import { IGenres } from '../interfaces/genres.interface';
 
 @Injectable({
   providedIn: 'root'

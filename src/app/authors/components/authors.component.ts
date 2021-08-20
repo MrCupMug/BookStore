@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthorsService } from '../services/authors.service';
-import { IAuthors } from '../interfaces/authors-interface';
+import { IAuthors } from '../interfaces/authors.interface';
 
 @Component({
   selector: 'app-authors',

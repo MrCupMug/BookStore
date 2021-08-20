@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IAuthors } from '../interfaces/authors-interface';
+import { IAuthors } from '../interfaces/authors.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +64,10 @@ export class AuthorsService {
 
     public getAuthors(): IAuthors[] {
         return this.authors;
+    }
+
+    public getAuthor(authorId: number) {
+        return this.authors.find(({id}) => id === authorId)
     }
 
 }

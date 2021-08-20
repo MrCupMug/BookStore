@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { GenresService } from '../services/genres.service';
-import { IGenres } from '../interfaces/genres-interface';
+import { IGenres } from '../interfaces/genres.interface';
 
 @Component({
   selector: 'app-genres',
