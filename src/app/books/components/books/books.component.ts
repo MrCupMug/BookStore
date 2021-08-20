@@ -26,27 +26,32 @@ export class BooksComponent implements OnInit {
 
   public showAdditionalInfo(event: any) {
 
-    let genresArray: any = this.bookCards
-      .find((el) => el.id === event.id)
-        .genres
-
-    let genre: string = '';
-
-    for(let genreEl of genresArray) {
-      genre += ' ' + genreEl.name
-    }
-
     this.dialog.open(DialogWindowsComponent, {
       data : {
         title: event.title,
         price: event.price,
         image: '../../../../assets/bookjpg',
-        genre: genre.trim(),
+        genre: this.getGenres(event),
         description: event.description,
         author: `${this.authorsService
           .getAuthor(event.id).first_name} ${this.authorsService.getAuthor(event.id).last_name}`,
       }
-    })
+    });
+  }
+
+  public getGenres(event: any) {
+
+    const genresArray: any = this.bookCards
+      .find((el) => el.id === event.id)
+        .genres;
+
+    let genre = '';
+
+    for (const genreEl of genresArray) {
+      genre += ' ' + genreEl.name;
+    }
+
+    return genre.trim();
   }
 
 }
