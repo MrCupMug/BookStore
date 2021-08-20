@@ -10,13 +10,21 @@ import { IGenres } from '../interfaces/genres.interface';
 })
 export class GenresComponent implements OnInit {
 
-  public genres: IGenres[] = this.genresService.getGenres();
+  public genres: IGenres[] = []
 
   constructor(
               private readonly genresService: GenresService,
   ) { }
 
   ngOnInit() {
+    this._loadGenres();
+  }
+
+  private _loadGenres(): void {
+    this.genresService.getGenres()
+      .subscribe((data) => {
+        this.genres = data.genres;
+      })
   }
 
   

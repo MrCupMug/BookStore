@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { AuthorsService } from '../services/authors.service';
 import { IAuthors } from '../interfaces/authors.interface';
@@ -10,7 +11,7 @@ import { IAuthors } from '../interfaces/authors.interface';
 })
 export class AuthorsComponent implements OnInit {
 
-  public authors: IAuthors[] = this.authorsService.getAuthors();
+  public authors: IAuthors[] = [];
 
   public dataSource = this.authors;
 
@@ -21,6 +22,15 @@ export class AuthorsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this._loadAuthors();
+  }
+
+  private _loadAuthors(): void {
+    this.authorsService.getAuthors()
+      .subscribe((data) => {
+        this.authors = data.authors;
+        this.dataSource = this.authors;
+      });
   }
 
 }

@@ -1,73 +1,28 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { IAuthors } from '../interfaces/authors.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorsService {
 
-  public authors: IAuthors[] = [
-    {
-        "id": 1,
-        "first_name": "Gus",
-        "last_name": "Bahringer"
-    },
-    {
-        "id": 2,
-        "first_name": "Tyron",
-        "last_name": "Bartell"
-    },
-    {
-        "id": 3,
-        "first_name": "Leeann",
-        "last_name": "Mertz"
-    },
-    {
-        "id": 4,
-        "first_name": "Nan",
-        "last_name": "Muller"
-    },
-    {
-        "id": 5,
-        "first_name": "Eulah",
-        "last_name": "Collier"
-    },
-    {
-        "id": 6,
-        "first_name": "Nathaniel",
-        "last_name": "Blick"
-    },
-    {
-        "id": 7,
-        "first_name": "Clinton",
-        "last_name": "Hayes"
-    },
-    {
-        "id": 8,
-        "first_name": "Shawn",
-        "last_name": "Lindgren"
-    },
-    {
-        "id": 9,
-        "first_name": "Hilda",
-        "last_name": "Schinner"
-    },
-    {
-        "id": 10,
-        "first_name": "Marlana",
-        "last_name": "Corwin"
-    }
-]
+    private url = 'api/authors';
 
-  constructor() { }
+    public authors: Observable<IAuthors[]> = this.http.get<IAuthors[]>(this.url);
 
-    public getAuthors(): IAuthors[] {
+  constructor(
+              private readonly http: HttpClient,
+  ) { }
+
+    public getAuthors(): Observable<any> {
         return this.authors;
     }
 
-    public getAuthor(authorId: number) {
-        return this.authors.find(({id}) => id === authorId)
+    public getAuthor(authorId: number): Observable<IAuthors> {
+        return this.http.get<IAuthors>(`${this.url}/${authorId}`);
     }
 
 }

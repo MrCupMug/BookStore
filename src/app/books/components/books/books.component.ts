@@ -13,7 +13,8 @@ import { AuthorsService } from 'src/app/authors/services/authors.service';
 })
 export class BooksComponent implements OnInit {
 
-  public bookCards: IBooksCard[] = this.booksService.getBooks();
+  public bookCards: IBooksCard[] = [];
+  public author: any;
 
   constructor(
               private readonly booksService: BooksService,
@@ -22,20 +23,23 @@ export class BooksComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
+    this._loadBooks();
+   }
 
   public showAdditionalInfo(event: any) {
 
-    this.dialog.open(DialogWindowsComponent, {
-      data : {
-        title: event.title,
-        price: event.price,
-        image: '../../../../assets/bookjpg',
-        genre: this.getGenres(event),
-        description: event.description,
-        author: `${this.authorsService
-          .getAuthor(event.id).first_name} ${this.authorsService.getAuthor(event.id).last_name}`,
-      }
+    this.authorsService.getAuthor(event.id)
+    .subscribe((data) => {
+      this.dialog.open(DialogWindowsComponent, {
+        data : {
+          title: event.title,
+          price: event.price,
+          image: '../../../../assets/bookjpg',
+          genre: this.getGenres(event),
+          description: event.description,
+          author: `${data.first_name} ${data.last_name}`,
+        }
+      });
     });
   }
 
@@ -52,6 +56,12 @@ export class BooksComponent implements OnInit {
     }
 
     return genre.trim();
+  }
+
+  private _loadBooks(): void {
+    this.booksService.getBooks().subscribe((data) => {
+      this.bookCards = data.books;
+    });
   }
 
 }

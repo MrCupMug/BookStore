@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { IGenres } from '../interfaces/genres.interface';
 
@@ -7,52 +9,13 @@ import { IGenres } from '../interfaces/genres.interface';
 })
 export class GenresService {
 
-  public genres: IGenres[] = [
-    {
-        "id": 1,
-        "name": "Fanfiction"
-    },
-    {
-        "id": 2,
-        "name": "Crime/Detective"
-    },
-    {
-        "id": 3,
-        "name": "Speech"
-    },
-    {
-        "id": 4,
-        "name": "Fantasy"
-    },
-    {
-        "id": 5,
-        "name": "Reference book"
-    },
-    {
-        "id": 6,
-        "name": "Realistic fiction"
-    },
-    {
-        "id": 7,
-        "name": "Horror"
-    },
-    {
-        "id": 8,
-        "name": "Legend"
-    },
-    {
-        "id": 9,
-        "name": "Folklore"
-    },
-    {
-        "id": 10,
-        "name": "Historical fiction"
-    }
-]
+  public genres: Observable<IGenres[]> = this.http.get<IGenres[]>('api/genres');
 
-  constructor() { }
+  constructor(
+              private readonly http: HttpClient,
+  ) { }
 
-    public getGenres(): IGenres[] {
+    public getGenres(): Observable<any> {
         return this.genres;
     }
 
