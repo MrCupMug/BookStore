@@ -5,3 +5,23 @@ table {
 th {
   width: 50%;
 }
+
+.add-author {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.add-author-button {
+  border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+  background-color: rgb(52, 83, 167);
+  cursor: pointer;
+}
+
+.add-author-button p {
+  padding: 0;
+  margin: 0;
+  color: white;
+  font-size: 1.5em;
+}

@@ -3,19 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IGenres } from '../interfaces/genres.interface';
+import { IGenresResponse } from '../interfaces/gebres.response.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenresService {
 
-  public genres: Observable<IGenres[]> = this.http.get<IGenres[]>('api/genres');
+  public genres: Observable<IGenresResponse> = this.http.get<IGenresResponse>('api/genres');
 
   constructor(
               private readonly http: HttpClient,
   ) { }
 
-    public getGenres(): Observable<any> {
+    public getGenres(): Observable<IGenresResponse> {
         return this.genres;
     }
 

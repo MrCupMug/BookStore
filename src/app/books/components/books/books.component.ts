@@ -26,6 +26,10 @@ export class BooksComponent implements OnInit {
     this._loadBooks();
    }
 
+   public addAuthor() {
+     this.booksService.addAuthor();
+   }
+
   public showAdditionalInfo(event: any) {
 
     this.authorsService.getAuthor(event.id)

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { AuthorsService } from '../services/authors.service';
 import { IAuthors } from '../interfaces/authors.interface';
