@@ -17,20 +17,16 @@ export class BooksComponent implements OnInit {
   public author: any;
 
   constructor(
-              private readonly booksService: BooksService,
-              private readonly dialog: MatDialog,
-              private authorsService: AuthorsService,
+    private readonly booksService: BooksService,
+    private readonly dialog: MatDialog,
+    private authorsService: AuthorsService,
   ) { }
 
   ngOnInit() {
     this._loadBooks();
    }
 
-   public addAuthor() {
-     this.booksService.addAuthor();
-   }
-
-  public showAdditionalInfo(event: any) {
+  public showAdditionalInfo(event: IBooksCard) {
 
     this.authorsService.getAuthor(event.id)
     .subscribe((data) => {
@@ -47,11 +43,11 @@ export class BooksComponent implements OnInit {
     });
   }
 
-  public getGenres(event: any) {
+  public getGenres(event: IBooksCard) {
 
     const genresArray: any = this.bookCards
       .find((el) => el.id === event.id)
-        .genres;
+      .genres;
 
     let genre = '';
 

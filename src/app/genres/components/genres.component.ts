@@ -10,7 +10,7 @@ import { IGenres } from '../interfaces/genres.interface';
 })
 export class GenresComponent implements OnInit {
 
-  public genres: IGenres[] = []
+  public genres: IGenres[] = [];
 
   constructor(
               private readonly genresService: GenresService,
@@ -24,9 +24,8 @@ export class GenresComponent implements OnInit {
     this.genresService.getGenres()
       .subscribe((data) => {
         this.genres = data.genres;
-      })
-  }
+      });
 
-  
+  }
 
 }
