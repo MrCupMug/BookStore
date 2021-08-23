@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { GenresService } from '../services/genres.service';
 import { IGenres } from '../interfaces/genres.interface';
@@ -8,9 +8,11 @@ import { IGenres } from '../interfaces/genres.interface';
   templateUrl: './genres.component.html',
   styleUrls: ['./genres.component.scss']
 })
-export class GenresComponent implements OnInit {
+export class GenresComponent implements OnInit, OnDestroy {
 
   public genres: IGenres[] = [];
+
+  private subscriptions: Array<any> = [];
 
   constructor(
               private readonly genresService: GenresService,
@@ -20,11 +22,19 @@ export class GenresComponent implements OnInit {
     this._loadGenres();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribtion) => {
+      subscribtion.unsubscribe();
+    });
+  }
+
   private _loadGenres(): void {
-    this.genresService.getGenres()
+    const request = this.genresService.getGenres()
       .subscribe((data) => {
         this.genres = data.genres;
       });
+
+    this.subscriptions.push(request);
 
   }
 

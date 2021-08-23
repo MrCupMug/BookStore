@@ -10,14 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class BooksService {
 
-  public books: Observable<IBooksResponse> = this.http.get<IBooksResponse>('api/books');
-
   constructor(
               private readonly http: HttpClient,
   ) { }
 
   public getBooks(): Observable<IBooksResponse> {
-    return this.books;
+    return this.http.get<IBooksResponse>('api/books');
   }
 
   public getBookById(id: number): Observable<IBooksCard> {

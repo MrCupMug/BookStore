@@ -8,3 +8,24 @@
   margin: 10px;
   flex: 0 1 20%;
 }
+
+.addButton {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.addButton button {
+  cursor: pointer;
+  border-radius: 7px;
+  border: none;
+  outline: none;
+  background-color: royalblue;
+  padding: 10px 15px;
+}
+
+.addButton p {
+  padding: 0;
+  margin: 0;
+  color: white;
+  font-size: 1.5em;
+}

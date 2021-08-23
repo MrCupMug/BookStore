@@ -1,0 +1,40 @@
+<div class="container">
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+  <h2>Title</h2>
+  <div class="alert" *ngIf="bookForm.get('title').invalid && (bookForm.get('title').dirty || bookForm.get('title').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="title">
+  <h2>Author's first name</h2>
+  <div class="alert" *ngIf="bookForm.get('firstName').invalid && (bookForm.get('firstName').dirty || bookForm.get('firstName').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="firstName">
+  <h2>Author's last name</h2>
+  <div class="alert" *ngIf="bookForm.get('lastName').invalid && (bookForm.get('lastName').dirty || bookForm.get('lastName').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="lastName">
+  <h2>Price</h2>
+  <div class="alert" *ngIf="bookForm.get('price').invalid && (bookForm.get('price').dirty || bookForm.get('price').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="price">
+  <h2>Genres</h2>
+  <div class="alert" *ngIf="bookForm.get('genres').invalid && (bookForm.get('genres').dirty || bookForm.get('genres').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="genres">
+  <h2>Description</h2>
+  <div class="alert" *ngIf="bookForm.get('description').invalid && (bookForm.get('description').dirty || bookForm.get('description').touched)">
+    This field is required
+  </div>
+  <input type="text" formControlName="description"><br>
+  <button mat-dialog-close
+  type="submit"
+  [disabled]="bookForm.invalid"
+  >
+    <p>Add book</p>
+  </button>
+</form>
+</div>

@@ -16,7 +16,6 @@ export class AddAuthorComponent implements OnInit {
 
   constructor(
     private readonly authorsService: AuthorsService,
-    private readonly dialog: MatDialog,
   ) { }
 
   ngOnInit() {

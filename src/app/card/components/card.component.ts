@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IBooksCard } from 'src/app/books/interfaces/books.interface';
+import { CardService } from '../services/card.service';
 
 @Component({
   selector: 'app-card',
@@ -12,12 +14,14 @@ export class CardComponent implements OnInit {
 
   @Output() private bookInfo = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private readonly cardService: CardService,
+  ) { }
 
   ngOnInit() {
   }
 
-  public showAdditionalInfo(book: IBooksCard): void {
+  public showAdditionalInfo(book: IBooksCard) {
     this.bookInfo.emit(book);
   }
 

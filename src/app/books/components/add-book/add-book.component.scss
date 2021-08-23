@@ -2,19 +2,26 @@
   text-align: center;
 }
 
-h2 {
+.container h2 {
+  padding: 0;
+  margin: 0;
   font-weight: normal;
 }
 
-.input {
+.container input {
   padding: 5px 0;
-  outline: none;
+  margin-bottom: 20px;
   text-align: center;
+}
+
+.alert {
+  background-color: rgba(167, 104, 104, 0.5);
+  margin-bottom: 5px;
+  border-radius: 3px;
 }
 
 button {
   cursor: pointer;
-  margin-top: 20px;
   padding: 10px 15px;
   border-radius: 7px;
   border: none;
@@ -23,16 +30,8 @@ button {
 }
 
 p {
-  color: white;
   font-size: 1.5em;
+  color: white;
   padding: 0;
   margin: 0;
 }
-
-.alert {
-  padding: 5px 0;
-  background-color: rgba(167, 104, 104, 0.5);
-  margin-bottom: 5px;
-  border-radius: 3px;
-}
-
