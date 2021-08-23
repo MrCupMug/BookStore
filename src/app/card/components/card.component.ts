@@ -10,7 +10,7 @@ export class CardComponent implements OnInit {
 
   @Input() public book!: IBooksCard;
 
-  @Output() private outputBook = new EventEmitter();
+  @Output() private bookInfo = new EventEmitter();
 
   constructor() { }
 
@@ -18,7 +18,7 @@ export class CardComponent implements OnInit {
   }
 
   public showAdditionalInfo(book: IBooksCard): void {
-    this.outputBook.emit(book);
+    this.bookInfo.emit(book);
   }
 
 }

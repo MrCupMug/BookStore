@@ -14,7 +14,7 @@ export class AuthorsComponent implements OnInit {
 
   public authors: IAuthors[] = [];
 
-  public dataSource = this.authors;
+  public dataSource: IAuthors[] = this.authors;
 
   public displayedColumns: string[] = ['first_name', 'last_name'];
 

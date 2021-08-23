@@ -1,5 +1,5 @@
 <div class="container">
   <div *ngFor="let book of bookCards" class="book-list">
-    <app-card [book]="book" (outputBook)="showAdditionalInfo($event)"></app-card>
+    <app-card [book]="book" (bookInfo)="showAdditionalInfo($event)"></app-card>
   </div>
 </div>
