@@ -22,4 +22,14 @@ export class BooksService {
       return this.http.get<IBooksCard>(`api/books/${id}`);
   }
 
+  public addBook(book: any, test: any): void {
+    this.http.post(`/api/authors/${test[0].id}/books`, {
+      description: book.description,
+      author_id: test[0].id,
+      title: book.title,
+      price: book.price,
+      genres: book.genres,
+    }).toPromise();
+  }
+
 }

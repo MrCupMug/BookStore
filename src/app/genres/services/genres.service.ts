@@ -10,14 +10,14 @@ import { IGenresResponse } from '../interfaces/gebres.response.interface';
 })
 export class GenresService {
 
-  public genres: Observable<IGenresResponse> = this.http.get<IGenresResponse>('api/genres');
+  //public genres: Observable<IGenresResponse> = this.http.get<IGenresResponse>('api/genres');
 
   constructor(
               private readonly http: HttpClient,
   ) { }
 
     public getGenres(): Observable<IGenresResponse> {
-        return this.genres;
+        return this.http.get<IGenresResponse>('api/genres');
     }
 
 }

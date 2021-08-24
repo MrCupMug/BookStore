@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddBookComponent } from './components/add-book/add-book.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [BooksComponent, DialogWindowsComponent, AddBookComponent],
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CardModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
   ],
   entryComponents: [DialogWindowsComponent, AddBookComponent],
 })
