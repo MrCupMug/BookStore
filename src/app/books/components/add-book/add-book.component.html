@@ -1,40 +1,56 @@
 <div class="container">
 <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-  <h2>Title</h2>
-  <div class="alert" *ngIf="bookForm.get('title').invalid && (bookForm.get('title').dirty || bookForm.get('title').touched)">
-    This field is required
-  </div>
-  <input type="text" formControlName="title">
-  <h2>Author's name</h2>
-  <div class="alert" *ngIf="bookForm.get('name').invalid && (bookForm.get('name').dirty || bookForm.get('name').touched)">
-    This field is required
-  </div>
-  <input type="text" formControlName="name" [matAutocomplete]="nameAuto">
-  <mat-autocomplete #nameAuto="matAutocomplete">
-    <mat-option *ngFor="let option of nameFilteredOptions | async" [value]="option">
-      {{option}}
-    </mat-option>
-  </mat-autocomplete>
-  <h2>Price</h2>
-  <div class="alert" *ngIf="bookForm.get('price').invalid && (bookForm.get('price').dirty || bookForm.get('price').touched)">
-    This field is required
-  </div>
-  <input type="text" formControlName="price">
-  <h2>Genres</h2>
-  <div class="alert" *ngIf="bookForm.get('genres').invalid && (bookForm.get('genres').dirty || bookForm.get('genres').touched)">
-    This field is required
-  </div>
-  <input type="text" formControlName="genres" [matAutocomplete]="genresAuto">
-  <mat-autocomplete #genresAuto="matAutocomplete">
-    <mat-option *ngFor="let options of genresFilteredOptions | async" [value]="options">
-      {{options}}
-    </mat-option>
-  </mat-autocomplete>
-  <h2>Description</h2>
-  <div class="alert" *ngIf="bookForm.get('description').invalid && (bookForm.get('description').dirty || bookForm.get('description').touched)">
-    This field is required
-  </div>
-  <input type="text" formControlName="description"><br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" formControlName="title"><br>
+    <mat-error *ngIf="bookForm.get('title').invalid && (bookForm.get('title').dirty || bookForm.get('title').touched)">
+      Please enter a valid title
+    </mat-error>
+  </mat-form-field><br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Author's name</mat-label>
+    <input type="text" matInput formControlName="name" [matAutocomplete]="nameAuto">
+    <mat-autocomplete #nameAuto="matAutocomplete">
+      <mat-option *ngFor="let option of nameOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="bookForm.get('name').invalid && (bookForm.get('name').dirty || bookForm.get('name').touched)">
+      Please enter a valid name
+    </mat-error>
+  </mat-form-field><br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" formControlName="price">
+    <mat-error *ngIf="bookForm.get('price').invalid && (bookForm.get('price').dirty || bookForm.get('price').touched)">
+      Please enter a valid price
+    </mat-error>
+  </mat-form-field><br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Genre</mat-label>
+    <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto">
+    <mat-autocomplete #genreAuto="matAutocomplete">
+      <mat-option *ngFor="let options of genresFilteredOptions | async" [value]="options">
+        {{options}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="bookForm.get('genre').invalid && (bookForm.get('genre').dirty || bookForm.get('genre').touched)">
+      Choose a valid genre
+    </mat-error>
+  </mat-form-field><br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Description</mat-label>
+    <input matInput type="text" formControlName="description"><br>
+    <mat-error *ngIf="bookForm.get('description').invalid && (bookForm.get('description').dirty || bookForm.get('description').touched)">
+      Please enter a valid description
+    </mat-error>
+  </mat-form-field><br>
+
   <button mat-dialog-close
   type="submit"
   [disabled]="bookForm.invalid"

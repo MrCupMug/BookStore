@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { IAuthors } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors.response.interface';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,6 @@ export class AuthorsService {
     first_name: undefined,
     last_name: undefined,
   };
-
-    // public authors: Observable<IAuthorsResponse> = this.http.get<IAuthorsResponse>('api/authors');
 
   constructor(
               private readonly http: HttpClient,
@@ -29,11 +27,15 @@ export class AuthorsService {
         return this.http.get<IAuthors>(`api/authors/${authorId}`);
     }
 
+    public getAuthorByName(name: string) {
+      return this.http.get(`/api/authors?q[first_name_cont]=${name}`);
+    }
+
     public addAuthor(firstName: string, lastName: string): void {
       this.http.post('/api/authors', {
         first_name: firstName,
         last_name: lastName,
-      }).toPromise();
+      }).subscribe();
     }
 
 }

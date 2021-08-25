@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBooksCard } from '../../interfaces/books.interface';
-import { DialogWindowsComponent } from '../dialogWindows/dialog-windows.component';
+import { DialogWindowsComponent } from '../BookInfo/book.info.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { IGenres } from 'src/app/genres/interfaces/genres.interface';
 import { AddBookComponent } from '../add-book/add-book.component';
@@ -15,9 +17,9 @@ import { AddBookComponent } from '../add-book/add-book.component';
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
-  public bookCards: IBooksCard[] = [];
+  public destroy$: Subject<boolean> = new Subject<boolean>();
 
-  private subscriptions: Array<any> = [];
+  public bookCards: IBooksCard[] = [];
 
   constructor(
     private readonly booksService: BooksService,
@@ -30,14 +32,13 @@ export class BooksComponent implements OnInit, OnDestroy {
    }
 
    ngOnDestroy() {
-     this.subscriptions.forEach((subscription) => {
-       subscription.unsubscribe();
-     });
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
    }
 
   public showAdditionalInfo(event: IBooksCard) {
 
-    const request = this.authorsService.getAuthor(event.id)
+    this.authorsService.getAuthor(event.id).pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.dialog.open(DialogWindowsComponent, {
         data : {
@@ -50,12 +51,10 @@ export class BooksComponent implements OnInit, OnDestroy {
         }
       });
     });
-
-    this.subscriptions.push(request);
   }
 
   public getGenres(event: any) {
-    event.genres.reduce((result, current: IGenres) => {
+    return event.genres.reduce((result, current: IGenres) => {
       result += current.name + ' ';
       return result;
     }, '').trim();
@@ -66,11 +65,12 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   private _loadBooks(): void {
-    const request = this.booksService.getBooks().subscribe((data) => {
-      this.bookCards = data.books;
+    this.booksService.getBooks()
+      .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+        this.bookCards = data.books;
     });
 
-    this.subscriptions.push(request);
   }
 
 

@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthorsService } from '../../services/authors.service';
 import { IAuthors } from '../../interfaces/authors.interface';
 import { AddAuthorComponent } from '../add-author/add-author.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-authors',
@@ -12,13 +15,15 @@ import { AddAuthorComponent } from '../add-author/add-author.component';
 })
 export class AuthorsComponent implements OnInit, OnDestroy {
 
+  public destroy$: Subject<boolean> = new Subject<boolean>();
+
   public authors: IAuthors[] = [];
 
   public dataSource: IAuthors[] = this.authors;
 
   public displayedColumns: string[] = ['first_name', 'last_name'];
 
-  private subscriptions: Array<any> = [];
+  private subscriptions: Array<Subscription> = [];
 
   constructor(
               private readonly authorsService: AuthorsService,
@@ -30,9 +35,8 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   public showAddAuthorModal(): void {
@@ -40,13 +44,11 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
 
   private _loadAuthors(): void {
-    const request = this.authorsService.getAuthors()
+    this.authorsService.getAuthors().pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.authors = data.authors;
         this.dataSource = this.authors;
       });
-
-    this.subscriptions.push(request);
   }
 
 }

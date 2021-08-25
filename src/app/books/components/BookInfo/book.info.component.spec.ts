@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogWindowsComponent } from './dialog-windows.component';
+import { DialogWindowsComponent } from './book.info.component';
 
 describe('DialogWindowsComponent', () => {
   let component: DialogWindowsComponent;

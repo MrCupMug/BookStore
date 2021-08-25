@@ -1,23 +1,10 @@
 .container {
   text-align: center;
+  width: 400px;
 }
 
-.container h2 {
-  padding: 0;
-  margin: 0;
-  font-weight: normal;
-}
-
-.container input {
-  padding: 5px 0;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.alert {
-  background-color: rgba(167, 104, 104, 0.5);
-  margin-bottom: 5px;
-  border-radius: 3px;
+.container form {
+  padding: 20px 0;
 }
 
 button {
@@ -32,6 +19,27 @@ button {
 p {
   font-size: 1.5em;
   color: white;
+  padding: 0;
+  margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.example-form {
+  padding: 0;
+  margin: 0;
+}
+
+.example-full-width {
+  width: 90%;
   padding: 0;
   margin: 0;
 }

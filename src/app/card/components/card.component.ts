@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+// import { BehaviorSubject, Observable } from 'rxjs';
 import { IBooksCard } from 'src/app/books/interfaces/books.interface';
 import { CardService } from '../services/card.service';
 
@@ -14,9 +14,7 @@ export class CardComponent implements OnInit {
 
   @Output() private bookInfo = new EventEmitter();
 
-  constructor(
-    private readonly cardService: CardService,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }

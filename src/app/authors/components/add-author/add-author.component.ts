@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorsService } from '../../services/authors.service';
 
 import { IAuthors } from '../../interfaces/authors.interface';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-author',

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl  } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { GenresService } from 'src/app/genres/services/genres.service';
@@ -12,13 +13,13 @@ import { BooksService } from '../../services/books.service';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss']
 })
-export class AddBookComponent implements OnInit {
+export class AddBookComponent implements OnInit, OnDestroy {
+
+  public destroy$: Subject<boolean> = new Subject();
 
   public nameFilteredOptions: Observable<string[]>;
 
   public genresFilteredOptions: Observable<string[]>;
-
-  // public myControl = new FormControl();
 
   public nameOptions!: string[];
 
@@ -28,7 +29,7 @@ export class AddBookComponent implements OnInit {
     title: [null, Validators.required],
     name: [null, Validators.required],
     price: [null, Validators.required],
-    genres: [null, Validators.required],
+    genre: [null, Validators.required],
     description: [null, Validators.required],
   });
 
@@ -40,71 +41,72 @@ export class AddBookComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {
+  public ngOnInit() {
 
-    this.authorsService.getAuthors().subscribe((value) => {
-      value.authors.reduce((result, current) => {
+    this.authorsService.getAuthors()
+      .pipe(takeUntil(this.destroy$))
+        .subscribe((value) => {
+        this.nameOptions = value.authors.reduce((result, current) => {
         result.push((`${current.first_name} ${current.last_name}`));
-        this.nameOptions = result;
+        //this.nameOptions = result;
+
 
         this.nameFilteredOptions = this.bookForm.get('name').valueChanges.pipe(
           startWith(''),
-          map((value) => this._nameFilter(value))
+          map((value) => this._optionsFilter(this.nameOptions, value))
         );
 
         return result;
       }, []);
     });
 
-    this.genresService.getGenres().subscribe((value) => {
-      value.genres.reduce((result, current) => {
+    this.genresService.getGenres()
+      .pipe(takeUntil(this.destroy$))
+        .subscribe((value) => {
+        value.genres.reduce((result, current) => {
         result.push(current.name);
         this.genresOptions = result;
 
-        this.genresFilteredOptions = this.bookForm.get('genres').valueChanges.pipe(
+        this.genresFilteredOptions = this.bookForm.get('genre').valueChanges.pipe(
           startWith(''),
-          map((value) => this._genresFilter(value))
+          map((value) => this._optionsFilter(this.genresOptions, value))
         );
 
         return result;
       }, []);
     });
 
+  }
+
+  public ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   public onSubmit(): void {
 
     this.authorsService.getAuthors().subscribe(el => {
-      let test = el.authors.filter(data => {
+      const authorIdArray = el.authors.filter(data => {
         return data.first_name === this.bookForm.value.name.split(' ')[0];
       });
 
-    //   console.log({
-    //   title: this.bookForm.value.title,
-    //   name: test[0].id,
-    //   price: this.bookForm.value.price,
-    //   genres: this.bookForm.value.genres,
-    //   description: this.bookForm.value.description,
-    // });
+      this.genresService.getGenres().subscribe((genres) => {
+        const genreIdArray = genres.genres.filter((data) => {
+          return data.name === this.bookForm.value.genre;
+        });
 
-    this.bookService.addBook(this.bookForm.value, test);
+        this.bookService.addBook(this.bookForm.value, authorIdArray, genreIdArray);
+
+      });
 
     });
 
   }
 
-  private _nameFilter(value: string): string[] {
+  private _optionsFilter(options, value) {
     const filterValue = value.toLowerCase();
 
-    return this.nameOptions.filter(option =>
-      option.toLowerCase().includes(filterValue)
-    );
-  }
-
-  private _genresFilter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.genresOptions.filter(option =>
+    return options.filter(option =>
       option.toLowerCase().includes(filterValue)
     );
   }
