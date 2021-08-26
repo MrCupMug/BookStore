@@ -11,7 +11,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Author's name</mat-label>
-    <input type="text" matInput formControlName="name" [matAutocomplete]="nameAuto">
+    <input type="text" matInput formControlName="name" [matAutocomplete]="nameAuto" (input)="filterNameOptions()">
     <mat-autocomplete #nameAuto="matAutocomplete">
       <mat-option *ngFor="let option of nameOptions" [value]="option">
         {{option}}
@@ -32,9 +32,9 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Genre</mat-label>
-    <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto">
+    <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto" (input)="filterGenresOptions()">
     <mat-autocomplete #genreAuto="matAutocomplete">
-      <mat-option *ngFor="let options of genresFilteredOptions | async" [value]="options">
+      <mat-option *ngFor="let options of genresOptions" [value]="options">
         {{options}}
       </mat-option>
     </mat-autocomplete>

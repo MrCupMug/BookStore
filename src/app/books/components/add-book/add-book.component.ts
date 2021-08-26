@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { AuthorsService } from 'src/app/authors/services/authors.service';
@@ -15,15 +14,13 @@ import { BooksService } from '../../services/books.service';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
+  public authoId: any;
+
   public destroy$: Subject<boolean> = new Subject();
 
-  public nameFilteredOptions: Observable<string[]>;
+  public nameOptions: string[];
 
-  public genresFilteredOptions: Observable<string[]>;
-
-  public nameOptions!: string[];
-
-  public genresOptions!: string[];
+  public genresOptions: string[];
 
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
@@ -42,19 +39,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
 
   public ngOnInit() {
-
     this.authorsService.getAuthors()
       .pipe(takeUntil(this.destroy$))
         .subscribe((value) => {
         this.nameOptions = value.authors.reduce((result, current) => {
         result.push((`${current.first_name} ${current.last_name}`));
-        //this.nameOptions = result;
-
-
-        this.nameFilteredOptions = this.bookForm.get('name').valueChanges.pipe(
-          startWith(''),
-          map((value) => this._optionsFilter(this.nameOptions, value))
-        );
 
         return result;
       }, []);
@@ -67,15 +56,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
         result.push(current.name);
         this.genresOptions = result;
 
-        this.genresFilteredOptions = this.bookForm.get('genre').valueChanges.pipe(
-          startWith(''),
-          map((value) => this._optionsFilter(this.genresOptions, value))
-        );
-
         return result;
       }, []);
     });
-
   }
 
   public ngOnDestroy() {
@@ -84,30 +67,38 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+    this.authorsService.getAuthorByName(this.bookForm.value.name.split(' ')[0]).subscribe(authorObject => {
+      const authorId = authorObject['authors'][0].id;
 
-    this.authorsService.getAuthors().subscribe(el => {
-      const authorIdArray = el.authors.filter(data => {
-        return data.first_name === this.bookForm.value.name.split(' ')[0];
-      });
+      this.genresService.getGenreByName(this.bookForm.value.genre).subscribe(genreObject => {
+        const genres = genreObject['genres'][0];
 
-      this.genresService.getGenres().subscribe((genres) => {
-        const genreIdArray = genres.genres.filter((data) => {
-          return data.name === this.bookForm.value.genre;
-        });
-
-        this.bookService.addBook(this.bookForm.value, authorIdArray, genreIdArray);
+        this.bookService.addBook(this.bookForm.value, authorId, genres);
 
       });
-
     });
-
   }
 
-  private _optionsFilter(options, value) {
-    const filterValue = value.toLowerCase();
-
-    return options.filter(option =>
-      option.toLowerCase().includes(filterValue)
-    );
+  public filterNameOptions(): void {
+    setTimeout(() => {
+      this.authorsService.getAuthorByName(this.bookForm.value.name).subscribe(data => {
+        this.nameOptions = data['authors'].reduce((result, current) => {
+          result.push((`${current.first_name} ${current.last_name}`));
+          return result;
+        }, []);
+      });
+    }, 500);
   }
+
+  public filterGenresOptions(): void {
+    setTimeout(() => {
+      this.genresService.getGenreByName(this.bookForm.value.genre).subscribe(genres => {
+        this.genresOptions = genres['genres'].reduce((result, current) => {
+          result.push(current.name);
+          return result;
+        }, []);
+      });
+    }, 500);
+  }
+
 }

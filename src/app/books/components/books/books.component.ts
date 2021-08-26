@@ -38,6 +38,8 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public showAdditionalInfo(event: IBooksCard) {
 
+    console.log(this.authorsService.getAuthorByName('Tyr'));
+
     this.authorsService.getAuthor(event.id).pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.dialog.open(DialogWindowsComponent, {

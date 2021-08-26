@@ -17,4 +17,8 @@ export class GenresService {
         return this.http.get<IGenresResponse>('api/genres');
     }
 
+    public getGenreByName(name: string) {
+      return this.http.get(`api/genres?q[name_cont]=${name}`);
+    }
+
 }

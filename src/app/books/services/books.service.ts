@@ -24,15 +24,17 @@ export class BooksService {
       return this.http.get<IBooksCard>(`api/books/${id}`);
   }
 
-  public addBook(book: any, authorIdArray: any, genreIdArray: any): void {
-    alert(book.title + ' ' + authorIdArray[0].id)
-    this.http.post(`/api/authors/${authorIdArray[0].id}/books`, {
-      description: book.description,
-      author_id: authorIdArray[0].id,
-      title: book.title,
-      price: book.price,
-      genres: genreIdArray[0],
-    }).subscribe();
+  public addBook(book: any, authorId: any, genres: any): void {
+
+    alert(authorId);
+
+    // this.http.post(`/api/authors/${authorId}/books`, {
+    //   description: book.description,
+    //   author_id: authorId,
+    //   title: book.title,
+    //   price: book.price,
+    //   genres,
+    // }).subscribe();
   }
 
 }

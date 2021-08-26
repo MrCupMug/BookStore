@@ -27,8 +27,11 @@ export class AuthorsService {
         return this.http.get<IAuthors>(`api/authors/${authorId}`);
     }
 
+
     public getAuthorByName(name: string) {
+
       return this.http.get(`/api/authors?q[first_name_cont]=${name}`);
+
     }
 
     public addAuthor(firstName: string, lastName: string): void {
