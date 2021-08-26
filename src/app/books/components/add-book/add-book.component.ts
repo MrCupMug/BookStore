@@ -36,28 +36,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   ) { }
 
 
-  public ngOnInit() {
-    this.authorsService.getAuthors()
-      .pipe(takeUntil(this.destroy$))
-        .subscribe((value) => {
-        this.nameOptions = value.authors.reduce((result, current) => {
-        result.push((`${current.first_name} ${current.last_name}`));
-
-        return result;
-      }, []);
-    });
-
-    this.genresService.getGenres()
-      .pipe(takeUntil(this.destroy$))
-        .subscribe((value) => {
-        value.genres.reduce((result, current) => {
-        result.push(current.name);
-        this.genresOptions = result;
-
-        return result;
-      }, []);
-    });
-  }
+  public ngOnInit() { }
 
   public ngOnDestroy() {
     this.destroy$.next(true);
@@ -66,31 +45,33 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
 
-    this.authorsService.getAuthorByName(this.bookForm.value.name.split(' ')[0]).subscribe(authorObject => {
-      const authorId = authorObject['authors'][0].id;
+    this.authorsService.getAuthorByName(this.bookForm.value.name.split(' ')[0])
+      .subscribe(authorObject => {
+        const authorId = authorObject['authors'][0].id;
 
-      this.genresService.getGenreByName(this.bookForm.value.genre).subscribe(genreObject => {
-        const genres = genreObject['genres'][0];
-
-        this.bookService.addBook(this.bookForm.value, authorId, genres);
-
+        this.genresService.getGenreByName(this.bookForm.value.genre)
+          .subscribe(genreObject => {
+            const genres = genreObject['genres'][0];
+            this.bookService.addBook(this.bookForm.value, authorId, genres);
+        });
       });
-    });
   }
 
   public filterNameOptions(): void {
     setTimeout(() => {
-      this.authorsService.getAuthorByName(this.bookForm.value.name).subscribe(authorsObject => {
-        this.nameOptions = authorsObject['authors'].map(data => {
-          return `${data.first_name} ${data.last_name}`;
+      this.authorsService.getAuthorByName(this.bookForm.value.name)
+        .pipe(takeUntil(this.destroy$))
+          .subscribe(authorsObject => {
+          this.nameOptions = authorsObject['authors'].map(data => {
+            return `${data.first_name} ${data.last_name}`;
+          });
         });
-      });
     }, 500);
   }
 
   public filterGenresOptions(): void {
     setTimeout(() => {
-      this.genresService.getGenreByName(this.bookForm.value.genre).subscribe(genres => {
+      this.genresService.getGenreByName(this.bookForm.value.genre).pipe(takeUntil(this.destroy$)).subscribe(genres => {
         this.genresOptions = genres['genres'].map(data => {
           return data.name;
         });

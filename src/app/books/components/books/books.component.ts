@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
-import { IBooksCard } from '../../interfaces/books.interface';
+import { IBook } from '../../interfaces/books.interface';
 import { DialogWindowsComponent } from '../BookInfo/book.info.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { IGenres } from 'src/app/genres/interfaces/genres.interface';
@@ -19,7 +19,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public bookCards: IBooksCard[] = [];
+  public bookCards: IBook[] = [];
 
   constructor(
     private readonly booksService: BooksService,
@@ -36,10 +36,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
    }
 
-  public showAdditionalInfo(event: IBooksCard) {
-
-    console.log(this.authorsService.getAuthorByName('Tyr'));
-
+  public showAdditionalInfo(event: IBook) {
     this.authorsService.getAuthor(event.id).pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.dialog.open(DialogWindowsComponent, {
@@ -74,8 +71,5 @@ export class BooksComponent implements OnInit, OnDestroy {
     });
 
   }
-
-
-
 
 }

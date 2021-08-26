@@ -1,4 +1,4 @@
-export interface IBooksCard {
+export interface IBook {
   id: number;
   description: string;
   author_id: number;
