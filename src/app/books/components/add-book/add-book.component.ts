@@ -14,8 +14,6 @@ import { BooksService } from '../../services/books.service';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public authoId: any;
-
   public destroy$: Subject<boolean> = new Subject();
 
   public nameOptions: string[];
@@ -67,6 +65,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+
     this.authorsService.getAuthorByName(this.bookForm.value.name.split(' ')[0]).subscribe(authorObject => {
       const authorId = authorObject['authors'][0].id;
 
@@ -81,11 +80,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public filterNameOptions(): void {
     setTimeout(() => {
-      this.authorsService.getAuthorByName(this.bookForm.value.name).subscribe(data => {
-        this.nameOptions = data['authors'].reduce((result, current) => {
-          result.push((`${current.first_name} ${current.last_name}`));
-          return result;
-        }, []);
+      this.authorsService.getAuthorByName(this.bookForm.value.name).subscribe(authorsObject => {
+        this.nameOptions = authorsObject['authors'].map(data => {
+          return `${data.first_name} ${data.last_name}`;
+        });
       });
     }, 500);
   }
@@ -93,10 +91,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public filterGenresOptions(): void {
     setTimeout(() => {
       this.genresService.getGenreByName(this.bookForm.value.genre).subscribe(genres => {
-        this.genresOptions = genres['genres'].reduce((result, current) => {
-          result.push(current.name);
-          return result;
-        }, []);
+        this.genresOptions = genres['genres'].map(data => {
+          return data.name;
+        });
       });
     }, 500);
   }
