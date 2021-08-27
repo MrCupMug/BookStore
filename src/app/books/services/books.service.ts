@@ -26,14 +26,8 @@ export class BooksService {
       return this.http.get<IBook>(`${this.booksUrl}/${id}`);
   }
 
-  public addBook(book: IBook, authorId: number): void {
-    this.http.post(`/api/authors/${authorId}/books`, {
-      description: book.description,
-      author_id: authorId,
-      title: book.title,
-      price: book.price,
-      genres: [],
-    }).subscribe();
+  public addBook(book: Partial<IBook>) {
+    return this.http.post(`/api/authors/${book.author_id}/books`, book);
   }
 
 }

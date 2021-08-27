@@ -11,13 +11,17 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Author's name</mat-label>
-    <input type="text" matInput formControlName="name" [matAutocomplete]="nameAuto" (input)="filterNameOptions()">
-    <mat-autocomplete #nameAuto="matAutocomplete">
-      <mat-option *ngFor="let author of nameOptions" [value]="author.first_name + ' ' + author.last_name" (click)="setAuthorId(author)">
+    <input type="text"
+      #input 
+      matInput 
+      formControlName="author" 
+      [matAutocomplete]="nameAuto">
+    <mat-autocomplete #nameAuto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let author of nameOptions" [value]="author">
         {{author.first_name + ' ' + author.last_name}}
       </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="bookForm.get('name').invalid && (bookForm.get('name').dirty || bookForm.get('name').touched)">
+    <mat-error *ngIf="bookForm.get('author').invalid && (bookForm.get('author').dirty || bookForm.get('author').touched)">
       Please enter a valid name
     </mat-error>
   </mat-form-field><br>
@@ -51,11 +55,12 @@
     </mat-error>
   </mat-form-field><br>
 
-  <button mat-dialog-close
-  type="submit"
-  [disabled]="bookForm.invalid"
-  >
-    <p>Add book</p>
+  <button mat-raised-button 
+    color="primary"
+    mat-dialog-close
+    type="submit"
+    [disabled]="bookForm.invalid">
+    Add book
   </button>
 </form>
 </div>

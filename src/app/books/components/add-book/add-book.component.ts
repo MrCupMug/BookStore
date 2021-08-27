@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { GenresService } from 'src/app/genres/services/genres.service';
 import { BooksService } from '../../services/books.service';
+import { IBook } from '../../interfaces/books.interface';
 
 @Component({
   selector: 'app-add-book',
@@ -24,10 +25,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
-    name: [null, Validators.required],
     price: [null, Validators.required],
     genre: [null, Validators.required],
     description: [null, Validators.required],
+    author: [null, Validators.required],
   });
 
   constructor(
@@ -38,7 +39,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
   ) { }
 
 
-  public ngOnInit() { }
+  public ngOnInit() {
+    this.bookForm.get('author').valueChanges.subscribe(data => {
+      console.log(data);
+    })
+   }
 
   public ngOnDestroy() {
     this.destroy$.next(true);
@@ -46,19 +51,28 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    this.bookService.addBook(this.bookForm.value, this.authorId);
+    const formValue = this.bookForm.value;
+    const book: Partial<IBook> = {
+      description: formValue.description,
+      author_id: formValue.author.id,
+      title: formValue.title,
+      price: formValue.price,
+      genres: [],
+    };
+    this.bookService.addBook(book)
+      .pipe(takeUntil(this.destroy$))
+        .subscribe();
   }
 
   public setAuthorId(name: any) {
     this.authorId = name.id;
   }
 
-  public filterNameOptions(): void {
-      this.authorsService.getAuthorByName(this.bookForm.value.name)
+  public filterNameOptions(text): void {
+      this.authorsService.getAuthorByName(text)
         .pipe(takeUntil(this.destroy$))
           .subscribe(authorsObject => {
           this.nameOptions = authorsObject['authors'];
-          this.authorId = authorsObject['authors'][0].id;
       });
   }
 
@@ -68,6 +82,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
           .subscribe(genres => {
             this.genresOptions = genres['genres'];
       });
+  }
+
+  public displayFn(author): string {
+    return author ? `${author.first_name} ${author.last_name}` : '';
   }
 
 }

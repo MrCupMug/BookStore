@@ -10,9 +10,7 @@ import { BooksService } from '../../services/books.service';
   templateUrl: './book.info.component.html',
   styleUrls: ['./book.info.component.scss']
 })
-export class DialogWindowsComponent implements OnInit {
-
-  test: any;
+export class BookAdditionalInfoComponent implements OnInit {
 
   constructor(
               @Inject(MAT_DIALOG_DATA) public data,
@@ -23,29 +21,5 @@ export class DialogWindowsComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
-
-  // public showAdditionalInfo(event: any): void {
-
-  //   this.authorsService.getAuthor(event.id)
-  //   .subscribe((data) => {
-  //     this.dialog.open(DialogWindowsComponent, {
-  //       data : {
-  //         title: event.title,
-  //         price: event.price,
-  //         image: '../../../../assets/bookjpg',
-  //         genre: this.getGenres(event),
-  //         description: event.description,
-  //         author: `${data.first_name} ${data.last_name}`,
-  //       }
-  //     });
-  //   });
-  // }
-
-  // public getGenres(event: any) {
-  //   event.genres.reduce((result, current: any) => {
-  //     result += current.name + ' ';
-  //     return result;
-  //   }, '').trim();
-  // }
 
 }

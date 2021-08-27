@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
-import { DialogWindowsComponent } from '../BookInfo/book.info.component';
+import { BookAdditionalInfoComponent } from '../BookInfo/book.info.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { IGenres } from 'src/app/genres/interfaces/genres.interface';
 import { AddBookComponent } from '../add-book/add-book.component';
@@ -39,7 +39,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   public showAdditionalInfo(event: IBook) {
     this.authorsService.getAuthor(event.id).pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
-      this.dialog.open(DialogWindowsComponent, {
+      this.dialog.open(BookAdditionalInfoComponent, {
         data : {
           title: event.title,
           price: event.price,
@@ -52,7 +52,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getGenres(event: any) {
+  public getGenres(event: IBook) {
     return event.genres.reduce((result, current: IGenres) => {
       result += current.name + ' ';
       return result;
