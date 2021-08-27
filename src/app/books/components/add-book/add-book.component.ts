@@ -54,22 +54,20 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public filterNameOptions(): void {
-    setTimeout(() => {
       this.authorsService.getAuthorByName(this.bookForm.value.name)
         .pipe(takeUntil(this.destroy$))
           .subscribe(authorsObject => {
           this.nameOptions = authorsObject['authors'];
           this.authorId = authorsObject['authors'][0].id;
-        });
-    }, 500);
+      });
   }
 
   public filterGenresOptions(): void {
-    setTimeout(() => {
-      this.genresService.getGenreByName(this.bookForm.value.genre).pipe(takeUntil(this.destroy$)).subscribe(genres => {
-        this.genresOptions = genres['genres'];
+      this.genresService.getGenreByName(this.bookForm.value.genre)
+        .pipe(takeUntil(this.destroy$))
+          .subscribe(genres => {
+            this.genresOptions = genres['genres'];
       });
-    }, 500);
   }
 
 }

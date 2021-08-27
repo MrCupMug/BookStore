@@ -1,6 +1,6 @@
-import { IBooksCard } from "./books.interface";
+import { IBook } from "./books.interface";
 
 export interface IBooksResponse {
-    books: IBooksCard[];
+    books: IBook[];
     meta: any;
 }

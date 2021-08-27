@@ -2,14 +2,12 @@
   text-align: center;
 }
 
-h2 {
-  font-weight: normal;
+mat-form-field {
+  margin-top: 10px;
 }
 
-.input {
-  padding: 5px 0;
-  outline: none;
-  text-align: center;
+h2 {
+  font-weight: normal;
 }
 
 button {
@@ -28,11 +26,3 @@ p {
   padding: 0;
   margin: 0;
 }
-
-.alert {
-  padding: 5px 0;
-  background-color: rgba(167, 104, 104, 0.5);
-  margin-bottom: 5px;
-  border-radius: 3px;
-}
-

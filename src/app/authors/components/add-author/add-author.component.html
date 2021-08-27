@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <h2>Author first name</h2>
   <div class="alert" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
     Data is required!
@@ -16,4 +16,32 @@
   mat-dialog-close>
     <p>Add author</p>
   </button>
+</div> -->
+
+<div class="container">
+
+  <mat-form-field>
+    <mat-label>Author's first name</mat-label>
+    <input matInput required class="input" type="text" [(ngModel)]="formsAuthorsInfo.first_name" #firstName="ngModel">
+    <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+      Form value is invalid
+    </mat-error>
+  </mat-form-field><br>
+ 
+  <mat-form-field>
+    <mat-label>Author's last name</mat-label>
+    <input matInput required class="input" type="text" [(ngModel)]="formsAuthorsInfo.last_name" #lastName="ngModel">
+    <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+      Form value is invalid
+    </mat-error>
+  </mat-form-field><br>
+
+  <button 
+  [disabled]="firstName.invalid || lastName.invalid" 
+  type="submit" 
+  (click)="addAuthor(firstName.value, lastName.value)" 
+  mat-dialog-close>
+    <p>Add author</p>
+  </button>
+
 </div>
