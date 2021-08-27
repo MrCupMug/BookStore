@@ -14,11 +14,13 @@ import { BooksService } from '../../services/books.service';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
+  public authorId: number;
+
   public destroy$: Subject<boolean> = new Subject();
 
-  public nameOptions: string[];
+  public nameOptions: object;
 
-  public genresOptions: string[];
+  public genresOptions: object;
 
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
@@ -44,17 +46,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+    this.bookService.addBook(this.bookForm.value, this.authorId);
+  }
 
-    this.authorsService.getAuthorByName(this.bookForm.value.name.split(' ')[0])
-      .subscribe(authorObject => {
-        const authorId = authorObject['authors'][0].id;
-
-        this.genresService.getGenreByName(this.bookForm.value.genre)
-          .subscribe(genreObject => {
-            const genres = genreObject['genres'][0];
-            this.bookService.addBook(this.bookForm.value, authorId, genres);
-        });
-      });
+  public setAuthorId(name: any) {
+    this.authorId = name.id;
   }
 
   public filterNameOptions(): void {
@@ -62,9 +58,8 @@ export class AddBookComponent implements OnInit, OnDestroy {
       this.authorsService.getAuthorByName(this.bookForm.value.name)
         .pipe(takeUntil(this.destroy$))
           .subscribe(authorsObject => {
-          this.nameOptions = authorsObject['authors'].map(data => {
-            return `${data.first_name} ${data.last_name}`;
-          });
+          this.nameOptions = authorsObject['authors'];
+          this.authorId = authorsObject['authors'][0].id;
         });
     }, 500);
   }
@@ -72,9 +67,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public filterGenresOptions(): void {
     setTimeout(() => {
       this.genresService.getGenreByName(this.bookForm.value.genre).pipe(takeUntil(this.destroy$)).subscribe(genres => {
-        this.genresOptions = genres['genres'].map(data => {
-          return data.name;
-        });
+        this.genresOptions = genres['genres'];
       });
     }, 500);
   }

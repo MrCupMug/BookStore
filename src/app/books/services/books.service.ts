@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { IBook } from '../interfaces/books.interface';
@@ -10,6 +10,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class BooksService {
 
+  public booksUrl = 'api/books';
+
   public bookAdditionalInfo: any = new BehaviorSubject(null);
 
   constructor(
@@ -17,20 +19,20 @@ export class BooksService {
   ) { }
 
   public getBooks(): Observable<IBooksResponse> {
-    return this.http.get<IBooksResponse>('api/books');
+    return this.http.get<IBooksResponse>(this.booksUrl);
   }
 
   public getBookById(id: number): Observable<IBook> {
-      return this.http.get<IBook>(`api/books/${id}`);
+      return this.http.get<IBook>(`${this.booksUrl}/${id}`);
   }
 
-  public addBook(book: IBook, authorId: number, genres: object): void {
+  public addBook(book: IBook, authorId: number): void {
     this.http.post(`/api/authors/${authorId}/books`, {
       description: book.description,
       author_id: authorId,
       title: book.title,
       price: book.price,
-      genres,
+      genres: [],
     }).subscribe();
   }
 

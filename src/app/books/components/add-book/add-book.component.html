@@ -13,8 +13,8 @@
     <mat-label>Author's name</mat-label>
     <input type="text" matInput formControlName="name" [matAutocomplete]="nameAuto" (input)="filterNameOptions()">
     <mat-autocomplete #nameAuto="matAutocomplete">
-      <mat-option *ngFor="let option of nameOptions" [value]="option">
-        {{option}}
+      <mat-option *ngFor="let author of nameOptions" [value]="author.first_name + ' ' + author.last_name" (click)="setAuthorId(author)">
+        {{author.first_name + ' ' + author.last_name}}
       </mat-option>
     </mat-autocomplete>
     <mat-error *ngIf="bookForm.get('name').invalid && (bookForm.get('name').dirty || bookForm.get('name').touched)">
@@ -34,8 +34,8 @@
     <mat-label>Genre</mat-label>
     <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto" (input)="filterGenresOptions()">
     <mat-autocomplete #genreAuto="matAutocomplete">
-      <mat-option *ngFor="let options of genresOptions" [value]="options">
-        {{options}}
+      <mat-option *ngFor="let genre of genresOptions" [value]="genre.name">
+        {{genre.name}}
       </mat-option>
     </mat-autocomplete>
     <mat-error *ngIf="bookForm.get('genre').invalid && (bookForm.get('genre').dirty || bookForm.get('genre').touched)">

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { BehaviorSubject, Observable } from 'rxjs';
-import { IBooksCard } from 'src/app/books/interfaces/books.interface';
+import { IBook } from 'src/app/books/interfaces/books.interface';
 import { CardService } from '../services/card.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { CardService } from '../services/card.service';
 })
 export class CardComponent implements OnInit {
 
-  @Input() public book!: IBooksCard;
+  @Input() public book!: IBook;
 
   @Output() private bookInfo = new EventEmitter();
 
@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
   ngOnInit() {
   }
 
-  public showAdditionalInfo(book: IBooksCard) {
+  public showAdditionalInfo(book: IBook) {
     this.bookInfo.emit(book);
   }
 
