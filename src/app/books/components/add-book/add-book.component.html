@@ -36,7 +36,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Genre</mat-label>
-    <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto" (input)="filterGenresOptions()">
+    <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto">
     <mat-autocomplete #genreAuto="matAutocomplete">
       <mat-option *ngFor="let genre of genresOptions" [value]="genre.name">
         {{genre.name}}

@@ -40,12 +40,26 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.bookForm.get('author').valueChanges
       .pipe(
+        debounceTime(500),
         switchMap(name => {
           return this.authorsService.getAuthorByName(name);
-        })
+        }),
+        takeUntil(this.destroy$),
       ).subscribe(authorsObject => {
         this.nameOptions = authorsObject['authors'];
-      })
+      });
+
+    this.bookForm.get('genre').valueChanges
+      .pipe(
+        debounceTime(500),
+        switchMap(genre => {
+          return this.genresService.getGenreByName(genre);
+        }),
+        takeUntil(this.destroy$),
+      ).subscribe(genreObject => {
+        this.genresOptions = genreObject['genres'];
+      });
+
   }
 
   public ngOnDestroy() {
@@ -62,21 +76,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
       price: formValue.price,
       genres: [],
     };
+
     this.bookService.addBook(book)
       .pipe(takeUntil(this.destroy$))
         .subscribe();
-  }
-
-  public setAuthorId(name: any) {
-    this.authorId = name.id;
-  }
-
-  public filterGenresOptions(): void {
-    this.genresService.getGenreByName(this.bookForm.value.genre)
-      .pipe(takeUntil(this.destroy$))
-        .subscribe(genres => {
-          this.genresOptions = genres['genres'];
-    });
   }
 
   public displayFn(author): string {
