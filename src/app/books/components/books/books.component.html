@@ -1,10 +1,9 @@
 <div class="container">
-  <div *ngFor="let book of bookCards" class="book-list">
+  <div *ngFor="let book of books" class="book-list">
     <app-card [book]="book" (bookInfo)="showAdditionalInfo($event)"></app-card>
   </div>
 </div>
 
 <div class="addButton">
-  <!-- <button (click)="showAddBookModal()"><p>Add book</p></button> -->
   <button mat-raised-button color="primary" (click)="showAddBookModal()">Add book</button>
 </div>

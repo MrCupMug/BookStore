@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-// import { BehaviorSubject, Observable } from 'rxjs';
 import { IBook } from 'src/app/books/interfaces/books.interface';
-import { CardService } from '../services/card.service';
 
 @Component({
   selector: 'app-card',

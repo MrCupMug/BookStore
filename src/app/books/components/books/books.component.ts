@@ -7,7 +7,7 @@ import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
 import { BookAdditionalInfoComponent } from '../BookInfo/book.info.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IGenres } from 'src/app/genres/interfaces/genres.interface';
+import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 import { AddBookComponent } from '../add-book/add-book.component';
 
 @Component({
@@ -19,7 +19,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public bookCards: IBook[] = [];
+  public books: IBook[] = [];
 
   constructor(
     private readonly booksService: BooksService,
@@ -37,23 +37,24 @@ export class BooksComponent implements OnInit, OnDestroy {
    }
 
   public showAdditionalInfo(event: IBook) {
-    this.authorsService.getAuthor(event.id).pipe(takeUntil(this.destroy$))
-    .subscribe((data) => {
-      this.dialog.open(BookAdditionalInfoComponent, {
-        data : {
-          title: event.title,
-          price: event.price,
-          image: '../../../../assets/bookjpg',
-          genre: this.getGenres(event),
-          description: event.description,
-          author: `${data.first_name} ${data.last_name}`,
-        }
-      });
-    });
+    this.authorsService.getAuthor(event.id)
+      .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.dialog.open(BookAdditionalInfoComponent, {
+            data : {
+              title: event.title,
+              price: event.price,
+              image: '../../../../assets/bookjpg',
+              genre: this.getGenres(event),
+              description: event.description,
+              author: `${data.first_name} ${data.last_name}`,
+            }
+          });
+        });
   }
 
   public getGenres(event: IBook) {
-    return event.genres.reduce((result, current: IGenres) => {
+    return event.genres.reduce((result, current: IGenre) => {
       result += current.name + ' ';
       return result;
     }, '').trim();
@@ -67,9 +68,8 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.booksService.getBooks()
       .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
-        this.bookCards = data.books;
-    });
-
+          this.books = data.books;
+        });
   }
 
 }

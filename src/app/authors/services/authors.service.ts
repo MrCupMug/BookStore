@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { IAuthors } from '../interfaces/authors.interface';
+import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors.response.interface';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class AuthorsService {
 
   private authorUrl = 'api/authors';
 
-  public formsAuthorInfo: IAuthors = {
+  public formsAuthorInfo: IAuthor = {
     first_name: undefined,
     last_name: undefined,
   };
@@ -25,8 +25,8 @@ export class AuthorsService {
         return this.http.get<IAuthorsResponse>(this.authorUrl);
     }
 
-    public getAuthor(authorId: number): Observable<IAuthors> {
-        return this.http.get<IAuthors>(`${this.authorUrl}/${authorId}`);
+    public getAuthor(authorId: number): Observable<IAuthor> {
+        return this.http.get<IAuthor>(`${this.authorUrl}/${authorId}`);
     }
 
 

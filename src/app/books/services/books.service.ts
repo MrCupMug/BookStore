@@ -12,7 +12,7 @@ export class BooksService {
 
   public booksUrl = 'api/books';
 
-  public bookAdditionalInfo: any = new BehaviorSubject(null);
+  // public bookAdditionalInfo: any = new BehaviorSubject(null);
 
   constructor(
               private readonly http: HttpClient,

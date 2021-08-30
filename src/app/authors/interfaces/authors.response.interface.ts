@@ -1,6 +1,6 @@
-import { IAuthors } from './authors.interface';
+import { IAuthor } from './authors.interface';
 
 export interface IAuthorsResponse {
-    authors: IAuthors[];
+    authors: IAuthor[];
     meta: any;
 }

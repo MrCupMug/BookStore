@@ -17,8 +17,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public destroy$: Subject<boolean> = new Subject();
 
-  public authorId: number;
-
   public nameOptions: object;
   public genresOptions: object;
 

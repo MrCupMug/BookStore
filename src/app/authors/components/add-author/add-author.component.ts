@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthorsService } from '../../services/authors.service';
 
-import { IAuthors } from '../../interfaces/authors.interface';
+import { IAuthor } from '../../interfaces/authors.interface';
 
 @Component({
   selector: 'app-add-author',
@@ -11,7 +11,7 @@ import { IAuthors } from '../../interfaces/authors.interface';
 })
 export class AddAuthorComponent implements OnInit {
 
-  public formsAuthorsInfo: IAuthors = this.authorsService.formsAuthorInfo;
+  public formsAuthorsInfo: IAuthor = this.authorsService.formsAuthorInfo;
 
   constructor(
     private readonly authorsService: AuthorsService,

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthorsService } from '../../services/authors.service';
-import { IAuthors } from '../../interfaces/authors.interface';
+import { IAuthor } from '../../interfaces/authors.interface';
 import { AddAuthorComponent } from '../add-author/add-author.component';
 
 @Component({
@@ -16,7 +16,7 @@ export class AuthorsComponent implements OnInit, OnDestroy {
 
   public destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public authors: IAuthors[] = [];
+  public authors: IAuthor[] = [];
 
   public displayedColumns: string[] = ['first_name', 'last_name'];
 
@@ -39,10 +39,11 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
 
   private _loadAuthors(): void {
-    this.authorsService.getAuthors().pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.authors = data.authors;
-      });
+    this.authorsService.getAuthors()
+      .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.authors = data.authors;
+        });
   }
 
 }
