@@ -5,10 +5,11 @@ import { AuthorsComponent } from './components/authors/authors.component';
 import { AddAuthorComponent } from './components/add-author/add-author.component';
 
 import { AuthorsRoutingModule } from './authors-routing.module';
-import {MatTableModule} from '@angular/material/table';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
   entryComponents: [AddAuthorComponent],
 })

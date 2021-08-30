@@ -31,15 +31,7 @@ export class AuthorsService {
 
 
     public getAuthorByName(name: string) {
-
-      const httpParams = new HttpParams({
-        fromObject: {
-          
-        }
-      })
-
       return this.http.get(`${this.authorUrl}?q[first_name_cont]=${name}`);
-
     }
 
     public addAuthor(firstName: string, lastName: string): void {

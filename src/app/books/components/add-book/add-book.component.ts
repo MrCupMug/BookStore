@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { AuthorsService } from 'src/app/authors/services/authors.service';
@@ -15,12 +15,11 @@ import { IBook } from '../../interfaces/books.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public authorId: number;
-
   public destroy$: Subject<boolean> = new Subject();
 
-  public nameOptions: object;
+  public authorId: number;
 
+  public nameOptions: object;
   public genresOptions: object;
 
   public bookForm: FormGroup = this.fb.group({
@@ -38,12 +37,16 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private readonly bookService: BooksService,
   ) { }
 
-
   public ngOnInit() {
-    this.bookForm.get('author').valueChanges.subscribe(data => {
-      console.log(data);
-    })
-   }
+    this.bookForm.get('author').valueChanges
+      .pipe(
+        switchMap(name => {
+          return this.authorsService.getAuthorByName(name);
+        })
+      ).subscribe(authorsObject => {
+        this.nameOptions = authorsObject['authors'];
+      })
+  }
 
   public ngOnDestroy() {
     this.destroy$.next(true);
@@ -68,20 +71,12 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.authorId = name.id;
   }
 
-  public filterNameOptions(text): void {
-      this.authorsService.getAuthorByName(text)
-        .pipe(takeUntil(this.destroy$))
-          .subscribe(authorsObject => {
-          this.nameOptions = authorsObject['authors'];
-      });
-  }
-
   public filterGenresOptions(): void {
-      this.genresService.getGenreByName(this.bookForm.value.genre)
-        .pipe(takeUntil(this.destroy$))
-          .subscribe(genres => {
-            this.genresOptions = genres['genres'];
-      });
+    this.genresService.getGenreByName(this.bookForm.value.genre)
+      .pipe(takeUntil(this.destroy$))
+        .subscribe(genres => {
+          this.genresOptions = genres['genres'];
+    });
   }
 
   public displayFn(author): string {
