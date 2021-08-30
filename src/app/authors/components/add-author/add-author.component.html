@@ -15,13 +15,14 @@
       Form value is invalid
     </mat-error>
   </mat-form-field><br>
-
-  <button 
-  [disabled]="firstName.invalid || lastName.invalid" 
-  type="submit" 
+  
+  <button
+  mat-raised-button color="primary"
+  type="submit"
+  [disabled]="firstName.invalid || lastName.invalid"
   (click)="addAuthor(firstName.value, lastName.value)" 
   mat-dialog-close>
-    <p>Add author</p>
+  Add author
   </button>
 
 </div>
