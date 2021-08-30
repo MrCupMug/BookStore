@@ -1,6 +1,6 @@
-import { IGenres } from "./genres.interface";
+import { IGenre } from "./genres.interface";
 
 export interface IGenresResponse {
-    genres: IGenres[];
+    genres: IGenre[];
     meta: any;
 }
