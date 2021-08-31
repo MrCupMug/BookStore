@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogWindowsComponent } from './book.info.component';
+import { GenreFormComponent } from './genre-form.component';
 
-describe('DialogWindowsComponent', () => {
-  let component: DialogWindowsComponent;
-  let fixture: ComponentFixture<DialogWindowsComponent>;
+describe('GenreFormComponent', () => {
+  let component: GenreFormComponent;
+  let fixture: ComponentFixture<GenreFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogWindowsComponent ]
+      declarations: [ GenreFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogWindowsComponent);
+    fixture = TestBed.createComponent(GenreFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

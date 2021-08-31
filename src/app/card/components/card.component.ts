@@ -8,9 +8,11 @@ import { IBook } from 'src/app/books/interfaces/books.interface';
 })
 export class CardComponent implements OnInit {
 
-  @Input() public book!: IBook;
+  @Input()
+  public book!: IBook;
 
-  @Output() private bookInfo = new EventEmitter();
+  @Output()
+  private bookInfo = new EventEmitter();
 
   constructor() { }
 

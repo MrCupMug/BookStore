@@ -5,10 +5,10 @@ import { takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
-import { BookAdditionalInfoComponent } from '../BookInfo/book.info.component';
+import { BookAdditionalInfoComponent } from '../book-info/book-info.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { IGenre } from 'src/app/genres/interfaces/genres.interface';
-import { AddBookComponent } from '../add-book/add-book.component';
+import { AddBookComponent } from '../add-book/add-book-form/add-book.component';
 
 @Component({
   selector: 'app-books',
@@ -17,14 +17,14 @@ import { AddBookComponent } from '../add-book/add-book.component';
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
-  public destroy$: Subject<boolean> = new Subject<boolean>();
+  public destroy$ = new Subject<void>();
 
   public books: IBook[] = [];
 
   constructor(
     private readonly booksService: BooksService,
     private readonly dialog: MatDialog,
-    private authorsService: AuthorsService,
+    private readonly authorsService: AuthorsService,
   ) { }
 
   ngOnInit() {
@@ -32,32 +32,37 @@ export class BooksComponent implements OnInit, OnDestroy {
    }
 
    ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
    }
 
   public showAdditionalInfo(event: IBook) {
     this.authorsService.getAuthor(event.id)
-      .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.dialog.open(BookAdditionalInfoComponent, {
-            data : {
-              title: event.title,
-              price: event.price,
-              image: '../../../../assets/bookjpg',
-              genre: this.getGenres(event),
-              description: event.description,
-              author: `${data.first_name} ${data.last_name}`,
-            }
-          });
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((data) => {
+        this.dialog.open(BookAdditionalInfoComponent, {
+          data : {
+            title: event.title,
+            price: event.price,
+            image: '../../../../assets/bookjpg',
+            genre: this.getGenres(event),
+            description: event.description,
+            author: `${data.first_name} ${data.last_name}`,
+          }
         });
+      });
   }
 
   public getGenres(event: IBook) {
-    return event.genres.reduce((result, current: IGenre) => {
-      result += current.name + ' ';
-      return result;
-    }, '').trim();
+    return event.genres
+      .reduce((result, current: IGenre) => {
+        result += current.name + ' ';
+
+        return result;
+      }, '')
+      .trim();
   }
 
   public showAddBookModal() {
@@ -67,9 +72,9 @@ export class BooksComponent implements OnInit, OnDestroy {
   private _loadBooks(): void {
     this.booksService.getBooks()
       .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.books = data.books;
-        });
+      .subscribe((data) => {
+        this.books = data.books;
+      });
   }
 
 }

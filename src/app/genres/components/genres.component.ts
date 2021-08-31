@@ -12,7 +12,7 @@ import { IGenre } from '../interfaces/genres.interface';
 })
 export class GenresComponent implements OnInit, OnDestroy {
 
-  public destroy$: Subject<boolean> = new Subject();
+  public destroy$ = new Subject<void>();
 
   public genres: IGenre[] = [];
 
@@ -25,15 +25,17 @@ export class GenresComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private _loadGenres(): void {
     this.genresService.getGenres()
-      .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.genres = data.genres;
-        });
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((data) => {
+        this.genres = data.genres;
+      });
   }
 }

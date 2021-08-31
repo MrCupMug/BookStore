@@ -1,0 +1,68 @@
+<div class="container">
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" formControlName="title"><br>
+      <mat-error *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched)">
+        Please enter a valid title
+      </mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Author's name</mat-label>
+      <input type="text"
+        #input 
+        matInput 
+        formControlName="author" 
+        [matAutocomplete]="nameAuto">
+      <mat-autocomplete #nameAuto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let author of nameOptions" [value]="author">
+          {{author.first_name + ' ' + author.last_name}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="authorControl.invalid && (authorControl.dirty || authorControl.touched)">
+        Please enter a valid name
+      </mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" formControlName="price">
+      <mat-error *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)">
+        Please enter a valid price
+      </mat-error>
+    </mat-form-field><br>
+
+    <!-- <mat-form-field class="example-full-width">
+      <mat-label>Genre</mat-label>
+      <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto">
+      <mat-autocomplete #genreAuto="matAutocomplete">
+        <mat-option *ngFor="let genre of genresOptions" [value]="genre.name">
+          {{genre.name}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="genreControl.invalid && (genreControl.dirty || genreControl.touched)">
+        Choose a valid genre
+      </mat-error>
+    </mat-form-field><br> -->
+
+    <app-genre-form></app-genre-form>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" formControlName="description"><br>
+      <mat-error *ngIf="descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched)">
+        Please enter a valid description
+      </mat-error>
+    </mat-form-field><br>
+
+    <button mat-raised-button 
+      color="primary"
+      mat-dialog-close
+      type="submit"
+      [disabled]="bookForm.invalid">
+      Add book
+    </button>
+  </form>
+</div>

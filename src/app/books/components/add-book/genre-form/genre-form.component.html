@@ -1,0 +1,22 @@
+<form [formGroup]="genreForm" class="form-container">
+  <mat-form-field class="container">
+    <input formControlName="genre" class="add-genre-form" matInput placeholder="Genres" [matAutocomplete]="genreAuto">
+    <mat-autocomplete #genreAuto="matAutocomplete">
+      <mat-option *ngFor="let genre of genresOptions" [value]="genre.name">
+        {{genre.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="genreForm.get('genre').invalid && (genreForm.get('genre').dirty || genreForm.get('genre').touched)">
+      Choose a valid genre
+    </mat-error>
+  </mat-form-field>
+  <button mat-button class="add-button" (click)="addAlternativeGenres()">+</button><br>
+
+  <ng-container formArrayName="alternativeGenres">
+    <ng-container *ngFor="let genre of alternativeGenres">
+      <mat-form-field>
+        <input matInput placeholder="Genres" formControlName="genre">
+      </mat-form-field><br>
+    </ng-container>
+  </ng-container>
+</form>

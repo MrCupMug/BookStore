@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { IBook } from '../interfaces/books.interface';
-import { IBooksResponse } from '../interfaces/books.response.interface';
+import { IBooksResponse } from '../interfaces/books-response.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -11,8 +11,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class BooksService {
 
   public booksUrl = 'api/books';
-
-  // public bookAdditionalInfo: any = new BehaviorSubject(null);
 
   constructor(
               private readonly http: HttpClient,
