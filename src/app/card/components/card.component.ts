@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
 import { IBook } from 'src/app/books/interfaces/books.interface';
 
 @Component({
@@ -6,18 +7,15 @@ import { IBook } from 'src/app/books/interfaces/books.interface';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
 
   @Input()
   public book!: IBook;
 
   @Output()
-  private bookInfo = new EventEmitter();
+  private bookInfo = new EventEmitter<IBook>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   public showAdditionalInfo(book: IBook) {
     this.bookInfo.emit(book);

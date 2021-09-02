@@ -47,7 +47,14 @@
       </mat-error>
     </mat-form-field><br> -->
 
-    <app-genre-form></app-genre-form>
+    <app-genre-form 
+    [(ngModel)]="external"
+    name="externalVal"
+    [ngModelOptions]="{standalone: true}"
+    #validations="ngModel"
+    [fetchFn]="fetchGenres$"
+    (genreList)="updateGenres($event)">
+    </app-genre-form>
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>

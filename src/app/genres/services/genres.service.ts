@@ -14,7 +14,7 @@ export class GenresService {
   ) { }
 
     public getGenres(): Observable<IGenresResponse> {
-        return this.http.get<IGenresResponse>('api/genres');
+      return this.http.get<IGenresResponse>('api/genres');
     }
 
     public getGenreByName(name: string) {

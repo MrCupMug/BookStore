@@ -10,12 +10,13 @@ import { CardModule } from '../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddBookComponent } from './components/add-book/add-book-form/add-book.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { GenreFormComponent } from './components/add-book/genre-form/genre-form.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -34,7 +35,10 @@ import { GenreFormComponent } from './components/add-book/genre-form/genre-form.
     MatAutocompleteModule,
     MatInputModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FormsModule,
+    MatChipsModule,
+    MatIconModule,
   ],
   entryComponents: [BookAdditionalInfoComponent, AddBookComponent],
 })

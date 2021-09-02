@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { GenresService } from 'src/app/genres/services/genres.service';
 import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
+import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 
 @Component({
   selector: 'app-add-book',
@@ -15,10 +16,13 @@ import { IBook } from '../../../interfaces/books.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
+  public genreValue: IGenre;
+
+  public external = '';
+
   public destroy$ = new Subject<void>();
 
   public nameOptions: Record<null, object[]>;
-  // public genresOptions: Record<null, object[]>;
 
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
@@ -47,10 +51,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
     return this.bookForm.get('price');
   }
 
-  // public get genreControl(): AbstractControl {
-  //   return this.bookForm.get('genre');
-  // }
-
   public get descriptionControl(): AbstractControl {
     return this.bookForm.get('description');
   }
@@ -68,23 +68,21 @@ export class AddBookComponent implements OnInit, OnDestroy {
         this.nameOptions = authorsObject.authors;
       });
 
-    // this.bookForm.get('genre').valueChanges
-    //   .pipe(
-    //     debounceTime(500),
-    //     switchMap((genre) => {
-    //       return this.genresService.getGenreByName(genre);
-    //     }),
-    //     takeUntil(this.destroy$),
-    //   )
-    //   .subscribe((genreObject: Record<string, object[]>) => {
-    //     this.genresOptions = genreObject.genres;
-    //   });
-
   }
 
   public ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public getGenreValue(event: string) {
+    this.genresService.getGenreByName(event)
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe((genreObject: Record<any, any>) => {
+      this.genreValue = genreObject.genres;
+    });
   }
 
   public onSubmit(): void {
@@ -98,7 +96,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       author_id: formValue.author.id,
       title: formValue.title,
       price: formValue.price,
-      genres: [],
+      genres: formValue.genre,
     };
 
     this.bookService.addBook(book)
@@ -108,10 +106,23 @@ export class AddBookComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  public updateGenres(event): void {
+    this.bookForm.get('genre').setValue(event);
+  }
+
   public displayFn(author): string {
     return author
       ? `${author.first_name} ${author.last_name}`
       : '';
+  }
+
+  public fetchGenres$ = (text: string) => {
+    return this.genresService.getGenreByName(text)
+      .pipe(
+        map((response: Record<string, object[]>) => {
+          return response.genres;
+        })
+      );
   }
 
 }
