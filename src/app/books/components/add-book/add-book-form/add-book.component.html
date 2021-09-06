@@ -47,14 +47,11 @@
       </mat-error>
     </mat-form-field><br> -->
 
-    <app-genre-form 
-    [(ngModel)]="external"
-    name="externalVal"
-    [ngModelOptions]="{standalone: true}"
-    #validations="ngModel"
-    [fetchFn]="fetchGenres$"
-    (genreList)="updateGenres($event)">
+    <app-genre-form
+      formControlName="genre"
+      [fetchFn]="fetchGenres$">
     </app-genre-form>
+    external: {{this.bookForm.get('genre').value | json}}
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>

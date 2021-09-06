@@ -4,7 +4,7 @@ import { LayoutComponent } from './components/layout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { MatToolbarModule } from '@angular/material';
+import { MatRippleModule, MatToolbarModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
 import { MatSidenavModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import { CardModule } from '../card/card.module';
     MatSidenavModule,
     FormsModule,
     RouterModule,
+    MatRippleModule,
   ],
   exports: [LayoutComponent],
 })

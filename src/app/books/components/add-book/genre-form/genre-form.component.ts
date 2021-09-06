@@ -1,5 +1,5 @@
-import { Component, forwardRef, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormArray, Validators, FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup } from '@angular/forms';
+import { Component, forwardRef, OnInit, OnDestroy, Input } from '@angular/core';
+import { FormBuilder, Validators, FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
@@ -22,18 +22,15 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
   @Input()
   fetchFn!: (text: string) => Observable<IGenre[]>;
 
-  @Output()
-  genreList = new EventEmitter();
-
   public chips: string[] = [];
 
   public removable = true;
 
-  private _val = '';
+  private _val = [];
 
   public destroy$ = new Subject<void>();
 
-  public genreForm: FormArray;
+  public genreForm: FormControl;
   public genreOptions: IGenre[];
 
   constructor(
@@ -46,9 +43,9 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
 
   public set value(val) {
     if ( val !== undefined && this._val !== val) {
-    this._val = val;
-    this.onChange(val);
-    this.onTouch(val);
+      this._val = val;
+      this.onChange(val);
+      this.onTouch(val);
     }
   }
 
@@ -61,12 +58,13 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
     this.destroy$.next();
     this.destroy$.complete();
   }
+
   public onChange: any = () => {};
 
   public onTouch: any = () => {};
 
   public writeValue(value: any) {
-    this.value = value;
+    this._val = value;
   }
 
   public registerOnChange(fn: any) {
@@ -82,24 +80,21 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
       return;
     }
     this.chips.push(genreName);
-    this.genreForm.clear();
-    this.genres.push(new FormControl(null, Validators.required));
-    this.genreList.emit(this.chips);
+    this.value = this.chips;
+    this.genreForm.reset();
   }
 
-  public remove(chip) {
+  public removeGenre(chip) {
     const index = this.chips.indexOf(chip);
 
     if (index >= 0) {
       this.chips.splice(index, 1);
     }
-    this.genreList.emit(this.chips);
+    this.value = this.chips;
   }
 
   private _initForm(): void {
-    this.genreForm = this.fb.array([
-      new FormControl(null, Validators.required)
-    ]);
+    this.genreForm = new FormControl(null, Validators.required);
   }
 
   private _listenGenresChange(): void {
@@ -109,7 +104,7 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
         switchMap((value) => {
           return this.fetchFn(value);
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((genres: IGenre[]) => {
         this.genreOptions = genres;

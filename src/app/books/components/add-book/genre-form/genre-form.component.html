@@ -1,6 +1,6 @@
 <mat-chip-list>
   <ng-container *ngFor="let chip of chips">
-    <mat-chip [removable]=removable (removed)="remove(chip)">
+    <mat-chip [removable]="removable" (removed)="removeGenre(chip)">
       {{chip}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
@@ -8,9 +8,9 @@
 </mat-chip-list>
 
 <div class="form-container">
-  <ng-container *ngFor="let genre of genres.controls; let i = index">
+  <ng-container>
     <mat-form-field class="form-field">
-      <input matInput [formControl]="genres.controls[i]" placeholder="Genres" [matAutocomplete]="genreAuto">
+      <input matInput [formControl]="genres" placeholder="Genres" [matAutocomplete]="genreAuto">
       <mat-autocomplete #genreAuto="matAutocomplete">
         <mat-option *ngFor="let genre of genreOptions" [value]="genre.name" (click)="addGenre(genre.name)">
           {{genre.name}}

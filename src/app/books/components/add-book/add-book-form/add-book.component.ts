@@ -18,8 +18,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public genreValue: IGenre;
 
-  public external = '';
-
   public destroy$ = new Subject<void>();
 
   public nameOptions: Record<null, object[]>;
@@ -27,7 +25,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
     price: [null, Validators.required],
-    genre: [null, Validators.required],
+    genre: [[], Validators.required],
     description: [null, Validators.required],
     author: [null, Validators.required],
   });
@@ -104,10 +102,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe();
-  }
-
-  public updateGenres(event): void {
-    this.bookForm.get('genre').setValue(event);
   }
 
   public displayFn(author): string {
