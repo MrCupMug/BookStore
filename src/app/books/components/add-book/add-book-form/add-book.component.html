@@ -34,24 +34,10 @@
       </mat-error>
     </mat-form-field><br>
 
-    <!-- <mat-form-field class="example-full-width">
-      <mat-label>Genre</mat-label>
-      <input type="text" matInput formControlName="genre" [matAutocomplete]="genreAuto">
-      <mat-autocomplete #genreAuto="matAutocomplete">
-        <mat-option *ngFor="let genre of genresOptions" [value]="genre.name">
-          {{genre.name}}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="genreControl.invalid && (genreControl.dirty || genreControl.touched)">
-        Choose a valid genre
-      </mat-error>
-    </mat-form-field><br> -->
-
     <app-genre-form
       formControlName="genre"
       [fetchFn]="fetchGenres$">
     </app-genre-form>
-    external: {{this.bookForm.get('genre').value | json}}
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>
@@ -60,6 +46,10 @@
         Please enter a valid description
       </mat-error>
     </mat-form-field><br>
+
+    <app-size-form formControlName="size" [unit]="unitFromServer">
+    </app-size-form>
+    converted value: {{this.bookForm.get('size').value | json}}
 
     <button mat-raised-button 
       color="primary"

@@ -17,6 +17,8 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { GenreFormComponent } from './components/add-book/genre-form/genre-form.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { MatChipsModule } from '@angular/material/chips';
     BookAdditionalInfoComponent,
     AddBookComponent,
     GenreFormComponent,
+    SizeFormComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +42,7 @@ import { MatChipsModule } from '@angular/material/chips';
     FormsModule,
     MatChipsModule,
     MatIconModule,
+    MatSelectModule,
   ],
   entryComponents: [BookAdditionalInfoComponent, AddBookComponent],
 })

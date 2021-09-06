@@ -16,6 +16,11 @@ import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
+  public unitFromServer = {
+    size: 1000,
+    unit: 'km',
+  };
+
   public genreValue: IGenre;
 
   public destroy$ = new Subject<void>();
@@ -28,6 +33,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     genre: [[], Validators.required],
     description: [null, Validators.required],
     author: [null, Validators.required],
+    size: [null, Validators.required],
   });
 
   constructor(
