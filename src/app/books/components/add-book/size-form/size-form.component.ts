@@ -1,5 +1,5 @@
 import { Component, forwardRef, OnInit, Input } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-size-form',
@@ -19,19 +19,30 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
   public unit: any;
   // public unit: 'cm' | 'm' | 'dm' | 'km';
 
-  public sizeForm: FormControl;
+  public sizeForm: FormGroup;
+
+  public unitValue: string;
 
   private _val;
 
-  constructor() {}
+  constructor(
+    private readonly fb: FormBuilder,
+  ) {}
 
   public get size() {
     return this.sizeForm;
   }
 
   ngOnInit() {
+    this.unitValue = this.unit.value;
+    this.writeValue(this.unit.size);
     this._initForm();
-    this.size.setValue(this.unit.size);
+
+    this.size.get('unit').valueChanges
+      .subscribe((unit) => {
+        this.unitValue = unit;
+        this.writeValue(this.unit.size);
+      })
   }
 
   public onChange: any = () => {};
@@ -47,6 +58,7 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
   }
 
   public writeValue(value: any) {
+    value = this.convertValue(value);
     this._val = value;
   }
 
@@ -58,19 +70,39 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  public changeValue(value: string): void {
-    switch (this.unit.unit) {
+  public convertValue(value: number) {
+    console.log('convert');
+    switch(this.unitValue) {
       case 'm':
-        this.convertToMeters(this.unit.size, value);
+        value = value / 100;
         break;
       case 'cm':
-        this.convertToCentimeters(this.unit.size, value);
+        value = this.unit.size;
         break;
       case 'dm':
-        this.convertToDecimeters(this.unit.size, value);
+        value = value / 10;
         break;
       case 'km':
-        this.convertToKilometers(this.unit.size, value);
+        value / 100000;
+        break;
+    }
+
+    return value;
+  }
+
+  public changeValue(): void {
+    switch (this.unit.unit) {
+      case 'm':
+        this.convertToMeters(this.unit.size, this.unit.unit);
+        break;
+      case 'cm':
+        this.convertToCentimeters(this.unit.size, this.unit.unit);
+        break;
+      case 'dm':
+        this.convertToDecimeters(this.unit.size, this.unit.unit);
+        break;
+      case 'km':
+        this.convertToKilometers(this.unit.size, this.unit.unit);
         break;
     }
   }
@@ -81,16 +113,16 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
 
     switch (unitValue) {
       case 'cm':
-        this.size.setValue(this.unit.size);
+        this.size.get('size').setValue(this.unit.size);
         break;
       case 'dm':
-        this.size.setValue(sizeValue / 10);
+        this.size.get('size').setValue(sizeValue / 10);
         break;
       case 'km':
-        this.size.setValue(sizeValue / 100000);
+        this.size.get('size').setValue(sizeValue / 100000);
         break;
       case 'm':
-        this.size.setValue(sizeValue / 100);
+        this.size.get('size').setValue(sizeValue / 100);
     }
 
     this.value = toMeters;
@@ -105,13 +137,13 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
         this.size.setValue(this.unit.size);
         break;
       case 'dm':
-        this.size.setValue(sizeValue / 10);
+        this.size.get('size').setValue(sizeValue / 10);
         break;
       case 'km':
-        this.size.setValue(sizeValue / 100000);
+        this.size.get('size').setValue(sizeValue / 100000);
         break;
       case 'm':
-        this.size.setValue(sizeValue / 100);
+        this.size.get('size').setValue(sizeValue / 100);
     }
 
     this.value = toCentimeters;
@@ -126,13 +158,13 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
         this.size.setValue(this.unit.size);
         break;
       case 'dm':
-        this.size.setValue(sizeValue / 10);
+        this.size.get('size').setValue(sizeValue / 10);
         break;
       case 'km':
-        this.size.setValue(sizeValue / 100000);
+        this.size.get('size').setValue(sizeValue / 100000);
         break;
       case 'm':
-        this.size.setValue(sizeValue / 100);
+        this.size.get('size').setValue(sizeValue / 100);
     }
 
     this.value = toDecimeters;
@@ -148,20 +180,24 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
         this.size.setValue(this.unit.size);
         break;
       case 'dm':
-        this.size.setValue(sizeValue / 10);
+        this.size.get('size').setValue(sizeValue / 10);
         break;
       case 'km':
-        this.size.setValue(sizeValue / 100000);
+        this.size.get('size').setValue(sizeValue / 100000);
         break;
       case 'm':
-        this.size.setValue(sizeValue / 100);
+        this.size.get('size').setValue(sizeValue / 100);
     }
 
     this.value = toKilometers;
   }
 
   private _initForm() {
-    this.sizeForm = new FormControl(null, Validators.required);
+    //this.sizeForm = new FormControl(this._val, Validators.required);
+    this.sizeForm = this.fb.group({
+      size: [this._val],
+      unit: [this.unit.unit],
+    })
   }
 
 }

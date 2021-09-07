@@ -16,8 +16,10 @@ import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public unitFromServer = 'm';
-  public sizeTest = 1000;
+  public unitFromServer = {
+    size: 1000,
+    unit: 'm',
+  };
 
   public genreValue: IGenre;
 
@@ -31,7 +33,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     genre: [[], Validators.required],
     description: [null, Validators.required],
     author: [null, Validators.required],
-    size: [null, Validators.required],
+    size: [100, Validators.required],
   });
 
   constructor(
