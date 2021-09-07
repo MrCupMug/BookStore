@@ -1,15 +1,13 @@
-<div>
-  <mat-form-field class="size-input" >
-    <mat-label>Size</mat-label>
-    <input matInput type="number" [formControl]="size">
-  </mat-form-field>
+<mat-form-field class="size-input" >
+  <mat-label>Size</mat-label>
+  <input matInput type="number" [formControl]="size">
+</mat-form-field>
 
-  <mat-form-field class="select-material">
-    <select matNativeControl (click)="changeValue(option.value)" #option>
-      <option value="cm">cm</option>
-      <option value="dm">dm</option>
-      <option value="m">m</option>
-      <option value="km">km</option>
-    </select>
-  </mat-form-field><br>
-</div>
+<mat-form-field class="select-material">
+  <select matNativeControl (click)="changeValue(option.value)" #option>
+    <option value="cm">cm</option>
+    <option value="dm">dm</option>
+    <option value="m">m</option>
+    <option value="km">km</option>
+  </select>
+</mat-form-field><br>

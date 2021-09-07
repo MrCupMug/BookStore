@@ -47,7 +47,9 @@
       </mat-error>
     </mat-form-field><br>
 
-    <app-size-form formControlName="size" [unit]="unitFromServer">
+    <app-size-form
+    formControlName="size"
+    [unit]="unitFromServer">
     </app-size-form>
     converted value: {{this.bookForm.get('size').value | json}}
 

@@ -16,10 +16,8 @@ import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public unitFromServer = {
-    size: 1000,
-    unit: 'km',
-  };
+  public unitFromServer = 'm';
+  public sizeTest = 1000;
 
   public genreValue: IGenre;
 
@@ -71,7 +69,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
       .subscribe((authorsObject: Record<string, object[]>) => {
         this.nameOptions = authorsObject.authors;
       });
-
   }
 
   public ngOnDestroy() {
@@ -124,5 +121,4 @@ export class AddBookComponent implements OnInit, OnDestroy {
         })
       );
   }
-
 }

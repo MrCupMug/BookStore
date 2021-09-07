@@ -16,7 +16,8 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from
 export class SizeFormComponent implements OnInit, ControlValueAccessor {
 
   @Input()
-  public unit;
+  public unit: any;
+  // public unit: 'cm' | 'm' | 'dm' | 'km';
 
   public sizeForm: FormControl;
 
@@ -46,7 +47,7 @@ export class SizeFormComponent implements OnInit, ControlValueAccessor {
   }
 
   public writeValue(value: any) {
-    this.value = value;
+    this._val = value;
   }
 
   public registerOnChange(fn: any) {
