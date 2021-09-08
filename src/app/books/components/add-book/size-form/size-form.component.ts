@@ -1,5 +1,7 @@
-import { Component, forwardRef, OnInit, Input } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { Component, forwardRef, OnInit, OnDestroy, Input } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-size-form',
@@ -13,191 +15,118 @@ import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACC
     }
   ]
 })
-export class SizeFormComponent implements OnInit, ControlValueAccessor {
+export class SizeFormComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input()
-  public unit: any;
-  // public unit: 'cm' | 'm' | 'dm' | 'km';
+  public unit: 'cm' | 'dm' | 'm' | 'km';
+
+  public destroy$ = new Subject<void>();
 
   public sizeForm: FormGroup;
 
-  public unitValue: string;
-
-  private _val;
+  private size: number;
 
   constructor(
-    private readonly fb: FormBuilder,
+    private readonly _fb: FormBuilder,
   ) {}
 
-  public get size() {
-    return this.sizeForm;
+  public get sizeControl(): AbstractControl | null {
+    return this.sizeForm.get('size');
   }
 
-  ngOnInit() {
-    this.unitValue = this.unit.value;
-    this.writeValue(this.unit.size);
+  public get unitControl(): AbstractControl | null {
+    return this.sizeForm.get('unit');
+  }
+
+  public ngOnInit(): void {
     this._initForm();
 
-    this.size.get('unit').valueChanges
-      .subscribe((unit) => {
-        this.unitValue = unit;
-        this.writeValue(this.unit.size);
-      })
+    this.unitEventListener();
+    this.sizeEventListener();
   }
 
-  public onChange: any = () => {};
-
-  public onTouch: any = () => {};
-
-  public set value(val) {
-    if ( val !== undefined && this._val !== val) {
-    this._val = val;
-    this.onChange(val);
-    this.onTouch(val);
-    }
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  public writeValue(value: any) {
-    value = this.convertValue(value);
-    this._val = value;
+  public onChange = (value) => {};
+
+  public onTouch = (value) => {};
+
+  public writeValue(size: number): void {
+    this.size = size;
+    const convertedSize = this.convertValue(size, this.unit);
+    this.sizeControl.setValue(convertedSize);
   }
 
-  public registerOnChange(fn: any) {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn: any) {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  public convertValue(value: number) {
-    console.log('convert');
-    switch(this.unitValue) {
+  private convertValue(value: number, unit: string): number {
+    switch (unit) {
       case 'm':
-        value = value / 100;
-        break;
-      case 'cm':
-        value = this.unit.size;
-        break;
+        return value / 100;
       case 'dm':
-        value = value / 10;
-        break;
+        return value / 10;
       case 'km':
-        value / 100000;
-        break;
-    }
+        return value / 100000;
 
-    return value;
+      default:
+        return value;
+    }
   }
 
-  public changeValue(): void {
-    switch (this.unit.unit) {
-      case 'm':
-        this.convertToMeters(this.unit.size, this.unit.unit);
-        break;
+  private convertToCentimeters(value: number, unit: string): void {
+    switch (unit) {
       case 'cm':
-        this.convertToCentimeters(this.unit.size, this.unit.unit);
+        this.size = value;
         break;
       case 'dm':
-        this.convertToDecimeters(this.unit.size, this.unit.unit);
+        this.size = value * 10;
+        break;
+      case 'm':
+        this.size = value * 100;
         break;
       case 'km':
-        this.convertToKilometers(this.unit.size, this.unit.unit);
+        this.size = value * 100000;
         break;
     }
   }
 
-  private convertToMeters(sizeValue: number, unitValue: string) {
-
-    const toMeters = sizeValue / 100;
-
-    switch (unitValue) {
-      case 'cm':
-        this.size.get('size').setValue(this.unit.size);
-        break;
-      case 'dm':
-        this.size.get('size').setValue(sizeValue / 10);
-        break;
-      case 'km':
-        this.size.get('size').setValue(sizeValue / 100000);
-        break;
-      case 'm':
-        this.size.get('size').setValue(sizeValue / 100);
-    }
-
-    this.value = toMeters;
+  private _initForm(): void {
+    this.sizeForm = this._fb.group({
+      size: [null],
+      unit: [this.unit],
+    });
   }
 
-  private convertToCentimeters(sizeValue: number, unitValue: string) {
-
-    const toCentimeters = sizeValue;
-
-    switch (unitValue) {
-      case 'cm':
-        this.size.setValue(this.unit.size);
-        break;
-      case 'dm':
-        this.size.get('size').setValue(sizeValue / 10);
-        break;
-      case 'km':
-        this.size.get('size').setValue(sizeValue / 100000);
-        break;
-      case 'm':
-        this.size.get('size').setValue(sizeValue / 100);
-    }
-
-    this.value = toCentimeters;
+  private unitEventListener(): void {
+    this.sizeForm.get('unit').valueChanges
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe((unit: string) => {
+      const test = this.unitControl.value;
+      const convertedValue = this.convertValue(this.size, test);
+      this.sizeControl.setValue(convertedValue);
+    });
   }
 
-  private convertToDecimeters(sizeValue: number, unitValue: string) {
-
-    const toDecimeters = sizeValue / 10;
-
-    switch (unitValue) {
-      case 'cm':
-        this.size.setValue(this.unit.size);
-        break;
-      case 'dm':
-        this.size.get('size').setValue(sizeValue / 10);
-        break;
-      case 'km':
-        this.size.get('size').setValue(sizeValue / 100000);
-        break;
-      case 'm':
-        this.size.get('size').setValue(sizeValue / 100);
-    }
-
-    this.value = toDecimeters;
-
-  }
-
-  private convertToKilometers(sizeValue: number, unitValue: string) {
-
-    const toKilometers = sizeValue / 100000;
-
-    switch (unitValue) {
-      case 'cm':
-        this.size.setValue(this.unit.size);
-        break;
-      case 'dm':
-        this.size.get('size').setValue(sizeValue / 10);
-        break;
-      case 'km':
-        this.size.get('size').setValue(sizeValue / 100000);
-        break;
-      case 'm':
-        this.size.get('size').setValue(sizeValue / 100);
-    }
-
-    this.value = toKilometers;
-  }
-
-  private _initForm() {
-    //this.sizeForm = new FormControl(this._val, Validators.required);
-    this.sizeForm = this.fb.group({
-      size: [this._val],
-      unit: [this.unit.unit],
-    })
+  private sizeEventListener(): void {
+    this.sizeControl.valueChanges
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe((size: number) => {
+      this.convertToCentimeters(size, this.unitControl.value);
+      this.onChange(this.size);
+    });
   }
 
 }

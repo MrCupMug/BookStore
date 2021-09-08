@@ -16,10 +16,7 @@ import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public unitFromServer = {
-    size: 1000,
-    unit: 'm',
-  };
+  public unitFromServer = 'm';
 
   public genreValue: IGenre;
 
@@ -41,7 +38,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private readonly authorsService: AuthorsService,
     private readonly genresService: GenresService,
     private readonly bookService: BooksService,
-  ) { }
+  ) {}
 
   public get titleControl(): AbstractControl {
     return this.bookForm.get('title');
