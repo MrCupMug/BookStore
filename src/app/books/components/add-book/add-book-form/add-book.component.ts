@@ -31,6 +31,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     description: [null, Validators.required],
     author: [null, Validators.required],
     size: [100, Validators.required],
+    testForm: {},
   });
 
   constructor(

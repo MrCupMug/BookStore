@@ -39,6 +39,17 @@
       [fetchFn]="fetchGenres$">
     </app-genre-form>
 
+    <mat-form-field>
+      <app-custom-form-field
+      placeholder="Phone number"
+      required
+      formControlName="testForm">
+      </app-custom-form-field>
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-hint>Include area code</mat-hint>
+    </mat-form-field><br>
+    external: {{this.bookForm.get('testForm').value | json}}
+
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>
       <input matInput type="text" formControlName="description"><br>
@@ -51,7 +62,6 @@
     formControlName="size"
     [unit]="unitFromServer">
     </app-size-form>
-    converted value: {{this.bookForm.get('size').value | json}}
 
     <button mat-raised-button 
       color="primary"

@@ -19,6 +19,7 @@ import { GenreFormComponent } from './components/add-book/genre-form/genre-form.
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
+import { CustomFormFieldComponent } from './components/add-book/custom-form-field/custom-form-field.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { SizeFormComponent } from './components/add-book/size-form/size-form.com
     AddBookComponent,
     GenreFormComponent,
     SizeFormComponent,
+    CustomFormFieldComponent,
   ],
   imports: [
     CommonModule,

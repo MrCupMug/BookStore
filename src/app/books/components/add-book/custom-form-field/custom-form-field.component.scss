@@ -1,0 +1,43 @@
+div {
+  display: flex;
+}
+
+input {
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  font: inherit;
+  text-align: center;
+}
+
+span {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+:host.floating span {
+  opacity: 1;
+}
+
+.app-custom-form-field-container {
+  display: flex;
+}
+
+.app-custom-form-field-element {
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  font: inherit;
+  text-align: center;
+}
+
+.app-custom-form-field-spacer {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+:host.example-floating .app-custom-form-field-spacer {
+  opacity: 1;
+}
