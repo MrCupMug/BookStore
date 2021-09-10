@@ -20,6 +20,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
 import { CustomFormFieldComponent } from './components/add-book/custom-form-field/custom-form-field.component';
+import { CustomGenreFormComponent } from './components/add-book/custom-genre-form/custom-genre-form.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { CustomFormFieldComponent } from './components/add-book/custom-form-fiel
     GenreFormComponent,
     SizeFormComponent,
     CustomFormFieldComponent,
+    CustomGenreFormComponent,
   ],
   imports: [
     CommonModule,
