@@ -1,4 +1,11 @@
 .example-chip-list {
     width: 90%;
   }
-  
+
+  span {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+  :host.floating span {
+    opacity: 1;
+  }

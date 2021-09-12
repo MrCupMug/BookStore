@@ -34,10 +34,10 @@
       </mat-error>
     </mat-form-field><br>
 
-    <app-genre-form
+    <!-- <app-genre-form
       formControlName="genre"
       [fetchFn]="fetchGenres$">
-    </app-genre-form>
+    </app-genre-form> -->
 
     <!-- <mat-form-field>
       <app-custom-form-field
@@ -49,9 +49,15 @@
       <mat-hint>Include area code</mat-hint>
     </mat-form-field><br> -->
 
-    <app-custom-genre-form>
-      
-    </app-custom-genre-form>
+    <mat-form-field class="custom-genre">
+      <app-custom-genre-form
+      placeholder="Genres"
+      required
+      [fetchFn]="fetchGenres$"
+      formControlName="genre">
+      </app-custom-genre-form>
+    </mat-form-field><br>
+    external: {{this.bookForm.get('genre').value | json}}
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>

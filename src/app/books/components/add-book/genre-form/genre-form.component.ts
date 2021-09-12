@@ -80,6 +80,7 @@ export class GenreFormComponent implements OnInit, OnDestroy, ControlValueAccess
       return;
     }
     this.chips.push(genreName);
+    console.log(this.genreForm.value);
     this.value = this.chips;
     this.genreForm.reset();
   }
