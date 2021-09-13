@@ -69,14 +69,14 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   ) {
       this.ngControl.valueAccessor = this;
 
-      fm.monitor(elRef.nativeElement, true)
-        .pipe(
-          takeUntil(this.destroy$),
-        )
-        .subscribe(origin => {
-          this.focused = !!origin;
-          this.stateChanges.next();
-        });
+      // fm.monitor(elRef.nativeElement, true)
+      //   .pipe(
+      //     takeUntil(this.destroy$),
+      //   )
+      //   .subscribe(origin => {
+      //     this.focused = !!origin;
+      //     this.stateChanges.next();
+      //   });
     }
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
@@ -112,6 +112,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   public ngOnInit(): void {
     this._initForm();
     this._listenGenresChange();
+    this._inputMonitore();
    }
 
   public ngOnDestroy(): void {
@@ -177,6 +178,17 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
       .subscribe((genres: IGenre[]) => {
         this.genreOptions = genres;
       });
+  }
+
+  private _inputMonitore(): void {
+    this.fm.monitor(this.elRef.nativeElement, true)
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe(origin => {
+      this.focused = !!origin;
+      this.stateChanges.next();
+    });
   }
 
 }

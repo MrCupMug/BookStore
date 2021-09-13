@@ -4,9 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GenresComponent } from './components/genres.component';
 
- const routes: Routes = [
-   {path: '', component: GenresComponent},
- ];
+const routes: Routes = [
+  {
+    path: '',
+    component: GenresComponent
+  },
+];
 
 
 @NgModule({

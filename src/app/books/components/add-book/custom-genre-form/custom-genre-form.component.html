@@ -7,11 +7,10 @@
   <input
           [formControl]="genreForm"
           [matChipInputFor]="genreList"
-          [matAutocomplete]="genreAutocomplete">
+          [matAutocomplete]="genreAutocomplete">       
   <mat-autocomplete #genreAutocomplete="matAutocomplete">
     <mat-option *ngFor="let genre of genreOptions" (click)="addGenre(genre.name)">
       {{genre.name}}
     </mat-option>
   </mat-autocomplete>
 </mat-chip-list>
- 

@@ -2,11 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthorsComponent } from './components/authors/authors.component';
+import { AuthorsComponent } from './components/authors/author-list/authors.component';
+import { AuthorInfoComponent } from './components/authors/author-info/author-info.component';
 
- const routes: Routes = [
-   {path: '', component: AuthorsComponent},
- ];
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'list',
+    component: AuthorsComponent
+  },
+  {
+    path: 'author-info',
+    component: AuthorInfoComponent
+  },
+];
 
 
 @NgModule({

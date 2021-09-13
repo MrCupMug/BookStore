@@ -43,7 +43,7 @@ export class BooksComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.dialog.open(BookAdditionalInfoComponent, {
-          data : {
+          data: {
             title: event.title,
             price: event.price,
             image: '../../../../assets/bookjpg',

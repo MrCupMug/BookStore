@@ -57,6 +57,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
     return this.bookForm.get('description');
   }
 
+  public get genreControl(): AbstractControl {
+    return this.bookForm.get('genre');
+  }
+
   public ngOnInit() {
     this.bookForm.get('author').valueChanges
       .pipe(
