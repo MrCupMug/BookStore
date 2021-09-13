@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Optional, Self, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatFormFieldControl } from '@angular/material';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import { Observable, Subject } from 'rxjs';
 import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';

@@ -13,7 +13,8 @@ import { AddBookComponent } from './components/add-book/add-book-form/add-book.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule, MatIconModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { GenreFormComponent } from './components/add-book/genre-form/genre-form.component';
 import { MatChipsModule } from '@angular/material/chips';
