@@ -101,7 +101,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     }
     set value(genres: IGenre[] | null) {
       this.genres = genres;
-      // this.stateChanges.next();
+      // this.`stateChanges`.next();
     }
 
   public ngOnInit(): void {
@@ -120,7 +120,9 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public onTouch: any = () => {};
 
-  public writeValue(value: any): void {}
+  public writeValue(value: any): void {
+    this.genres = [...value];
+  }
 
   public registerOnChange(fn: any): void {
     this.onChange = fn;
