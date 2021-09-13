@@ -57,7 +57,6 @@
       formControlName="genre">
       </app-custom-genre-form>
     </mat-form-field><br>
-    external: {{this.bookForm.get('genre').value | json}}
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>
@@ -67,10 +66,10 @@
       </mat-error>
     </mat-form-field><br>
 
-    <app-size-form
+    <!-- <app-size-form
     formControlName="size"
     [unit]="unitFromServer">
-    </app-size-form>
+    </app-size-form> -->
 
     <button mat-raised-button 
       color="primary"

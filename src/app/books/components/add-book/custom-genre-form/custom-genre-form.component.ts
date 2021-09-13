@@ -17,6 +17,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
       useExisting: CustomGenreFormComponent,
     },
   ],
+  // tslint:disable-next-line: no-host-metadata-property
   host: {
     '[id]': 'id',
     '[attr.aria-describedby]': 'describedBy',
@@ -77,6 +78,10 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
           this.stateChanges.next();
         });
     }
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }
+  autofilled?: boolean;
 
     get empty(): boolean {
       return !this.genreForm.value;
@@ -85,7 +90,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     get shouldLabelFloat(): boolean {
       return this.focused || !this.empty || !!this.genres.length;
     }
-    
+
     @Input()
     get placeholder(): string {
       return this._placeholder;

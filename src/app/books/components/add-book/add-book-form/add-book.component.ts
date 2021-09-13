@@ -27,7 +27,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public bookForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
     price: [null, Validators.required],
-    genre: [[ "Fanfiction", "Realistic fiction" ], Validators.required],
+    genre: [[], Validators.required],
     description: [null, Validators.required],
     author: [null, Validators.required],
     size: [100, Validators.required],
