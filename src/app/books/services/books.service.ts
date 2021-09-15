@@ -25,6 +25,7 @@ export class BooksService {
   }
 
   public addBook(book: Partial<IBook>) {
+    console.log(book);
     return this.http.post(`/api/authors/${book.author_id}/books`, book);
   }
 

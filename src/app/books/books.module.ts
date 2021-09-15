@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
 import { CustomFormFieldComponent } from './components/add-book/custom-form-field/custom-form-field.component';
 import { CustomGenreFormComponent } from './components/add-book/custom-genre-form/custom-genre-form.component';
+import { BookInfoPageComponent } from './components/book-info-page/book-info-page.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CustomGenreFormComponent } from './components/add-book/custom-genre-for
     SizeFormComponent,
     CustomFormFieldComponent,
     CustomGenreFormComponent,
+    BookInfoPageComponent,
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,11 @@
-<div class="author-info-container">
-  <h2>{{ authorInformation.first_name }}</h2>
-  <h2>{{ authorInformation.last_name }}</h2>
-  <div *ngFor="let book of books">
-    {{ book.title }}
+<ng-container *ngIf="author">
+  <div class="info-container">
+    <h2>{{author.first_name}}</h2>
+    <h2>{{author.last_name}}</h2>
   </div>
-</div>
+</ng-container>
+<ng-container *ngIf="books">
+  <div *ngFor="let book of books" class="books-container">
+    <span [routerLink]="['/books', book.id]" class="book-style">{{book.title}}</span>
+  </div>
+</ng-container>

@@ -18,12 +18,11 @@
       <button 
       mat-icon-button 
       [matMenuTriggerFor]="menu" 
-      aria-label="Example icon-button with a menu" 
-      (click)="setAuthorInformation(author)">
+      aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="../author-info">
+        <button mat-menu-item [routerLink]="['./', author.id]">
           Additional info
         </button>
       </mat-menu>

@@ -19,6 +19,8 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public destroy$ = new Subject<void>();
 
+  public bookInfo: IBook;
+
   public books: IBook[] = [];
 
   constructor(
@@ -36,23 +38,8 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
    }
 
-  public showAdditionalInfo(event: IBook) {
-    this.authorsService.getAuthor(event.id)
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((data) => {
-        this.dialog.open(BookAdditionalInfoComponent, {
-          data: {
-            title: event.title,
-            price: event.price,
-            image: '../../../../assets/bookjpg',
-            genre: this.getGenres(event),
-            description: event.description,
-            author: `${data.first_name} ${data.last_name}`,
-          }
-        });
-      });
+  public setBookInfo(event: IBook) {
+    this.bookInfo = event;
   }
 
   public getGenres(event: IBook) {

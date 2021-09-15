@@ -1,7 +1,18 @@
-.author-info-container {
+.info-container {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.info-container h2 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.books-container {
   text-align: center;
 }
 
-.author-info-container h2 {
-  font-size: 2em;
+.book-style {
+  cursor: pointer;
+  outline: none;
 }

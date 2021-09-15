@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors-response.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,6 @@ export class AuthorsService {
     last_name: undefined,
   };
 
-  public authorInformation = new BehaviorSubject<IAuthor>({first_name: 'Gus', last_name: 'Bahringer', id: 1});
-
   constructor(
     private readonly http: HttpClient,
   ) { }
@@ -31,13 +29,12 @@ export class AuthorsService {
       return this.http.get<IAuthor>(`${this.authorUrl}/${authorId}`);
     }
 
-
     public getAuthorByName(name: string) {
       return this.http.get(`${this.authorUrl}?q[first_name_cont]=${name}`);
     }
 
-    public getBookByAuthor(author: IAuthor): Observable<object> {
-      return this.http.get(`${this.authorUrl}/${author.id}/books`);
+    public getBookByAuthor(id: number): Observable<object> {
+      return this.http.get(`${this.authorUrl}/${id}/books`);
     }
 
     public addAuthor(firstName: string, lastName: string): void {
@@ -45,14 +42,6 @@ export class AuthorsService {
         first_name: firstName,
         last_name: lastName,
       }).subscribe();
-    }
-
-    public setAuthorInformation(author: IAuthor): void {
-      this.authorInformation.next(author);
-    }
-
-    public getAuthorInformation(): BehaviorSubject<IAuthor> {
-      return this.authorInformation;
     }
 
 }

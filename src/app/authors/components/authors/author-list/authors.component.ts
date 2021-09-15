@@ -14,7 +14,7 @@ import { AddAuthorComponent } from '../../add-author/add-author.component';
 })
 export class AuthorsComponent implements OnInit, OnDestroy {
 
-  public destroy$: Subject<boolean> = new Subject<boolean>();
+  public destroy$ = new Subject<void>();
 
   public authors: IAuthor[] = [];
 
@@ -30,16 +30,12 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public showAddAuthorModal(): void {
     this.dialog.open(AddAuthorComponent);
-  }
-
-  public setAuthorInformation(author: IAuthor): void {
-    this.authorsService.setAuthorInformation(author);
   }
 
   private _loadAuthors(): void {

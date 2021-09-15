@@ -8,15 +8,10 @@ import { AuthorInfoComponent } from './components/authors/author-info/author-inf
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'list',
-    pathMatch: 'full'
-  },
-  {
-    path: 'list',
     component: AuthorsComponent
   },
   {
-    path: 'author-info',
+    path: ':id',
     component: AuthorInfoComponent
   },
 ];
