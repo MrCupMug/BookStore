@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthorsComponent } from './components/authors/author-list/authors.component';
 import { AuthorInfoComponent } from './components/authors/author-info/author-info.component';
+import { AuthorsResolverService } from './services/authors-resolver.service';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: AuthorInfoComponent
+    component: AuthorInfoComponent,
+    resolve: { author: AuthorsResolverService }
   },
 ];
 
@@ -24,5 +26,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
+  providers: [AuthorsResolverService],
 })
 export class AuthorsRoutingModule { }

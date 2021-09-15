@@ -13,8 +13,6 @@ import { IBook } from 'src/app/books/interfaces/books.interface';
 })
 export class AuthorInfoComponent implements OnInit, OnDestroy {
 
-  public id: number;
-
   public author!: IAuthor;
   public books!: IBook[];
 
@@ -26,8 +24,6 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-
     this._getAuthor();
     this._getBooks();
   }
@@ -37,19 +33,18 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private _getAuthor(): void {
-    this.authorsService.getAuthor(this.id)
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe
-      ((author) => {
-        this.author = author;
-      });
+  private _getAuthor() {
+    this.route.data
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe((author) => {
+      this.author = author.author;
+    })
   }
 
   private _getBooks(): void {
-    this.authorsService.getBookByAuthor(this.id)
+    this.authorsService.getBookByAuthor(this.author.id)
       .pipe(
         takeUntil(this.destroy$),
       )
