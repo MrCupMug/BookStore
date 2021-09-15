@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BooksComponent } from './components/books/books.component';
 import { BookInfoPageComponent } from './components/book-info-page/book-info-page.component';
+import { BooksResolverService } from './services/books-resolver.service';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: BookInfoPageComponent
+    component: BookInfoPageComponent,
+    resolve: { book: BooksResolverService }
   },
 ];
 
@@ -24,5 +26,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
+  providers: [BooksResolverService],
 })
 export class BooksRoutingModule { }
