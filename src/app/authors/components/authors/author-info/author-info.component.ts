@@ -48,8 +48,8 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
       )
-      .subscribe((books) => {
-        this.books = books['books'];
+      .subscribe((books: Record<string, IBook[]>) => {
+        this.books = books.books;
       });
   }
 

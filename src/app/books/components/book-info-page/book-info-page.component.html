@@ -1,7 +1,8 @@
+<a routerLink=""><button mat-raised-button color="primary">Back</button></a>
 <ng-container *ngIf="book">
   <div class="book-container">
     <h2><span class="font-style">Title: </span> {{book.title}}</h2>
-    <h3><span class="font-style">Author: </span>  <span [routerLink]="['../../authors/', book.author_id]" class="author-name">{{ author?.first_name || '-' }} {{ author?.last_name || '-' }}</span></h3>
+    <h3><span class="font-style">Author: </span>  <a [routerLink]="['../../authors/', book.author_id]"><span class="author-name">{{ author?.first_name || '-' }} {{ author?.last_name || '-' }}</span></a></h3>
     <h3><span class="font-style">Price: </span>  {{book.price}}</h3>
     <h3><span class="font-style">Genres: </span>  </h3>
     <ng-container *ngFor="let genre of book.genres">

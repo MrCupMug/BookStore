@@ -48,12 +48,12 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
 
   private _getAuthor(id: number): void {
     this.authorsService.getAuthor(id)
-    .pipe(
-      takeUntil(this.destroy$),
-    )
-    .subscribe((author) => {
-      this.author = author;
-    })
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((author) => {
+        this.author = author;
+      })
   }
 
 }
