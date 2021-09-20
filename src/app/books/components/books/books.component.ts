@@ -5,9 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
-import { BookAdditionalInfoComponent } from '../book-info/book-info.component';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IGenre } from 'src/app/genres/interfaces/genres.interface';
 import { AddBookComponent } from '../add-book/add-book-form/add-book.component';
 
 @Component({
@@ -26,39 +23,30 @@ export class BooksComponent implements OnInit, OnDestroy {
   constructor(
     private readonly booksService: BooksService,
     private readonly dialog: MatDialog,
-    private readonly authorsService: AuthorsService,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this._loadBooks();
-   }
+  }
 
-   ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-   }
+  }
 
-  public setBookInfo(event: IBook) {
+  public setBookInfo(event: IBook): void {
     this.bookInfo = event;
   }
 
-  public getGenres(event: IBook) {
-    return event.genres
-      .reduce((result, current: IGenre) => {
-        result += current.name + ' ';
-
-        return result;
-      }, '')
-      .trim();
-  }
-
-  public showAddBookModal() {
+  public showAddBookModal(): void {
     this.dialog.open(AddBookComponent);
   }
 
   private _loadBooks(): void {
     this.booksService.getBooks()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        )
       .subscribe((data) => {
         this.books = data.books;
       });

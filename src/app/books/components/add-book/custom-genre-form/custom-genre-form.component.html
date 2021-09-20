@@ -1,7 +1,7 @@
 <mat-chip-list #genreList aria-label="Genre selection">
   <mat-chip *ngFor="let genre of genres" [selectable]="selectable"
             [removable]="removable" (removed)="remove(genre)">
-    {{genre}}
+    {{ genre }}
     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
   </mat-chip>
   <input
@@ -10,7 +10,7 @@
           [matAutocomplete]="genreAutocomplete">       
   <mat-autocomplete #genreAutocomplete="matAutocomplete">
     <mat-option *ngFor="let genre of genreOptions" (click)="addGenre(genre.name)">
-      {{genre.name}}
+      {{ genre.name }}
     </mat-option>
   </mat-autocomplete>
 </mat-chip-list>

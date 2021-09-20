@@ -33,7 +33,7 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private _getAuthor() {
+  private _getAuthor() : void {
     this.route.data
     .pipe(
       takeUntil(this.destroy$),

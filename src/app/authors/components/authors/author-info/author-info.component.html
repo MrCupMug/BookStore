@@ -1,8 +1,8 @@
 <a routerLink="/authors"><button mat-raised-button color="primary">Back</button></a>
 <ng-container *ngIf="author">
   <div class="info-container">
-    <h2>{{author.first_name}}</h2>
-    <h2>{{author.last_name}}</h2>
+    <h2>{{ author.first_name }}</h2>
+    <h2>{{ author.last_name }}</h2>
   </div>
 </ng-container>
 <!-- <ng-container *ngIf="books">
@@ -13,6 +13,6 @@
 
 <div class="books-container" *ngIf="books">
   <div *ngFor="let book of books" class="book-style">
-    <a [routerLink]="['/books', book.id]">{{book.title}}</a>
+    <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
   </div>
 </div>

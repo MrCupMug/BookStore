@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AuthorsService } from '../../services/authors.service';
 
 import { IAuthor } from '../../interfaces/authors.interface';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-author',
   templateUrl: './add-author.component.html',
   styleUrls: ['./add-author.component.scss']
 })
-export class AddAuthorComponent implements OnInit {
+export class AddAuthorComponent implements OnInit, OnDestroy {
+
+  public destroy$ = new Subject<void>();
 
   public formsAuthorsInfo: IAuthor = this.authorsService.formsAuthorInfo;
 
@@ -17,11 +21,20 @@ export class AddAuthorComponent implements OnInit {
     private readonly authorsService: AuthorsService,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
+  }
+
+  public ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public addAuthor(firstName: string, lastName: string) {
-    this.authorsService.addAuthor(firstName, lastName);
+    this.authorsService.addAuthor(firstName, lastName)
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe();
   }
 
 }

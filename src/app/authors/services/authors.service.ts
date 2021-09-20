@@ -37,11 +37,11 @@ export class AuthorsService {
       return this.http.get(`${this.authorUrl}/${id}/books`);
     }
 
-    public addAuthor(firstName: string, lastName: string): void {
-      this.http.post(this.authorUrl, {
+    public addAuthor(firstName: string, lastName: string): Observable<object> {
+      return this.http.post(this.authorUrl, {
         first_name: firstName,
         last_name: lastName,
-      }).subscribe();
+      });
     }
 
 }
