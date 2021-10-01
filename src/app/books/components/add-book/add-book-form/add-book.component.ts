@@ -8,6 +8,7 @@ import { GenresService } from 'src/app/genres/services/genres.service';
 import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
 import { IGenre } from 'src/app/genres/interfaces/genres.interface';
+import { titleValidator } from '../../../validators/title-validator';
 
 @Component({
   selector: 'app-add-book',
@@ -25,7 +26,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   public nameOptions: Record<null, object[]>;
 
   public bookForm: FormGroup = this.fb.group({
-    title: [null, Validators.required],
+    title: [null, titleValidator()],
     price: [null, Validators.required],
     genre: [[], Validators.required],
     description: [null, Validators.required],

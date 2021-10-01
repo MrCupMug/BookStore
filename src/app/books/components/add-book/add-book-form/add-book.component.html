@@ -4,8 +4,8 @@
     <mat-form-field class="example-full-width">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title">
-      <mat-error *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched)">
-        Please enter a valid title
+      <mat-error *ngIf="titleControl.errors?.invalidTitle && (titleControl.dirty || titleControl.touched)">
+        Title should be more then 5 characters
       </mat-error>
     </mat-form-field>
 
@@ -21,7 +21,7 @@
           {{ author.first_name + ' ' + author.last_name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-error *ngIf="authorControl.invalid && (authorControl.dirty || authorControl.touched)">
+      <mat-error *ngIf="authorControl.invalid">
         Please enter a valid name
       </mat-error>
     </mat-form-field>
@@ -29,7 +29,7 @@
     <mat-form-field class="example-full-width">
       <mat-label>Price</mat-label>
       <input matInput type="number" formControlName="price">
-      <mat-error *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)">
+      <mat-error *ngIf="priceControl.invalid">
         Please enter a valid price
       </mat-error>
     </mat-form-field>
@@ -51,7 +51,7 @@
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>
       <input matInput type="text" formControlName="description">
-      <mat-error *ngIf="descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched)">
+      <mat-error *ngIf="descriptionControl.invalid">
         Please enter a valid description
       </mat-error>
     </mat-form-field>

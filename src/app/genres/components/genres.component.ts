@@ -12,21 +12,27 @@ import { IGenre } from '../interfaces/genres.interface';
 })
 export class GenresComponent implements OnInit, OnDestroy {
 
+  public flagControl = '';
+
   public destroy$ = new Subject<void>();
 
   public genres: IGenre[] = [];
 
   constructor(
-              private readonly genresService: GenresService,
+    private readonly genresService: GenresService,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this._loadGenres();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public modelChange(change: any): void {
+    console.log(change);
   }
 
   private _loadGenres(): void {

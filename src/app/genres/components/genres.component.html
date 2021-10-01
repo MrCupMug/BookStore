@@ -3,3 +3,17 @@
     <h3>{{ genre.name }}</h3>
   </div>
 </div>
+<div class="validator-container">
+  <input 
+        appFlag 
+        id="validator-test" 
+        type="text" 
+        [(ngModel)]="flagControl" 
+        #flag="ngModel"
+        [ngModelOptions]="{name: 'test'}">
+</div>
+<div class="error" *ngIf="flag.errors?.invalidColor && (flag.touched && flag.dirty)">
+  Are you dumb?
+</div>
+
+{{flag.name}} : {{flag.model}}
