@@ -4,6 +4,18 @@
   </div>
 </div>
 
-<div class="addButton">
+<!-- <div class="addButton">
   <button mat-raised-button color="primary" (click)="showAddBookModal()">Add book</button>
+</div> -->
+
+<div class="bottom-container">
+  <button mat-fab color="primary" (click)="showAddBookModal()">+</button>
+  <mat-paginator class="paginator"
+              [length]="booksMeta.length"
+              [pageSize]="booksMeta.pageSize"
+              [pageIndex]="booksMeta.pageIndex - 1"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="setPagination($event)"
+              aria-label="Select page">
+  </mat-paginator>
 </div>

@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
 import { CustomGenreFormComponent } from './components/add-book/custom-genre-form/custom-genre-form.component';
 import { BookInfoPageComponent } from './components/book-info-page/book-info-page.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { BookInfoPageComponent } from './components/book-info-page/book-info-pag
     MatChipsModule,
     MatIconModule,
     MatSelectModule,
+    MatPaginatorModule,
   ],
   entryComponents: [ AddBookComponent ],
 })
