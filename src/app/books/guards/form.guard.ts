@@ -26,7 +26,17 @@ export class FormGuard implements CanDeactivate<AddBookPageComponent> {
         return true;
       }
 
-      return confirm('Are you sure?');
+      const isUserSure = confirm('Are you sure?');
+
+      if (isUserSure) {
+        component.dialog.closeAll();
+        component.form.reset();
+
+        return true;
+      }
+
+      return false;
+
   }
 
 }
