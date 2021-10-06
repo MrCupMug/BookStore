@@ -34,11 +34,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- <app-genre-form
-      formControlName="genre"
-      [fetchFn]="fetchGenres$">
-    </app-genre-form> -->
-
     <mat-form-field class="custom-genre">
       <app-custom-genre-form
       placeholder="Genres"
@@ -56,17 +51,19 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- <app-size-form
-    formControlName="size"
-    [unit]="unitFromServer">
-    </app-size-form> -->
-
     <button mat-raised-button 
       color="primary"
       mat-dialog-close
       type="submit"
       [disabled]="bookForm.invalid">
       Add book
+    </button>
+
+    <button class="form-cancel-button"
+      mat-raised-button
+      color="primary"
+      routerLink="../">
+      Cancel
     </button>
   </form>
 </div>

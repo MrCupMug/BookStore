@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IBook } from '../../interfaces/books.interface';
+import { IBook } from '../../../interfaces/books.interface';
 
 @Component({
   selector: 'app-book-info-page',
@@ -26,7 +26,6 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
     this._getBook();
     this._getAuthor(this.book.author_id);
   }

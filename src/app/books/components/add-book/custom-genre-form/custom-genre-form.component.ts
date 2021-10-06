@@ -81,7 +81,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
   }
-  autofilled?: boolean;
+  // autofilled?: boolean;
 
     get empty(): boolean {
       return !this.genreForm.value;
@@ -126,8 +126,10 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public onTouch: any = () => {};
 
-  public writeValue(value: any): void {
-    this.genres = [...value];
+  public writeValue(value: IGenre[] | null): void {
+    this.genres = !!value
+      ? [...value]
+      : [];
   }
 
   public registerOnChange(fn: any): void {

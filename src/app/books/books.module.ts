@@ -6,7 +6,7 @@ import { BooksRoutingModule } from './books-routing.module';
 
 import { CardModule } from '../card/card.module';
 
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { AddBookComponent } from './components/add-book/add-book-form/add-book.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,19 +17,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
-import { SizeFormComponent } from './components/add-book/size-form/size-form.component';
 import { CustomGenreFormComponent } from './components/add-book/custom-genre-form/custom-genre-form.component';
-import { BookInfoPageComponent } from './components/book-info-page/book-info-page.component';
+import { BookInfoPageComponent } from './components/add-book/book-info-page/book-info-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
+import { FormService } from './services/form.service';
+import { FormGuard } from './guards/form.guard';
 
 
 @NgModule({
   declarations: [
     BooksComponent,
     AddBookComponent,
-    SizeFormComponent,
     CustomGenreFormComponent,
     BookInfoPageComponent,
+    AddBookPageComponent,
   ],
   imports: [
     CommonModule,
@@ -48,5 +50,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule,
   ],
   entryComponents: [ AddBookComponent ],
+  providers: [
+    FormService,
+    FormGuard,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS,
+    useValue:
+    {hasBackdrop: true, disableClose: true, closeOnNavigation: true}}
+  ]
 })
 export class BooksModule { }

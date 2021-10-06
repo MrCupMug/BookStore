@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
-import { AddBookComponent } from '../add-book/add-book-form/add-book.component';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBooksResponse } from '../../interfaces/books-response.interface';
@@ -35,25 +34,14 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly booksService: BooksService,
-    private readonly dialog: MatDialog,
+    // private readonly dialog: MatDialog,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-  ) { }
+  ) {
+   }
 
   public ngOnInit() {
-    this.activatedRoute
-      .queryParams
-      .pipe(
-        switchMap((data) => this._getBooks(data.limit, data.page)),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((data: IBooksResponse) => {
-        this.books = data.books;
-        this.booksMeta.length = data.meta.records;
-        this.booksMeta.pageSize = data.meta.limit;
-        this.booksMeta.pageIndex = data.meta.page;
-      });
-
+    this._loadBooks();
   }
 
   public ngOnDestroy() {
@@ -79,12 +67,27 @@ export class BooksComponent implements OnInit, OnDestroy {
       });
   }
 
-  public showAddBookModal(): void {
-    this.dialog.open(AddBookComponent);
-  }
+  // public showAddBookModal(): void {
+  //   this.dialog.open(AddBookComponent);
+  // }
 
   private _getBooks(limit: number, page: number): Observable<IBooksResponse> {
     return this.booksService.getBooksWithParams(limit, page);
+  }
+
+  private _loadBooks(): void {
+    this.activatedRoute
+    .queryParams
+    .pipe(
+      switchMap((data) => this._getBooks(data.limit, data.page)),
+      takeUntil(this.destroy$),
+    )
+    .subscribe((data: IBooksResponse) => {
+      this.books = data.books;
+      this.booksMeta.length = data.meta.records;
+      this.booksMeta.pageSize = data.meta.limit;
+      this.booksMeta.pageIndex = data.meta.page;
+    });
   }
 
 }
