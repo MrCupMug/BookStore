@@ -17,8 +17,6 @@ export class FormGuard implements CanDeactivate<AddBookPageComponent> {
       const formValueArray = Object.values(component.form.value);
       const notEmpty = formValueArray.some((el) => !!el);
 
-      console.log(Object.values(component.form.value));
-
       if (!notEmpty) {
         component.dialog.closeAll();
         component.form.reset();

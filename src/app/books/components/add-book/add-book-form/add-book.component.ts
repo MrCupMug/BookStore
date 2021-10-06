@@ -4,13 +4,12 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { debounceTime, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
-import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { GenresService } from 'src/app/genres/services/genres.service';
+import { AuthorsService } from '../../../../authors/services/authors.service';
+import { GenresService } from '../../../../genres/services/genres.service';
 import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
-import { IGenre } from 'src/app/genres/interfaces/genres.interface';
-import { FormService } from 'src/app/books/services/form.service';
-import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
+import { IGenre } from '../../../../genres/interfaces/genres.interface';
+import { FormService } from '../../../services/form.service';
 import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
 
 @Component({
@@ -22,13 +21,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public bookForms: FormGroup;
 
-  public unitFromServer = 'm';
-
   public genreValue: IGenre;
 
   public destroy$ = new Subject<void>();
 
-  public nameOptions: Record<null, object[]>;
+  public nameOptions: Record<string, any>;
 
   public fetchGenres$!: any;
 
@@ -131,7 +128,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$),
     )
-    .subscribe((authorsObject: Record<string, object[]>) => {
+    .subscribe((authorsObject: any) => {
       this.nameOptions = authorsObject.authors;
     });
   }
