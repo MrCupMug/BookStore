@@ -37,17 +37,12 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public destroy$ = new Subject<void>();
 
-  // Dunno why th I need it to be here
   public stateChanges = new Subject<void>();
 
-  // Dunno why th I need it to be here
   public id = `app-custom-genre-form-${CustomGenreFormComponent.nextId++}`;
 
-  // Variables for chips
-  // public visible = true;
   public selectable = true;
   public removable = true;
-  // public addOnBlur = true;
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   public focused = false;
@@ -69,19 +64,10 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   ) {
       this.ngControl.valueAccessor = this;
 
-      // fm.monitor(elRef.nativeElement, true)
-      //   .pipe(
-      //     takeUntil(this.destroy$),
-      //   )
-      //   .subscribe(origin => {
-      //     this.focused = !!origin;
-      //     this.stateChanges.next();
-      //   });
     }
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
   }
-  // autofilled?: boolean;
 
     get empty(): boolean {
       return !this.genreForm.value;
@@ -106,7 +92,6 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     }
     set value(genres: IGenre[] | null) {
       this.genres = genres;
-      // this.`stateChanges`.next();
     }
 
   public ngOnInit(): void {
@@ -140,13 +125,13 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     this.onTouch = fn;
   }
 
-  setDescribedByIds(ids: string[]): void {
+  public setDescribedByIds(ids: string[]): void {
     this.describedBy = ids.join(' ');
   }
 
-  onContainerClick(event: MouseEvent): void {}
+  public onContainerClick(event: MouseEvent): void {}
 
-  remove(genre: IGenre): void {
+  public remove(genre: IGenre): void {
     const index = this.genres.indexOf(genre);
 
     if (index >= 0) {

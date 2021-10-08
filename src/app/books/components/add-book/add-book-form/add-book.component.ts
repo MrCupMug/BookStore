@@ -10,7 +10,8 @@ import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
 import { FormService } from '../../../services/form.service';
-import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
+import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
+import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
 
 @Component({
   selector: 'app-add-book',
@@ -21,13 +22,13 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public bookForms: FormGroup;
 
-  public genreValue: IGenre;
+  public genreValue: IGenre[];
 
   public destroy$ = new Subject<void>();
 
-  public nameOptions: Record<string, any>;
+  public nameOptions: Array<object>;
 
-  public fetchGenres$!: any;
+  public fetchGenres$: (text: string) => Observable<IGenre[]>;
 
   constructor(
     private readonly authorsService: AuthorsService,
@@ -61,8 +62,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+
     this.bookForms = this.formService.loadForm();
-    this.fetchGenres$ = this.fetchGenres();
+    this.fetchGenres$ = this.fetchGenres.bind(this);
     this._loadAuthors();
   }
 
@@ -71,15 +73,16 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public fetchGenres(): (text: string) => Observable<Record<string, any>> {
-    return (text: string) => {
-      return this.genresService.getGenreByName(text)
-        .pipe(
-          map((response: Record<string, any>) => {
-            return response.genres;
-          })
-        );
-    };
+  public fetchGenres(text: string): Observable<IGenre[]> {
+
+    return this.genresService.getGenreByName(text)
+      .pipe(
+        map((response: IGenresResponse) => {
+
+          return response.genres;
+        })
+      );
+
   }
 
   public getGenreValue(event: string): void {
@@ -87,7 +90,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     .pipe(
       takeUntil(this.destroy$),
     )
-    .subscribe((genreObject: Record<string, any>) => {
+    .subscribe((genreObject: IGenresResponse) => {
       this.genreValue = genreObject.genres;
     });
   }
@@ -128,7 +131,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$),
     )
-    .subscribe((authorsObject: any) => {
+    .subscribe((authorsObject: IAuthorsResponse) => {
       this.nameOptions = authorsObject.authors;
     });
   }
