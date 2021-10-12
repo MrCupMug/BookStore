@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Filter</h1>
+<div class="filter-container" mat-dialog-content [formGroup]="filterForm">
+  <mat-form-field class="filter-form">
+    <mat-label>Author</mat-label>
+    <input
+         matInput 
+         type="text" 
+         formControlName="author"
+         [matAutocomplete]="nameAuto">
+    <mat-autocomplete #nameAuto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let author of nameOptions" [value]="author">
+        {{ author.first_name + ' ' + author.last_name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field><br>
+  <mat-form-field class="filter-form">
+    <mat-label>Genre</mat-label>
+    <input 
+        matInput 
+        type="text" 
+        formControlName="genre"
+        [matAutocomplete]="genreAuto">
+    <mat-autocomplete #genreAuto="matAutocomplete">
+      <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">
+        {{ genre.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="min-price">
+    <mat-label>min price</mat-label>
+    <input type="number" matInput formControlName="minPrice">
+    <mat-error>
+      pidaras. pidarasina
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="max-price">
+    <mat-label>max price</mat-label>
+    <input type="number" matInput formControlName="maxPrice">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button>Set filter options</button>
+</div>

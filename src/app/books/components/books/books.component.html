@@ -1,15 +1,12 @@
 <div class="container">
-  <div *ngFor="let book of books" class="book-list">
-    <app-card [book]="book" (bookInfo)="setBookInfo($event)" [routerLink]="['./', book.id]"></app-card>
+  <div *ngFor="let book of (booksAsync | async)?.books" class="book-list">
+    <app-card class="book-card" [book]="book" (bookInfo)="setBookInfo($event)" [routerLink]="['./', book.id]"></app-card>
   </div>
 </div>
 
-<!-- <div class="addButton">
-  <button mat-raised-button color="primary" (click)="showAddBookModal()">Add book</button>
-</div> -->
-
 <div class="bottom-container">
-  <button mat-fab color="primary" routerLink="test">+</button>
+  <button class="fab-button" mat-fab color="primary" routerLink="test">+</button>
+  <button class="fab-button" mat-fab color="primary" (click)="openFilter()">Filter</button>
   <mat-paginator class="paginator"
               [length]="booksMeta.length"
               [pageSize]="booksMeta.pageSize"

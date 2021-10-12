@@ -1,0 +1,25 @@
+.filter-container {
+  width: 250px;
+}
+
+.filter-form {
+  width: 90%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.min-price {
+  width: 35%;
+  float: left;
+  margin-right: 10px;
+}
+
+.max-price {
+  width: 35%;
+  float: right;
+  margin-right: 27px;
+}

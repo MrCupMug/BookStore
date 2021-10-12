@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
@@ -8,6 +7,8 @@ import { IBook } from '../../interfaces/books.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBooksResponse } from '../../interfaces/books-response.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { FilterComponent } from '../filter/filter.component';
 
 @Component({
   selector: 'app-books',
@@ -22,6 +23,8 @@ export class BooksComponent implements OnInit, OnDestroy {
     pageIndex: 1,
   };
 
+  public booksAsync: Observable<IBooksResponse>;
+
   public pageSizeOptions = [5, 10, 15];
 
   public pageEvent: PageEvent;
@@ -30,23 +33,28 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public bookInfo: IBook;
 
-  public books: IBook[] = [];
+  // public books: IBook[] = [];
 
   constructor(
-    private readonly booksService: BooksService,
-    // private readonly dialog: MatDialog,
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute,
+    private readonly _booksService: BooksService,
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _dialog: MatDialog,
   ) {
    }
 
   public ngOnInit() {
     this._loadBooks();
+    // this.testAsync = this._booksService.getBooksWithParams(this.booksMeta.pageSize, this.booksMeta.pageIndex);
   }
 
   public ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public openFilter(): void {
+    this._dialog.open(FilterComponent);
   }
 
   public setBookInfo(event: IBook): void {
@@ -59,31 +67,28 @@ export class BooksComponent implements OnInit, OnDestroy {
       page: event.pageIndex + 1,
     };
 
-    this.router.navigate([],
+    this._router.navigate([],
       {
-        relativeTo: this.activatedRoute,
+        relativeTo: this._activatedRoute,
         queryParams,
         queryParamsHandling: 'merge',
       });
   }
 
-  // public showAddBookModal(): void {
-  //   this.dialog.open(AddBookComponent);
-  // }
-
   private _getBooks(limit: number, page: number): Observable<IBooksResponse> {
-    return this.booksService.getBooksWithParams(limit, page);
+    return this._booksService.getBooksWithParams(limit, page);
   }
 
   private _loadBooks(): void {
-    this.activatedRoute
+    this._activatedRoute
     .queryParams
     .pipe(
       switchMap((data) => this._getBooks(data.limit, data.page)),
       takeUntil(this.destroy$),
     )
     .subscribe((data: IBooksResponse) => {
-      this.books = data.books;
+      // this.books = data.books;
+      this.booksAsync = this._booksService.getBooksWithParams(data.meta.limit, data.meta.page);
       this.booksMeta.length = data.meta.records;
       this.booksMeta.pageSize = data.meta.limit;
       this.booksMeta.pageIndex = data.meta.page;

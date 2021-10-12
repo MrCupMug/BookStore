@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { from, of, Subject } from 'rxjs';
-import { delay, map, mergeAll, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { GenresService } from '../services/genres.service';
 import { IGenre } from '../interfaces/genres.interface';
@@ -11,8 +11,6 @@ import { IGenre } from '../interfaces/genres.interface';
   styleUrls: ['./genres.component.scss']
 })
 export class GenresComponent implements OnInit, OnDestroy {
-
-  public flagControl = '';
 
   public destroy$ = new Subject<void>();
 
@@ -29,10 +27,6 @@ export class GenresComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public modelChange(change: any): void {
-    console.log(change);
   }
 
   private _loadGenres(): void {

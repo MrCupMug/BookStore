@@ -169,13 +169,13 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   private _inputMonitore(): void {
     this.fm.monitor(this.elRef.nativeElement, true)
-    .pipe(
-      takeUntil(this.destroy$),
-    )
-    .subscribe(origin => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe(origin => {
+        this.focused = !!origin;
+        this.stateChanges.next();
+      });
   }
 
 }

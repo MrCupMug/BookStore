@@ -23,6 +23,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
 import { FormService } from './services/form.service';
 import { FormGuard } from './guards/form.guard';
+import { FilterComponent } from './components/filter/filter.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { FormGuard } from './guards/form.guard';
     CustomGenreFormComponent,
     BookInfoPageComponent,
     AddBookPageComponent,
+    FilterComponent,
   ],
   imports: [
     CommonModule,
@@ -48,8 +51,9 @@ import { FormGuard } from './guards/form.guard';
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatSliderModule,
   ],
-  entryComponents: [ AddBookComponent ],
+  entryComponents: [ AddBookComponent, FilterComponent ],
   providers: [
     FormService,
     FormGuard,
