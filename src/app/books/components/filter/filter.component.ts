@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
@@ -16,13 +16,6 @@ import { GenresService } from 'src/app/genres/services/genres.service';
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit, OnDestroy {
-
-  public filtrationData = {
-    author: undefined,
-    genre: undefined,
-    minPrice: undefined,
-    maxPrice: undefined,
-  };
 
   public nameOptions: IAuthor[];
   public genreOptions: IGenre[];
@@ -64,15 +57,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   public emitFiltration(): void {
-    console.log('call');
-
-    this.filtrationData.author = this.filterForm.get('author').value;
-    this.filtrationData.genre = this.filterForm.get('genre').value;
-    this.filtrationData.minPrice =  this.filterForm.get('price').get('minPrice').value;
-    this.filtrationData.maxPrice = this.filterForm.get('price').get('maxPrice').value;
-
-    this._dialog.close({data: this.filtrationData});
-
+    this._dialog.close(this.filterForm);
   }
 
   public displayFn(author): string {
@@ -111,7 +96,11 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   private _priceValidator(): ValidatorFn {
     return (group: FormGroup): ValidationErrors | null => {
-      if (group.get('minPrice').value > group.get('maxPrice').value) {
+
+      const minPrice = group.get('minPrice');
+      const maxPrice = group.get('maxPrice');
+
+      if (minPrice.value > maxPrice.value) {
         return {invalidPrice: 'invalid price filter',
                 isValid: true};
       }

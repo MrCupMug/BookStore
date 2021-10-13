@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IBooksResponse } from '../../interfaces/books-response.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterComponent } from '../filter/filter.component';
+import { AuthorsService } from 'src/app/authors/services/authors.service';
 
 @Component({
   selector: 'app-books',
@@ -25,7 +26,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public dialogRef: any;
 
-  public booksAsync: Observable<IBooksResponse>;
+  public booksAsync: Observable<any>;
 
   public pageSizeOptions = [5, 10, 15];
 
@@ -37,6 +38,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly _booksService: BooksService,
+    private readonly _authorsService: AuthorsService,
     private readonly _router: Router,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _dialog: MatDialog,
@@ -97,7 +99,14 @@ export class BooksComponent implements OnInit, OnDestroy {
   private _listenFiltration(): void {
     this.dialogRef.afterClosed()
       .subscribe((filtrationData) => {
-        console.log(filtrationData);
+
+        console.log(filtrationData.valid);
+
+        if (filtrationData?.controls?.author.value) {
+          this.booksAsync = this._authorsService.getBookByAuthor(filtrationData?.controls.author.value.id);
+        } else {
+          this.booksAsync = this._booksService.getFilteredBooks(filtrationData);
+        }
       });
   }
 

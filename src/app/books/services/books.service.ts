@@ -31,6 +31,18 @@ export class BooksService {
     return this.http.get<IBooksResponse>(this.booksUrl, {params});
   }
 
+  public getFilteredBooks(filteredParams: any): Observable<IBooksResponse> {
+    const params = new HttpParams({
+      fromObject: {
+        'q[genres_name_cont]': filteredParams?.controls.genre || '',
+        'q[price_gteq]': filteredParams?.controls.minPrice || 1,
+        'q[price_lteq]': filteredParams?.controls.maxPrice || 99999,
+      }
+    });
+
+    return this.http.get<IBooksResponse>(this.booksUrl, {params});
+  }
+
   public getBookById(id: number): Observable<IBook> {
       return this.http.get<IBook>(`${this.booksUrl}/${id}`);
   }
