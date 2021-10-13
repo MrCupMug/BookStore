@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Filter</h1>
+<h1 class="center-elements" mat-dialog-title>Filter</h1>
 <div class="filter-container" mat-dialog-content [formGroup]="filterForm">
   <mat-form-field class="filter-form">
     <mat-label>Author</mat-label>
@@ -26,19 +26,23 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field class="min-price">
-    <mat-label>min price</mat-label>
-    <input type="number" matInput formControlName="minPrice">
-    <mat-error>
-      pidaras. pidarasina
+
+  <div formGroupName="price" class="price-form">
+    <mat-form-field class="min-price">
+      <mat-label>min price</mat-label>
+      <input type="number" matInput formControlName="minPrice">
+    </mat-form-field>
+    <mat-form-field class="max-price">
+      <mat-label>max price</mat-label>
+      <input type="number" matInput formControlName="maxPrice">
+    </mat-form-field>
+    <mat-error class="price-error" *ngIf="filterForm.get('price')?.errors?.isValid">
+      {{filterForm?.get('price')?.errors?.invalidPrice}}
     </mat-error>
-  </mat-form-field>
-  <mat-form-field class="max-price">
-    <mat-label>max price</mat-label>
-    <input type="number" matInput formControlName="maxPrice">
-  </mat-form-field>
+  </div>
+
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
-  <button mat-button>Set filter options</button>
+  <button mat-button (click)="emitFiltration()">Set filter options</button>
 </div>

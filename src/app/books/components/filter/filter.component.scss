@@ -1,5 +1,6 @@
 .filter-container {
   width: 250px;
+  text-align: center;
 }
 
 .filter-form {
@@ -13,13 +14,24 @@ input::-webkit-inner-spin-button {
 }
 
 .min-price {
-  width: 35%;
+  width: 40%;
   float: left;
-  margin-right: 10px;
 }
 
 .max-price {
-  width: 35%;
+  width: 40%;
   float: right;
-  margin-right: 27px;
+}
+
+.price-form {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.price-error {
+  text-align: center;
+}
+
+.center-elements {
+  text-align: center;
 }

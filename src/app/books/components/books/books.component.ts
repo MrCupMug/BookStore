@@ -23,6 +23,8 @@ export class BooksComponent implements OnInit, OnDestroy {
     pageIndex: 1,
   };
 
+  public dialogRef: any;
+
   public booksAsync: Observable<IBooksResponse>;
 
   public pageSizeOptions = [5, 10, 15];
@@ -32,8 +34,6 @@ export class BooksComponent implements OnInit, OnDestroy {
   public destroy$ = new Subject<void>();
 
   public bookInfo: IBook;
-
-  // public books: IBook[] = [];
 
   constructor(
     private readonly _booksService: BooksService,
@@ -45,7 +45,6 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this._loadBooks();
-    // this.testAsync = this._booksService.getBooksWithParams(this.booksMeta.pageSize, this.booksMeta.pageIndex);
   }
 
   public ngOnDestroy() {
@@ -54,7 +53,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   public openFilter(): void {
-    this._dialog.open(FilterComponent);
+    this.dialogRef = this._dialog.open(FilterComponent);
+    this._listenFiltration();
   }
 
   public setBookInfo(event: IBook): void {
@@ -87,12 +87,18 @@ export class BooksComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     )
     .subscribe((data: IBooksResponse) => {
-      // this.books = data.books;
       this.booksAsync = this._booksService.getBooksWithParams(data.meta.limit, data.meta.page);
       this.booksMeta.length = data.meta.records;
       this.booksMeta.pageSize = data.meta.limit;
       this.booksMeta.pageIndex = data.meta.page;
     });
+  }
+
+  private _listenFiltration(): void {
+    this.dialogRef.afterClosed()
+      .subscribe((filtrationData) => {
+        console.log(filtrationData);
+      });
   }
 
 }
