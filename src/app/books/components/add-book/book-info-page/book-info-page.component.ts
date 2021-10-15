@@ -1,5 +1,6 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,6 +24,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly authorsService: AuthorsService,
+    private readonly _location: Location,
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public goBack(): void {
+    this._location.back();
   }
 
   private _getBook(): void {

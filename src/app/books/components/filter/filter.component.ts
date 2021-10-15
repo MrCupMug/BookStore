@@ -23,11 +23,11 @@ export class FilterComponent implements OnInit, OnDestroy {
   public destroy$ = new Subject<void>();
 
   public filterForm = this._fb.group({
-    author: [null, Validators.required],
-    genre: [null, Validators.required],
+    author: [null],
+    genre: [null],
     price: this._fb.group({
-      minPrice: [null, Validators.required],
-      maxPrice: [null, Validators.required],
+      minPrice: [null],
+      maxPrice: [null],
     }, {validators: this._priceValidator()})
   });
 
@@ -57,7 +57,20 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   public emitFiltration(): void {
-    this._dialog.close(this.filterForm);
+    let queryParams = {
+      author: this.filterForm?.controls?.author?.value?.id,
+      'q[genres_name_cont]': this.filterForm.controls.genre.value,
+      'q[price_gteq]': this.filterForm.controls.price.get('minPrice').value,
+      'q[price_lteq]': this.filterForm.controls.price.get('maxPrice').value,
+    };
+
+    for (let param in queryParams) {
+      if (!queryParams[param]) {
+        delete queryParams[param];
+      }
+    }
+
+    this._dialog.close(queryParams);
   }
 
   public displayFn(author): string {

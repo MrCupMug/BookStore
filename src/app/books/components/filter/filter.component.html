@@ -44,5 +44,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
-  <button mat-button (click)="emitFiltration()">Set filter options</button>
+  <button mat-button 
+          (click)="emitFiltration()"
+          [disabled]="filterForm.invalid">Set filter options</button>
 </div>

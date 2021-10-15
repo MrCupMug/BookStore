@@ -1,4 +1,4 @@
-<a routerLink=""><button mat-raised-button color="primary">Back</button></a>
+<button mat-raised-button color="primary" (click)="goBack()">Back</button>
 <ng-container *ngIf="book">
   <div class="book-container">
     <h2><span class="font-style">Title: </span> {{ book.title }}</h2>

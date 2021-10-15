@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
@@ -10,6 +10,7 @@ import { IBooksResponse } from '../../interfaces/books-response.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterComponent } from '../filter/filter.component';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
+import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
 
 @Component({
   selector: 'app-books',
@@ -77,36 +78,44 @@ export class BooksComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _getBooks(limit: number, page: number): Observable<IBooksResponse> {
-    return this._booksService.getBooksWithParams(limit, page);
+  private _getBooks(params: any): Observable<IBooksResponse> {
+      return this._booksService.getBooksWithParams(params);
   }
 
   private _loadBooks(): void {
     this._activatedRoute
     .queryParams
-    .pipe(
-      switchMap((data) => this._getBooks(data.limit, data.page)),
-      takeUntil(this.destroy$),
-    )
-    .subscribe((data: IBooksResponse) => {
-      this.booksAsync = this._booksService.getBooksWithParams(data.meta.limit, data.meta.page);
-      this.booksMeta.length = data.meta.records;
-      this.booksMeta.pageSize = data.meta.limit;
-      this.booksMeta.pageIndex = data.meta.page;
-    });
+      .pipe(
+        tap((params) => {
+
+          if (params.author) {
+            this.booksAsync = this._authorsService.getBookByAuthor(params.author, params);
+          } else {
+            this.booksAsync = this._getBooks(params);
+          }
+        }),
+        switchMap((data) => this._getBooks(data)),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((data: IBooksResponse) => {
+        console.log(data);
+        this.booksMeta.length = data.meta.records;
+        this.booksMeta.pageSize = data.meta.limit;
+        this.booksMeta.pageIndex = data.meta.page;
+      });
   }
 
   private _listenFiltration(): void {
     this.dialogRef.afterClosed()
       .subscribe((filtrationData) => {
 
-        console.log(filtrationData.valid);
+        this._router.navigate([],
+          {
+            relativeTo: this._activatedRoute,
+            queryParams: filtrationData,
+            queryParamsHandling: 'merge',
+          });
 
-        if (filtrationData?.controls?.author.value) {
-          this.booksAsync = this._authorsService.getBookByAuthor(filtrationData?.controls.author.value.id);
-        } else {
-          this.booksAsync = this._booksService.getFilteredBooks(filtrationData);
-        }
       });
   }
 
