@@ -57,11 +57,14 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   public emitFiltration(): void {
+
+    const control = this.filterForm?.controls;
+
     let queryParams = {
-      author: this.filterForm?.controls?.author?.value?.id,
-      'q[genres_name_cont]': this.filterForm.controls.genre.value,
-      'q[price_gteq]': this.filterForm.controls.price.get('minPrice').value,
-      'q[price_lteq]': this.filterForm.controls.price.get('maxPrice').value,
+      author: control?.author?.value?.id,
+      genre: control.genre.value,
+      minPrice: control.price.get('minPrice').value,
+      maxPrice: control.price.get('maxPrice').value,
     };
 
     for (let param in queryParams) {

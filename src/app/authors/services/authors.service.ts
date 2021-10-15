@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors-response.interface';
 import { Observable } from 'rxjs';
-import { IBook } from 'src/app/books/interfaces/books.interface';
 import { IBooksResponse } from 'src/app/books/interfaces/books-response.interface';
 
 @Injectable({
@@ -41,7 +40,7 @@ export class AuthorsService {
         const params = new HttpParams({
           fromObject: {
             limit: paginationParams.limit,
-            // page: paginationParams.page,
+            page: paginationParams.page,
           },
         });
 

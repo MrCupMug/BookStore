@@ -86,19 +86,14 @@ export class BooksComponent implements OnInit, OnDestroy {
     this._activatedRoute
     .queryParams
       .pipe(
-        tap((params) => {
-
-          if (params.author) {
-            this.booksAsync = this._authorsService.getBookByAuthor(params.author, params);
-          } else {
-            this.booksAsync = this._getBooks(params);
-          }
+        switchMap((data) => {
+          this.booksAsync = this._getBooks(data);
+          return this._getBooks(data);
         }),
-        switchMap((data) => this._getBooks(data)),
         takeUntil(this.destroy$),
       )
       .subscribe((data: IBooksResponse) => {
-        console.log(data);
+        // console.log(data);
         this.booksMeta.length = data.meta.records;
         this.booksMeta.pageSize = data.meta.limit;
         this.booksMeta.pageIndex = data.meta.page;
