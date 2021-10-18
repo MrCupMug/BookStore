@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
-import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
-import { IGenre } from 'src/app/genres/interfaces/genres.interface';
-import { GenresService } from 'src/app/genres/services/genres.service';
+import { IAuthorsResponse } from '../../../authors/interfaces/authors-response.interface';
+import { IAuthor } from '../../../authors/interfaces/authors.interface';
+import { AuthorsService } from '../../../authors/services/authors.service';
+import { IGenresResponse } from '../../../genres/interfaces/genres-response.interface';
+import { IGenre } from '../../../genres/interfaces/genres.interface';
+import { GenresService } from '../../../genres/services/genres.service';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-filter',
@@ -22,23 +23,17 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   public destroy$ = new Subject<void>();
 
-  public filterForm = this._fb.group({
-    author: [null],
-    genre: [null],
-    price: this._fb.group({
-      minPrice: [null],
-      maxPrice: [null],
-    }, {validators: this._priceValidator()})
-  });
+  public filterForm: FormGroup;
 
   constructor(
-    private readonly _fb: FormBuilder,
+    private readonly _filterService: FilterService,
     private readonly _authorsService: AuthorsService,
     private readonly _genreService: GenresService,
     private readonly _dialog: MatDialogRef<FilterComponent>,
   ) { }
 
   public ngOnInit(): void {
+    this._loadFilterForm();
     this._loadAuthors();
     this._loadGenres();
   }
@@ -46,14 +41,6 @@ export class FilterComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public get minPrice(): AbstractControl {
-    return this.filterForm?.get('minPrice');
-  }
-
-  public get maxPrice(): AbstractControl {
-    return this.filterForm?.get('maxPrice');
   }
 
   public emitFiltration(): void {
@@ -68,7 +55,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     };
 
     for (let param in queryParams) {
-      if (!queryParams[param]) {
+      if ( !queryParams[param] ) {
         delete queryParams[param];
       }
     }
@@ -110,19 +97,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _priceValidator(): ValidatorFn {
-    return (group: FormGroup): ValidationErrors | null => {
-
-      const minPrice = group.get('minPrice');
-      const maxPrice = group.get('maxPrice');
-
-      if (minPrice.value > maxPrice.value) {
-        return {invalidPrice: 'invalid price filter',
-                isValid: true};
-      }
-
-      return null;
-    };
+  private _loadFilterForm(): void {
+    this.filterForm = this._filterService.filterForm;
   }
 
 }

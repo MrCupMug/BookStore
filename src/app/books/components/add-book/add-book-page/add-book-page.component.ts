@@ -1,6 +1,5 @@
-import { T } from '@angular/cdk/keycodes';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -9,7 +8,6 @@ import { takeUntil } from 'rxjs/operators';
 import { FormService } from '../../../services/form.service';
 
 import { AddBookComponent } from '../add-book-form/add-book.component';
-
 
 @Component({
   selector: 'app-add-book-page',
@@ -22,12 +20,12 @@ export class AddBookPageComponent implements OnInit, OnDestroy {
 
   public destroy$ = new Subject<void>();
 
-  public dialog = this.dialogWindow;
+  public dialog = this._dialogWindow;
 
   constructor(
-    private readonly dialogWindow: MatDialog,
-    private readonly router: Router,
-    private readonly formService: FormService,
+    private readonly _dialogWindow: MatDialog,
+    private readonly _router: Router,
+    private readonly _formService: FormService,
   ) { }
 
   public get form(): FormGroup {
@@ -35,7 +33,7 @@ export class AddBookPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.bookForm = this.formService.loadForm();
+    this.bookForm = this._formService.loadForm();
     this.dialog.open(AddBookComponent);
     this._afterClose();
   }
@@ -51,7 +49,7 @@ export class AddBookPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => {
-        this.router.navigate(['../']);
+        this._router.navigate(['../']);
       });
   }
 

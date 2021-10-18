@@ -24,7 +24,8 @@ import { AddBookPageComponent } from './components/add-book/add-book-page/add-bo
 import { FormService } from './services/form.service';
 import { FormGuard } from './guards/form.guard';
 import { FilterComponent } from './components/filter/filter.component';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
+import { FilterService } from './services/filter.service';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import {MatSliderModule} from '@angular/material/slider';
   providers: [
     FormService,
     FormGuard,
+    FilterService,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS,
     useValue:
     {hasBackdrop: true, disableClose: true, closeOnNavigation: true}}

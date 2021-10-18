@@ -59,8 +59,8 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
-    private fm: FocusMonitor,
-    private elRef: ElementRef<HTMLElement>
+    private _fm: FocusMonitor,
+    private _elRef: ElementRef<HTMLElement>
   ) {
       this.ngControl.valueAccessor = this;
 
@@ -102,7 +102,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public ngOnDestroy(): void {
     this.stateChanges.complete();
-    this.fm.stopMonitoring(this.elRef.nativeElement);
+    this._fm.stopMonitoring(this._elRef.nativeElement);
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -168,11 +168,11 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   }
 
   private _inputMonitore(): void {
-    this.fm.monitor(this.elRef.nativeElement, true)
+    this._fm.monitor(this._elRef.nativeElement, true)
       .pipe(
         takeUntil(this.destroy$),
       )
-      .subscribe(origin => {
+      .subscribe((origin) => {
         this.focused = !!origin;
         this.stateChanges.next();
       });

@@ -11,7 +11,6 @@ import { IBook } from '../../../interfaces/books.interface';
 @Component({
   selector: 'app-book-info-page',
   templateUrl: './book-info-page.component.html',
-
   styleUrls: ['./book-info-page.component.scss']
 })
 export class BookInfoPageComponent implements OnInit, OnDestroy {
@@ -22,8 +21,8 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly authorsService: AuthorsService,
+    private readonly _route: ActivatedRoute,
+    private readonly _authorsService: AuthorsService,
     private readonly _location: Location,
   ) { }
 
@@ -42,7 +41,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   }
 
   private _getBook(): void {
-    this.route.data
+    this._route.data
       .pipe(
         takeUntil(this.destroy$),
       )
@@ -52,13 +51,13 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   }
 
   private _getAuthor(id: number): void {
-    this.authorsService.getAuthor(id)
+    this._authorsService.getAuthor(id)
       .pipe(
         takeUntil(this.destroy$),
       )
       .subscribe((author) => {
         this.author = author;
-      })
+      });
   }
 
 }

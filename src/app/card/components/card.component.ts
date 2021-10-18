@@ -17,7 +17,7 @@ export class CardComponent {
 
   constructor() { }
 
-  public showAdditionalInfo(book: IBook) {
+  public showAdditionalInfo(book: IBook): void {
     this.bookInfo.emit(book);
   }
 

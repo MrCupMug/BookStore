@@ -5,11 +5,6 @@
     <h2>{{ author.last_name }}</h2>
   </div>
 </ng-container>
-<!-- <ng-container *ngIf="books">
-  <div *ngFor="let book of books" class="books-container">
-    <span [routerLink]="['/books', book.id]" class="book-style">{{book.title}}</span>
-  </div>
-</ng-container> -->
 
 <div class="books-container" *ngIf="books">
   <div *ngFor="let book of books" class="book-style">

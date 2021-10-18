@@ -29,7 +29,7 @@ export class AddAuthorComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public addAuthor(firstName: string, lastName: string) {
+  public addAuthor(firstName: string, lastName: string): void {
     this.authorsService.addAuthor(firstName, lastName)
       .pipe(
         takeUntil(this.destroy$),

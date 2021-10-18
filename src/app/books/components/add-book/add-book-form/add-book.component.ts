@@ -12,6 +12,7 @@ import { IGenre } from '../../../../genres/interfaces/genres.interface';
 import { FormService } from '../../../services/form.service';
 import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
 import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
+import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 
 @Component({
   selector: 'app-add-book',
@@ -26,15 +27,15 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public destroy$ = new Subject<void>();
 
-  public nameOptions: Array<object>;
+  public nameOptions: IAuthor[];
 
-  public fetchGenres$: (text: string) => Observable<IGenre[]>;
+  public fetchGenres$: Observable<IGenre[]>;
 
   constructor(
-    private readonly authorsService: AuthorsService,
-    private readonly genresService: GenresService,
-    private readonly bookService: BooksService,
-    private readonly formService: FormService,
+    private readonly _authorsService: AuthorsService,
+    private readonly _genresService: GenresService,
+    private readonly _bookService: BooksService,
+    private readonly _formService: FormService,
   ) { }
 
   public get bookForm(): FormGroup {
@@ -62,8 +63,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-
-    this.bookForms = this.formService.loadForm();
+    this.bookForms = this._formService.loadForm();
     this.fetchGenres$ = this.fetchGenres.bind(this);
     this._loadAuthors();
   }
@@ -75,7 +75,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public fetchGenres(text: string): Observable<IGenre[]> {
 
-    return this.genresService.getGenreByName(text)
+    return this._genresService.getGenreByName(text)
       .pipe(
         map((response: IGenresResponse) => {
 
@@ -86,13 +86,13 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   public getGenreValue(event: string): void {
-    this.genresService.getGenreByName(event)
-    .pipe(
-      takeUntil(this.destroy$),
-    )
-    .subscribe((genreObject: IGenresResponse) => {
-      this.genreValue = genreObject.genres;
-    });
+    this._genresService.getGenreByName(event)
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((genreObject: IGenresResponse) => {
+        this.genreValue = genreObject.genres;
+      });
   }
 
   public onSubmit(): void {
@@ -109,7 +109,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       genres: formValue.genre,
     };
 
-    this.bookService.addBook(book)
+    this._bookService.addBook(book)
       .pipe(
         takeUntil(this.destroy$),
       )
@@ -127,7 +127,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     .pipe(
       debounceTime(500),
       switchMap((name) => {
-        return this.authorsService.getAuthorByName(name);
+        return this._authorsService.getAuthorByName(name);
       }),
       takeUntil(this.destroy$),
     )

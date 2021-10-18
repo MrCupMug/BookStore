@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthorInfoComponent } from './components/authors/author-info/author-info.component';
+import { AuthorsResolverService } from './services/authors-resolver.service';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AuthorInfoComponent } from './components/authors/author-info/author-inf
     MatMenuModule,
     MatIconModule,
   ],
+  providers: [AuthorsResolverService],
   entryComponents: [AddAuthorComponent],
 })
 export class AuthorsModule { }

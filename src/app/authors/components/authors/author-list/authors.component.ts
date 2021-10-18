@@ -21,29 +21,31 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['first_name', 'last_name', 'additional_info'];
 
   constructor(
-              private readonly authorsService: AuthorsService,
-              private readonly dialog: MatDialog,
+    private readonly _authorsService: AuthorsService,
+    private readonly _dialog: MatDialog,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this._loadAuthors();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   public showAddAuthorModal(): void {
-    this.dialog.open(AddAuthorComponent);
+    this._dialog.open(AddAuthorComponent);
   }
 
   private _loadAuthors(): void {
-    this.authorsService.getAuthors()
-      .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.authors = data.authors;
-        });
+    this._authorsService.getAuthors()
+      .pipe(
+        takeUntil(this.destroy$),
+        )
+      .subscribe((data) => {
+        this.authors = data.authors;
+      });
   }
 
 }

@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IBooksResponse } from 'src/app/books/interfaces/books-response.interface';
-import { IBook } from 'src/app/books/interfaces/books.interface';
+import { IAuthor } from '../../../../authors/interfaces/authors.interface';
+import { AuthorsService } from '../../../../authors/services/authors.service';
+import { IBooksResponse } from '../../../../books/interfaces/books-response.interface';
+import { IBook } from '../../../../books/interfaces/books.interface';
 
 @Component({
   selector: 'app-author-info',
@@ -20,8 +20,8 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
   public destroy$ = new Subject<void>();
 
   constructor(
-    private readonly authorsService: AuthorsService,
-    private readonly route: ActivatedRoute,
+    private readonly _authorsService: AuthorsService,
+    private readonly _route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
@@ -34,18 +34,18 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private _getAuthor() : void {
-    this.route.data
-    .pipe(
-      takeUntil(this.destroy$),
-    )
-    .subscribe((author) => {
-      this.author = author.author;
-    })
+  private _getAuthor(): void {
+    this._route.data
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((author) => {
+        this.author = author.author;
+      });
   }
 
   private _getBooks(): void {
-    this.authorsService.getBookByAuthor(this.author.id)
+    this._authorsService.getBookByAuthor(this.author.id)
       .pipe(
         takeUntil(this.destroy$),
       )

@@ -1,16 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBooksResponse } from '../../interfaces/books-response.interface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterComponent } from '../filter/filter.component';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
-import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
 
 @Component({
   selector: 'app-books',
@@ -25,9 +23,9 @@ export class BooksComponent implements OnInit, OnDestroy {
     pageIndex: 1,
   };
 
-  public dialogRef: any;
+  public dialogRef: MatDialogRef<FilterComponent>;
 
-  public booksAsync: Observable<any>;
+  public booksAsync: Observable<IBooksResponse>;
 
   public pageSizeOptions = [5, 10, 15];
 
@@ -39,18 +37,17 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly _booksService: BooksService,
-    private readonly _authorsService: AuthorsService,
     private readonly _router: Router,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _dialog: MatDialog,
   ) {
    }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this._loadBooks();
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -78,7 +75,9 @@ export class BooksComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _getBooks(params: any): Observable<IBooksResponse> {
+  private _getBooks(params: object): Observable<IBooksResponse> {
+      this.booksAsync = this._booksService.getBooksWithParams(params);
+
       return this._booksService.getBooksWithParams(params);
   }
 
@@ -87,13 +86,11 @@ export class BooksComponent implements OnInit, OnDestroy {
     .queryParams
       .pipe(
         switchMap((data) => {
-          this.booksAsync = this._getBooks(data);
           return this._getBooks(data);
         }),
         takeUntil(this.destroy$),
       )
       .subscribe((data: IBooksResponse) => {
-        // console.log(data);
         this.booksMeta.length = data.meta.records;
         this.booksMeta.pageSize = data.meta.limit;
         this.booksMeta.pageIndex = data.meta.page;
@@ -102,13 +99,15 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   private _listenFiltration(): void {
     this.dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+      )
       .subscribe((filtrationData) => {
 
         this._router.navigate([],
           {
             relativeTo: this._activatedRoute,
             queryParams: filtrationData,
-            queryParamsHandling: 'merge',
           });
 
       });

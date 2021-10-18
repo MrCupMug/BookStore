@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IGenresResponse } from '../interfaces/genres-response.interface';
-import { IGenre } from '../interfaces/genres.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +10,15 @@ import { IGenre } from '../interfaces/genres.interface';
 export class GenresService {
 
   constructor(
-    private readonly http: HttpClient,
+    private readonly _http: HttpClient,
   ) { }
 
     public getGenres(): Observable<IGenresResponse> {
-      return this.http.get<IGenresResponse>('api/genres');
+      return this._http.get<IGenresResponse>('api/genres');
     }
 
     public getGenreByName(name: string): Observable<IGenresResponse> {
-      return this.http.get<IGenresResponse>(`api/genres?q[name_cont]=${name}`);
+      return this._http.get<IGenresResponse>(`api/genres?q[name_cont]=${name}`);
     }
 
 }

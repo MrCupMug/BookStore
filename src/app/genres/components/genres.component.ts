@@ -17,20 +17,20 @@ export class GenresComponent implements OnInit, OnDestroy {
   public genres: IGenre[] = [];
 
   constructor(
-    private readonly genresService: GenresService,
+    private readonly _genresService: GenresService,
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this._loadGenres();
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   private _loadGenres(): void {
-    this.genresService.getGenres()
+    this._genresService.getGenres()
       .pipe(
         takeUntil(this.destroy$),
       )
