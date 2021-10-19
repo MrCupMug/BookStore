@@ -55,7 +55,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     };
 
     for (let param in queryParams) {
-      if ( !queryParams[param] ) {
+      if (!queryParams[param]) {
         delete queryParams[param];
       }
     }

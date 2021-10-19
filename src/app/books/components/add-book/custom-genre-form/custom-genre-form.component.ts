@@ -4,7 +4,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { Observable, Subject } from 'rxjs';
 import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import { IGenre } from 'src/app/genres/interfaces/genres.interface';
+import { IGenre } from '../../../../genres/interfaces/genres.interface';
 import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({

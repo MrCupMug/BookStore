@@ -76,9 +76,9 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   private _getBooks(params: object): Observable<IBooksResponse> {
-      this.booksAsync = this._booksService.getBooksWithParams(params);
+      this.booksAsync = this._booksService.getBooks(params);
 
-      return this._booksService.getBooksWithParams(params);
+      return this._booksService.getBooks(params);
   }
 
   private _loadBooks(): void {

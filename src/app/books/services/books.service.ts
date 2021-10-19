@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { IBook } from '../interfaces/books.interface';
 import { IBooksResponse } from '../interfaces/books-response.interface';
 import { Observable } from 'rxjs';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
+import { AuthorsService } from '../../authors/services/authors.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,9 @@ export class BooksService {
     private readonly _authorsService: AuthorsService,
   ) { }
 
-  public getBooks(): Observable<IBooksResponse> {
-    return this._http.get<IBooksResponse>(this.booksUrl);
-  }
+  public getBooks(queryParams: any): Observable<IBooksResponse> {
 
-  public getBooksWithParams(queryParams: any): Observable<IBooksResponse> {
-
-    if ( queryParams.author ) {
+    if (queryParams.author) {
       return this._authorsService.getBookByAuthor(queryParams.author, queryParams);
     } else {
       const params = new HttpParams({
@@ -44,7 +40,7 @@ export class BooksService {
       return this._http.get<IBook>(`${this.booksUrl}/${id}`);
   }
 
-  public addBook(book: Partial<IBook>): Observable<any> {
+  public addBook(book: Partial<IBook>): Observable<object> {
     return this._http.post(`/api/authors/${book.author_id}/books`, book);
   }
 

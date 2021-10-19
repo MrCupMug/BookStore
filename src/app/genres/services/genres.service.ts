@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IGenresResponse } from '../interfaces/genres-response.interface';
@@ -9,16 +9,24 @@ import { IGenresResponse } from '../interfaces/genres-response.interface';
 })
 export class GenresService {
 
+  public genresUrl = 'api/genres';
+
   constructor(
     private readonly _http: HttpClient,
   ) { }
 
     public getGenres(): Observable<IGenresResponse> {
-      return this._http.get<IGenresResponse>('api/genres');
+      return this._http.get<IGenresResponse>(this.genresUrl);
     }
 
     public getGenreByName(name: string): Observable<IGenresResponse> {
-      return this._http.get<IGenresResponse>(`api/genres?q[name_cont]=${name}`);
+      const params = new HttpParams({
+        fromObject: {
+          'q[name_cont]': name,
+        }
+      });
+
+      return this._http.get<IGenresResponse>(this.genresUrl, {params});
     }
 
 }

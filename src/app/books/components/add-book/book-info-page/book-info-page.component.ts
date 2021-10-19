@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
+import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { IBook } from '../../../interfaces/books.interface';
 

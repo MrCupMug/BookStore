@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors-response.interface';
 import { Observable } from 'rxjs';
-import { IBooksResponse } from 'src/app/books/interfaces/books-response.interface';
+import { IBooksResponse } from '../../books/interfaces/books-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,19 +19,25 @@ export class AuthorsService {
   };
 
   constructor(
-    private readonly http: HttpClient,
+    private readonly _http: HttpClient,
   ) { }
 
     public getAuthors(): Observable<IAuthorsResponse> {
-      return this.http.get<IAuthorsResponse>(this.authorUrl);
+      return this._http.get<IAuthorsResponse>(this.authorUrl);
     }
 
     public getAuthor(authorId: number): Observable<IAuthor> {
-      return this.http.get<IAuthor>(`${this.authorUrl}/${authorId}`);
+      return this._http.get<IAuthor>(`${this.authorUrl}/${authorId}`);
     }
 
-    public getAuthorByName(name: string) {
-      return this.http.get(`${this.authorUrl}?q[first_name_cont]=${name}`);
+    public getAuthorByName(name: string): Observable<IAuthorsResponse> {
+      const params = new HttpParams({
+        fromObject: {
+          'q[first_name_cont]': name,
+        }
+      });
+
+      return this._http.get<IAuthorsResponse>(this.authorUrl, {params});
     }
 
     public getBookByAuthor(id: number, paginationParams?: any): Observable<IBooksResponse> {
@@ -44,14 +50,14 @@ export class AuthorsService {
           },
         });
 
-        return this.http.get<IBooksResponse>(`${this.authorUrl}/${id}/books`, {params});
+        return this._http.get<IBooksResponse>(`${this.authorUrl}/${id}/books`, {params});
       }
 
-      return this.http.get<IBooksResponse>(`${this.authorUrl}/${id}/books`);
+      return this._http.get<IBooksResponse>(`${this.authorUrl}/${id}/books`);
     }
 
     public addAuthor(firstName: string, lastName: string): Observable<object> {
-      return this.http.post(this.authorUrl, {
+      return this._http.post(this.authorUrl, {
         first_name: firstName,
         last_name: lastName,
       });

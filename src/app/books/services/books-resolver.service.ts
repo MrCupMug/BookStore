@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { IBook } from '../interfaces/books.interface';
 import { BooksService } from './books.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BooksResolverService implements Resolve<IBook> {
 
   constructor(

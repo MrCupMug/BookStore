@@ -9,8 +9,8 @@ import { GenresService } from '../../../../genres/services/genres.service';
 import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
-import { FormService } from '../../../services/form.service';
-import { IAuthorsResponse } from 'src/app/authors/interfaces/authors-response.interface';
+import { FormService } from '../../../services/book-form.service';
+import { IAuthorsResponse } from '../../../../authors/interfaces/authors-response.interface';
 import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 

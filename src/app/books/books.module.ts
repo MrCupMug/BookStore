@@ -21,11 +21,12 @@ import { CustomGenreFormComponent } from './components/add-book/custom-genre-for
 import { BookInfoPageComponent } from './components/add-book/book-info-page/book-info-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
-import { FormService } from './services/form.service';
+import { FormService } from './services/book-form.service';
 import { FormGuard } from './guards/form.guard';
 import { FilterComponent } from './components/filter/filter.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { FilterService } from './services/filter.service';
+import { BooksResolverService } from './services/books-resolver.service';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { FilterService } from './services/filter.service';
   ],
   entryComponents: [ AddBookComponent, FilterComponent ],
   providers: [
+    BooksResolverService,
     FormService,
     FormGuard,
     FilterService,
