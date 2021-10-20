@@ -2,14 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, pluck, switchMap, takeUntil } from 'rxjs/operators';
-import { IAuthorsResponse } from '../../../authors/interfaces/authors-response.interface';
+import { debounceTime, pluck, takeUntil } from 'rxjs/operators';
+
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../authors/services/authors.service';
-import { IGenresResponse } from '../../../genres/interfaces/genres-response.interface';
 import { IGenre } from '../../../genres/interfaces/genres.interface';
 import { GenresService } from '../../../genres/services/genres.service';
 import { FilterService } from '../../services/filter.service';
+
 
 @Component({
   selector: 'app-filter',

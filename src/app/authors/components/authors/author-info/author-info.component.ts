@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
+
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../../authors/services/authors.service';
 import { IBook } from '../../../../books/interfaces/books.interface';
+
 
 @Component({
   selector: 'app-author-info',

@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { AuthorsService } from '../../../services/authors.service';
 import { IAuthor } from '../../../interfaces/authors.interface';
 import { AddAuthorComponent } from '../../add-author/add-author.component';
-import { pluck } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-authors',

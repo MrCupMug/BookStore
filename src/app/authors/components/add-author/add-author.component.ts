@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { AuthorsService } from '../../services/authors.service';
-
-import { IAuthor } from '../../interfaces/authors.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { AuthorsService } from '../../services/authors.service';
+import { IAuthor } from '../../interfaces/authors.interface';
+
 
 @Component({
   selector: 'app-add-author',

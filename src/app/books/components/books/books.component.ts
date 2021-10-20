@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { pluck, switchMap, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
 import { IBooksResponse } from '../../interfaces/books-response.interface';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterComponent } from '../filter/filter.component';
+
 
 @Component({
   selector: 'app-books',

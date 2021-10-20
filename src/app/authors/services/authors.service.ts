@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors-response.interface';
-import { Observable } from 'rxjs';
 import { IBooksResponse } from '../../books/interfaces/books-response.interface';
+
 
 @Injectable({
   providedIn: 'root'

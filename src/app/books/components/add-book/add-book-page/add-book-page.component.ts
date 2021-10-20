@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FormService } from '../../../services/book-form.service';
-
 import { AddBookComponent } from '../add-book-form/add-book.component';
 
 @Component({

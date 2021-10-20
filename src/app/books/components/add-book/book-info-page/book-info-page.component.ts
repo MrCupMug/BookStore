@@ -1,12 +1,13 @@
-import { OnDestroy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
-import { AuthorsService } from 'src/app/authors/services/authors.service';
+import { AuthorsService } from '../../../../authors/services/authors.service';
 import { IBook } from '../../../interfaces/books.interface';
+
 
 @Component({
   selector: 'app-book-info-page',

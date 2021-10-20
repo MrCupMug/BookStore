@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-
 import { Observable } from 'rxjs';
 
 import { AddBookPageComponent } from '../components/add-book/add-book-page/add-book-page.component';

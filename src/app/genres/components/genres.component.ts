@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
 import { GenresService } from '../services/genres.service';
 import { IGenre } from '../interfaces/genres.interface';
+
 
 @Component({
   selector: 'app-genres',

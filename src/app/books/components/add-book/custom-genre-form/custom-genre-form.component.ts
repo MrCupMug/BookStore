@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, Input, Optional, Self, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
+import { FocusMonitor } from '@angular/cdk/a11y';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Observable, Subject } from 'rxjs';
-import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
-import { FocusMonitor } from '@angular/cdk/a11y';
+
 
 @Component({
   selector: 'app-custom-genre-form',

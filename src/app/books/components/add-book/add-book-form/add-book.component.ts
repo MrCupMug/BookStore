@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-
-import { debounceTime, takeUntil, map, pluck } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { debounceTime, takeUntil, map, pluck } from 'rxjs/operators';
 
 import { AuthorsService } from '../../../../authors/services/authors.service';
 import { GenresService } from '../../../../genres/services/genres.service';
@@ -10,8 +9,9 @@ import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
 import { FormService } from '../../../services/book-form.service';
-import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
+import { IGenresResponse } from '../../../../genres/interfaces/genres-response.interface';
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
+
 
 @Component({
   selector: 'app-add-book',
