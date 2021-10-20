@@ -31,7 +31,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public genreForm: FormControl;
 
-  public genreOptions: IGenre[];
+  public genreOptions$: Observable<IGenre[]>;
 
   public genres: IGenre[] = [];
 
@@ -153,18 +153,29 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     this.genreForm = new FormControl(null, Validators.required);
   }
 
+  // private _listenGenresChange(): void {
+  //   this.genreForm.valueChanges
+  //     .pipe(
+  //       debounceTime(300),
+  //       switchMap((value) => {
+  //         return this.fetchFn(value);
+  //       }),
+  //       takeUntil(this.destroy$),
+  //     )
+  //     .subscribe((genres: IGenre[]) => {
+  //       this.genreOptions = genres;
+  //     });
+  // }
+
   private _listenGenresChange(): void {
     this.genreForm.valueChanges
       .pipe(
         debounceTime(300),
-        switchMap((value) => {
-          return this.fetchFn(value);
-        }),
         takeUntil(this.destroy$),
       )
-      .subscribe((genres: IGenre[]) => {
-        this.genreOptions = genres;
-      });
+      .subscribe((genre) => {
+        this.genreOptions$ = this.fetchFn(genre);
+      })
   }
 
   private _inputMonitore(): void {

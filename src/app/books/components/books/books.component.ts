@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { pluck, switchMap, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
@@ -25,7 +25,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public dialogRef: MatDialogRef<FilterComponent>;
 
-  public booksAsync: Observable<IBooksResponse>;
+  public books$: Observable<IBook[]>;
 
   public pageSizeOptions = [5, 10, 15];
 
@@ -76,7 +76,10 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   private _getBooks(params: object): Observable<IBooksResponse> {
-      this.booksAsync = this._booksService.getBooks(params);
+      this.books$ = this._booksService.getBooks(params)
+        .pipe(
+          pluck('books'),
+        );
 
       return this._booksService.getBooks(params);
   }

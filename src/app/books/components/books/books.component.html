@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngFor="let book of (booksAsync | async)?.books" class="book-list">
+  <div *ngFor="let book of books$ | async" class="book-list">
     <app-card class="book-card" [book]="book" (bookInfo)="setBookInfo($event)" [routerLink]="['./', book.id]"></app-card>
   </div>
 </div>

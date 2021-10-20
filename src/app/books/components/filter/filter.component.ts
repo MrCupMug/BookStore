@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, pluck, switchMap, takeUntil } from 'rxjs/operators';
 import { IAuthorsResponse } from '../../../authors/interfaces/authors-response.interface';
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../authors/services/authors.service';
@@ -18,8 +18,8 @@ import { FilterService } from '../../services/filter.service';
 })
 export class FilterComponent implements OnInit, OnDestroy {
 
-  public nameOptions: IAuthor[];
-  public genreOptions: IGenre[];
+  public nameOptions$: Observable<IAuthor[]>;
+  public genreOptions$: Observable<IGenre[]>;
 
   public destroy$ = new Subject<void>();
 
@@ -73,28 +73,28 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.filterForm.get('genre').valueChanges
       .pipe(
         debounceTime(300),
-        switchMap((value) => {
-          return this._genreService.getGenreByName(value);
-        }),
         takeUntil(this.destroy$)
       )
-      .subscribe((response: IGenresResponse) => {
-        this.genreOptions = response.genres;
-      });
+      .subscribe((genre: string) => {
+        this.genreOptions$ = this._genreService.getGenreByName(genre)
+          .pipe(
+            pluck('genres'),
+          );
+      })
   }
 
   private _loadAuthors(): void {
     this.filterForm.get('author').valueChanges
       .pipe(
         debounceTime(500),
-        switchMap((name) => {
-          return this._authorsService.getAuthorByName(name);
-        }),
         takeUntil(this.destroy$),
       )
-      .subscribe((authorsObject: IAuthorsResponse) => {
-        this.nameOptions = authorsObject.authors;
-      });
+      .subscribe((name: string) => {
+        this.nameOptions$ = this._authorsService.getAuthorByName(name)
+          .pipe(
+            pluck('authors'),
+          );
+      })
   }
 
   private _loadFilterForm(): void {

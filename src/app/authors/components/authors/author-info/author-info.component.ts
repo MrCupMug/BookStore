@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { pluck, takeUntil } from 'rxjs/operators';
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../../authors/services/authors.service';
-import { IBooksResponse } from '../../../../books/interfaces/books-response.interface';
 import { IBook } from '../../../../books/interfaces/books.interface';
 
 @Component({
@@ -14,8 +13,9 @@ import { IBook } from '../../../../books/interfaces/books.interface';
 })
 export class AuthorInfoComponent implements OnInit, OnDestroy {
 
+  public books$: Observable<IBook[]>;
+
   public author!: IAuthor;
-  public books!: IBook[];
 
   public destroy$ = new Subject<void>();
 
@@ -45,13 +45,10 @@ export class AuthorInfoComponent implements OnInit, OnDestroy {
   }
 
   private _getBooks(): void {
-    this._authorsService.getBookByAuthor(this.author.id)
+    this.books$ = this._authorsService.getBookByAuthor(this.author.id)
       .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((books: IBooksResponse) => {
-        this.books = books.books;
-      });
+        pluck('books')
+      );
   }
 
 }

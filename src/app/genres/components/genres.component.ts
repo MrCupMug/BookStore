@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 import { GenresService } from '../services/genres.service';
 import { IGenre } from '../interfaces/genres.interface';
@@ -10,11 +10,9 @@ import { IGenre } from '../interfaces/genres.interface';
   templateUrl: './genres.component.html',
   styleUrls: ['./genres.component.scss']
 })
-export class GenresComponent implements OnInit, OnDestroy {
+export class GenresComponent implements OnInit {
 
-  public destroy$ = new Subject<void>();
-
-  public genres: IGenre[] = [];
+  public genres$: Observable<IGenre[]>;
 
   constructor(
     private readonly _genresService: GenresService,
@@ -24,18 +22,10 @@ export class GenresComponent implements OnInit, OnDestroy {
     this._loadGenres();
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   private _loadGenres(): void {
-    this._genresService.getGenres()
+    this.genres$ = this._genresService.getGenres()
       .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((data) => {
-        this.genres = data.genres;
-      });
+        pluck('genres'),
+      );
   }
 }

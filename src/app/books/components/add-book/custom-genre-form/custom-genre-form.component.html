@@ -9,7 +9,7 @@
           [matChipInputFor]="genreList"
           [matAutocomplete]="genreAutocomplete">       
   <mat-autocomplete #genreAutocomplete="matAutocomplete">
-    <mat-option *ngFor="let genre of genreOptions" (click)="addGenre(genre.name)">
+    <mat-option *ngFor="let genre of genreOptions$ | async" (click)="addGenre(genre.name)">
       {{ genre.name }}
     </mat-option>
   </mat-autocomplete>

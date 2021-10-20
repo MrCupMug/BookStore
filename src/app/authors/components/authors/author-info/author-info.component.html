@@ -6,8 +6,8 @@
   </div>
 </ng-container>
 
-<div class="books-container" *ngIf="books">
-  <div *ngFor="let book of books" class="book-style">
+<div class="books-container">
+  <div *ngFor="let book of books$ | async" class="book-style">
     <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
   </div>
 </div>

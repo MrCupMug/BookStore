@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
@@ -16,7 +16,7 @@ import { IBook } from '../../../interfaces/books.interface';
 export class BookInfoPageComponent implements OnInit, OnDestroy {
 
   public book: IBook;
-  public author: IAuthor;
+  public author$: Observable<IAuthor>;
 
   private destroy$ = new Subject<void>();
 
@@ -50,14 +50,10 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _getAuthor(id: number): void {
-    this._authorsService.getAuthor(id)
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((author) => {
-        this.author = author;
-      });
+  private _getAuthor(id: number) {
+    this.author$ =  this._authorsService.getAuthor(id);
+
+      console.log(this.author$);
   }
 
 }

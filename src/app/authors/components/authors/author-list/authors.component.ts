@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 import { AuthorsService } from '../../../services/authors.service';
 import { IAuthor } from '../../../interfaces/authors.interface';
 import { AddAuthorComponent } from '../../add-author/add-author.component';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-authors',
@@ -14,9 +14,9 @@ import { AddAuthorComponent } from '../../add-author/add-author.component';
 })
 export class AuthorsComponent implements OnInit, OnDestroy {
 
-  public destroy$ = new Subject<void>();
+  public authors$: Observable<IAuthor[]>;
 
-  public authors: IAuthor[] = [];
+  public destroy$ = new Subject<void>();
 
   public displayedColumns: string[] = ['first_name', 'last_name', 'additional_info'];
 
@@ -39,13 +39,10 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
 
   private _loadAuthors(): void {
-    this._authorsService.getAuthors()
+    this.authors$ = this._authorsService.getAuthors()
       .pipe(
-        takeUntil(this.destroy$),
-        )
-      .subscribe((data) => {
-        this.authors = data.authors;
-      });
+        pluck('authors'),
+      );
   }
 
 }

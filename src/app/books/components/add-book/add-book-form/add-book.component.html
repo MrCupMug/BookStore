@@ -17,7 +17,7 @@
         formControlName="author" 
         [matAutocomplete]="nameAuto">
       <mat-autocomplete #nameAuto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let author of nameOptions" [value]="author">
+        <mat-option *ngFor="let author of nameOptions$ | async" [value]="author">
           {{ author.first_name + ' ' + author.last_name }}
         </mat-option>
       </mat-autocomplete>

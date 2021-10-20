@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { debounceTime, switchMap, takeUntil, map } from 'rxjs/operators';
+import { debounceTime, takeUntil, map, pluck } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 import { AuthorsService } from '../../../../authors/services/authors.service';
@@ -10,7 +10,6 @@ import { BooksService } from '../../../services/books.service';
 import { IBook } from '../../../interfaces/books.interface';
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
 import { FormService } from '../../../services/book-form.service';
-import { IAuthorsResponse } from '../../../../authors/interfaces/authors-response.interface';
 import { IGenresResponse } from 'src/app/genres/interfaces/genres-response.interface';
 import { IAuthor } from '../../../../authors/interfaces/authors.interface';
 
@@ -23,11 +22,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public bookForms: FormGroup;
 
-  public genreValue: IGenre[];
-
   public destroy$ = new Subject<void>();
 
-  public nameOptions: IAuthor[];
+  public nameOptions$: Observable<IAuthor[]>;
 
   public fetchGenres$: Observable<IGenre[]>;
 
@@ -85,16 +82,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   }
 
-  public getGenreValue(event: string): void {
-    this._genresService.getGenreByName(event)
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((genreObject: IGenresResponse) => {
-        this.genreValue = genreObject.genres;
-      });
-  }
-
   public onSubmit(): void {
     if (!this.bookForm.valid) {
       return;
@@ -124,16 +111,16 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   private _loadAuthors(): void {
     this.bookForm.get('author').valueChanges
-    .pipe(
-      debounceTime(500),
-      switchMap((name) => {
-        return this._authorsService.getAuthorByName(name);
-      }),
-      takeUntil(this.destroy$),
-    )
-    .subscribe((authorsObject: IAuthorsResponse) => {
-      this.nameOptions = authorsObject.authors;
-    });
+      .pipe(
+        debounceTime(500),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((name: string) => {
+        this.nameOptions$ = this._authorsService.getAuthorByName(name)
+          .pipe(
+            pluck('authors'),
+          );
+      })
   }
 
 }

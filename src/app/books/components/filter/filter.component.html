@@ -8,7 +8,7 @@
          formControlName="author"
          [matAutocomplete]="nameAuto">
     <mat-autocomplete #nameAuto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let author of nameOptions" [value]="author">
+      <mat-option *ngFor="let author of nameOptions$ | async" [value]="author">
         {{ author.first_name + ' ' + author.last_name }}
       </mat-option>
     </mat-autocomplete>
@@ -21,7 +21,7 @@
         formControlName="genre"
         [matAutocomplete]="genreAuto">
     <mat-autocomplete #genreAuto="matAutocomplete">
-      <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">
+      <mat-option *ngFor="let genre of genreOptions$ | async" [value]="genre.name">
         {{ genre.name }}
       </mat-option>
     </mat-autocomplete>
