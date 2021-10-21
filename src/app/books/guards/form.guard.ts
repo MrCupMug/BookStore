@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
 import { AddBookPageComponent } from '../components/add-book/add-book-page/add-book-page.component';
@@ -17,23 +18,26 @@ export class FormGuard implements CanDeactivate<AddBookPageComponent> {
       const notEmpty = formValueArray.some((el) => !!el);
 
       if (!notEmpty) {
-        component.dialog.closeAll();
-        component.form.reset();
+        this._close(component);
 
         return true;
       }
 
-      const isUserSure = confirm('Are you sure?');
+      const confirmed = confirm('Are you sure?');
 
-      if (isUserSure) {
-        component.dialog.closeAll();
-        component.form.reset();
+      if (confirmed) {
+        this._close(component);
 
         return true;
       }
 
       return false;
 
+  }
+
+  private _close(component: AddBookPageComponent): void {
+    component.dialog.closeAll();
+    component.form.reset();
   }
 
 }

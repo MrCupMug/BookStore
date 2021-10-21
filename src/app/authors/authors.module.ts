@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthorsComponent } from './components/authors/author-list/authors.component';
+import { AuthorListComponent } from './components/views/author-list/author-list.component';
 import { AddAuthorComponent } from './components/add-author/add-author.component';
 
 import { AuthorsRoutingModule } from './authors-routing.module';
@@ -14,12 +14,14 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthorInfoComponent } from './components/authors/author-info/author-info.component';
+import { AuthorInfoComponent } from './components/views/author-info/author-info.component';
 import { AuthorsResolverService } from './services/authors-resolver.service';
+import { AuthorsComponent } from './components/containers/authors/authors.component';
+import { AuthorInfContainerComponent } from './components/containers/author-inf-container/author-inf-container.component';
 
 
 @NgModule({
-  declarations: [AuthorsComponent, AddAuthorComponent, AuthorInfoComponent],
+  declarations: [AuthorListComponent, AddAuthorComponent, AuthorInfoComponent, AuthorsComponent, AuthorInfContainerComponent],
   imports: [
     CommonModule,
     FormsModule,

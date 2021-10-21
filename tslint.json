@@ -89,7 +89,7 @@
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
-    "no-input-rename": true,
+    "no-input-rename": false,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
     "no-output-on-prefix": true,
@@ -133,6 +133,7 @@
     "use-pipe-transform-interface": true,
     "variable-name": {
       "options": [
+        "allow-leading-underscore",
         "ban-keywords",
         "check-format",
         "allow-pascal-case"

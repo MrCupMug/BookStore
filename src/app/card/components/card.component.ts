@@ -13,7 +13,7 @@ export class CardComponent {
   public book!: IBook;
 
   @Output()
-  private bookInfo = new EventEmitter<IBook>();
+  private readonly bookInfo = new EventEmitter<IBook>();
 
   constructor() { }
 

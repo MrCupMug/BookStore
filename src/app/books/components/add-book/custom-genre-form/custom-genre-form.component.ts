@@ -2,13 +2,16 @@ import { Component, OnInit, OnDestroy, Input, Optional, Self, ElementRef } from 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
+
 import { MatFormFieldControl } from '@angular/material/form-field';
+
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { IGenre } from '../../../../genres/interfaces/genres.interface';
 
 
+// Review
 @Component({
   selector: 'app-custom-genre-form',
   templateUrl: './custom-genre-form.component.html',
@@ -29,7 +32,7 @@ import { IGenre } from '../../../../genres/interfaces/genres.interface';
 export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormFieldControl<IGenre[]>, ControlValueAccessor {
 
   @Input()
-  fetchFn!: (text: string) => Observable<IGenre[]>;
+  public fetchFn!: (text: string) => Observable<IGenre[]>;
 
   public genreForm: FormControl;
 
@@ -61,38 +64,34 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
-    private _fm: FocusMonitor,
-    private _elRef: ElementRef<HTMLElement>
+    private readonly _fm: FocusMonitor,
+    private readonly _elRef: ElementRef<HTMLElement>
   ) {
       this.ngControl.valueAccessor = this;
-
     }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
 
-    get empty(): boolean {
+    public get empty(): boolean {
       return !this.genreForm.value;
     }
 
-    get shouldLabelFloat(): boolean {
+    public get shouldLabelFloat(): boolean {
       return this.focused || !this.empty || !!this.genres.length;
     }
 
     @Input()
-    get placeholder(): string {
+    public get placeholder(): string {
       return this._placeholder;
     }
-    set placeholder(placeholder: string) {
+    public set placeholder(placeholder: string) {
       this._placeholder = placeholder;
       this.stateChanges.next();
     }
 
     @Input()
-    get value(): IGenre[] {
+    public get value(): IGenre[] {
       return this.genres;
     }
-    set value(genres: IGenre[] | null) {
+    public set value(genres: IGenre[] | null) {
       this.genres = genres;
     }
 
@@ -107,6 +106,10 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     this._fm.stopMonitoring(this._elRef.nativeElement);
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
   }
 
   public onChange: any = (value) => {};
@@ -155,20 +158,6 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     this.genreForm = new FormControl(null, Validators.required);
   }
 
-  // private _listenGenresChange(): void {
-  //   this.genreForm.valueChanges
-  //     .pipe(
-  //       debounceTime(300),
-  //       switchMap((value) => {
-  //         return this.fetchFn(value);
-  //       }),
-  //       takeUntil(this.destroy$),
-  //     )
-  //     .subscribe((genres: IGenre[]) => {
-  //       this.genreOptions = genres;
-  //     });
-  // }
-
   private _listenGenresChange(): void {
     this.genreForm.valueChanges
       .pipe(
@@ -177,7 +166,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
       )
       .subscribe((genre) => {
         this.genreOptions$ = this.fetchFn(genre);
-      })
+      });
   }
 
   private _inputMonitore(): void {

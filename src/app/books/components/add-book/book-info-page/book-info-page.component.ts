@@ -19,7 +19,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   public book: IBook;
   public author$: Observable<IAuthor>;
 
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -27,6 +27,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
     private readonly _location: Location,
   ) { }
 
+  // FIXME Error
   ngOnInit(): void {
     this._getBook();
     this._getAuthor(this.book.author_id);
@@ -53,8 +54,6 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
 
   private _getAuthor(id: number) {
     this.author$ =  this._authorsService.getAuthor(id);
-
-      console.log(this.author$);
   }
 
 }

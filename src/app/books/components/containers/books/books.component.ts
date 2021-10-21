@@ -5,10 +5,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { pluck, switchMap, takeUntil } from 'rxjs/operators';
 
-import { BooksService } from '../../services/books.service';
-import { IBook } from '../../interfaces/books.interface';
-import { IBooksResponse } from '../../interfaces/books-response.interface';
-import { FilterComponent } from '../filter/filter.component';
+import { BooksService } from '../../../services/books.service';
+import { IBook } from '../../../interfaces/books.interface';
+import { IBooksResponse } from '../../../interfaces/books-response.interface';
+import { FilterComponent } from '../../filter/filter.component';
 
 
 @Component({

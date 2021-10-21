@@ -88,7 +88,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     }
 
     const formValue = this.bookForm.value;
-    const book: Partial<IBook> = {
+    const book: IBook = {
       description: formValue.description,
       author_id: formValue.author.id,
       title: formValue.title,
@@ -120,7 +120,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
           .pipe(
             pluck('authors'),
           );
-      })
+      });
   }
 
 }

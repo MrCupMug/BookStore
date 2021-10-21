@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthorsComponent } from './components/authors/author-list/authors.component';
-import { AuthorInfoComponent } from './components/authors/author-info/author-info.component';
+import { AuthorInfContainerComponent } from './components/containers/author-inf-container/author-inf-container.component';
 import { AuthorsResolverService } from './services/authors-resolver.service';
+import { AuthorsComponent } from './components/containers/authors/authors.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: AuthorInfoComponent,
+    component: AuthorInfContainerComponent,
     resolve: { author: AuthorsResolverService }
   },
 ];

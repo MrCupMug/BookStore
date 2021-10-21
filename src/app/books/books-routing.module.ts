@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { BooksComponent } from './components/books/books.component';
+import { BooksComponent } from './components/containers/books/books.component';
 import { BookInfoPageComponent } from './components/add-book/book-info-page/book-info-page.component';
 import { BooksResolverService } from './services/books-resolver.service';
 import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
     component: BooksComponent
   },
   {
-    path: 'test',
+    path: 'add-book',
     component: AddBookPageComponent,
     canDeactivate: [FormGuard]
   },

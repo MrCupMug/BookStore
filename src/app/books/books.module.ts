@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BooksComponent } from './components/books/books.component';
+import { BooksComponent } from './components/containers/books/books.component';
 
 import { BooksRoutingModule } from './books-routing.module';
 
@@ -27,6 +27,7 @@ import { FilterComponent } from './components/filter/filter.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { FilterService } from './services/filter.service';
 import { BooksResolverService } from './services/books-resolver.service';
+import { BookListComponent } from './components/views/book-list/book-list.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { BooksResolverService } from './services/books-resolver.service';
     BookInfoPageComponent,
     AddBookPageComponent,
     FilterComponent,
+    BookListComponent,
   ],
   imports: [
     CommonModule,
