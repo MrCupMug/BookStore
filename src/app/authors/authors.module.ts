@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthorInfoComponent } from './components/views/author-info/author-info.component';
 import { AuthorsResolverService } from './services/authors-resolver.service';
 import { AuthorsComponent } from './components/containers/authors/authors.component';
-import { AuthorInfContainerComponent } from './components/containers/author-inf-container/author-inf-container.component';
+import { AuthorInfContainerComponent } from './components/containers/author-info-container/author-inf-container.component';
 
 
 @NgModule({

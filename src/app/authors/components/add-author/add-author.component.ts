@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { IAuthor } from '../../interfaces/authors.interface';
   templateUrl: './add-author.component.html',
   styleUrls: ['./add-author.component.scss']
 })
-export class AddAuthorComponent implements OnInit, OnDestroy {
+export class AddAuthorComponent implements OnDestroy {
 
   public destroy$ = new Subject<void>();
 
@@ -21,8 +21,6 @@ export class AddAuthorComponent implements OnInit, OnDestroy {
   constructor(
     private readonly authorsService: AuthorsService,
   ) { }
-
-  public ngOnInit() {}
 
   public ngOnDestroy() {
     this.destroy$.next();

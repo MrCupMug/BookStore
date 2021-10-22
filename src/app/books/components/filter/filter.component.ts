@@ -80,7 +80,7 @@ export class FilterComponent implements OnInit, OnDestroy {
           .pipe(
             pluck('genres'),
           );
-      })
+      });
   }
 
   private _loadAuthors(): void {
@@ -94,7 +94,7 @@ export class FilterComponent implements OnInit, OnDestroy {
           .pipe(
             pluck('authors'),
           );
-      })
+      });
   }
 
   private _loadFilterForm(): void {

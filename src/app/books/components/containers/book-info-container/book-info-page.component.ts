@@ -17,7 +17,7 @@ import { IBook } from '../../../interfaces/books.interface';
 export class BookInfoPageComponent implements OnInit, OnDestroy {
 
   public book: IBook;
-  public author$: Observable<IAuthor>;
+  public author: Observable<IAuthor>;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -28,7 +28,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   ) { }
 
   // FIXME Error
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._getBook();
     this._getAuthor(this.book.author_id);
   }
@@ -53,7 +53,7 @@ export class BookInfoPageComponent implements OnInit, OnDestroy {
   }
 
   private _getAuthor(id: number) {
-    this.author$ =  this._authorsService.getAuthor(id);
+    this.author =  this._authorsService.getAuthor(id);
   }
 
 }

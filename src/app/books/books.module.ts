@@ -18,7 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { CustomGenreFormComponent } from './components/add-book/custom-genre-form/custom-genre-form.component';
-import { BookInfoPageComponent } from './components/add-book/book-info-page/book-info-page.component';
+import { BookInfoPageComponent } from './components/containers/book-info-container/book-info-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
 import { FormService } from './services/book-form.service';
@@ -28,6 +28,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FilterService } from './services/filter.service';
 import { BooksResolverService } from './services/books-resolver.service';
 import { BookListComponent } from './components/views/book-list/book-list.component';
+import { BookInfoViewComponent } from './components/views/book-info-view/book-info-view.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { BookListComponent } from './components/views/book-list/book-list.compon
     AddBookPageComponent,
     FilterComponent,
     BookListComponent,
+    BookInfoViewComponent,
   ],
   imports: [
     CommonModule,

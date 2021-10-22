@@ -17,6 +17,9 @@ export class BookListComponent {
   @Input()
   public pageSizeOptions: Observable<number>;
 
+  @Input()
+  public booksMeta: any;
+
   @Output()
   public bookInfo = new EventEmitter<IBook>();
 
@@ -25,12 +28,6 @@ export class BookListComponent {
 
   @Output()
   public pagination = new EventEmitter<any>();
-
-  public booksMeta = {
-    length: 100,
-    pageSize: 10,
-    pageIndex: 1,
-  };
 
   constructor() { }
 

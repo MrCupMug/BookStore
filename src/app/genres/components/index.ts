@@ -1,1 +1,1 @@
-export { GenreListComponent } from './genre/genre-list.component';
+export { GenreListComponent } from './views/genre/genre-list.component';

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BooksComponent } from './components/containers/books/books.component';
-import { BookInfoPageComponent } from './components/add-book/book-info-page/book-info-page.component';
+import { BookInfoPageComponent } from './components/containers/book-info-container/book-info-page.component';
 import { BooksResolverService } from './services/books-resolver.service';
 import { AddBookPageComponent } from './components/add-book/add-book-page/add-book-page.component';
 import { FormGuard } from './guards/form.guard';
