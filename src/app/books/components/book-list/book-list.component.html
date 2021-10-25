@@ -1,0 +1,18 @@
+<div class="container">
+  <div *ngFor="let book of books" class="book-list">
+    <app-card class="book-card" [book]="book" (bookInfo)="setBookInfo($event)" [routerLink]="['./', book.id]"></app-card>
+  </div>
+</div>
+
+<div class="bottom-container">
+  <button class="fab-button" mat-fab color="primary" routerLink="add-book">+</button>
+  <button class="fab-button" mat-fab color="primary" (click)="openFilter()">Filter</button>
+  <mat-paginator class="paginator"
+              [length]="booksMeta?.records"
+              [pageSize]="booksMeta?.limit"
+              [pageIndex]="booksMeta?.page - 1"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="setPagination($event)"
+              aria-label="Select page">
+  </mat-paginator>
+</div>

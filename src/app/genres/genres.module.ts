@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { GenreListComponent } from './components';
+import { GenreListComponent } from './components/genre/genre-list.component';
 
 import { GenresRoutingModule } from './genres-routing.module';
-import { GenreComponent } from './components/container/genre-list/genre.component';
+import { GenreListContainerComponent } from './containers/genre-list-container/genre-list-container.component';
 
 @NgModule({
-  declarations: [GenreListComponent, GenreComponent],
+  declarations: [GenreListComponent, GenreListContainerComponent],
   imports: [
     CommonModule,
     GenresRoutingModule,

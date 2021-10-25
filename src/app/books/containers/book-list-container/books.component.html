@@ -1,0 +1,8 @@
+<app-book-list 
+  [books]="books$ | async"
+  [pageSizeOptions]="pageSizeOptions"
+  [booksMeta]="meta$ | async"
+  (setBookInfo)="setBookInfo($event)"
+  (filter)="openFilter()"
+  (pagination)="setPagination($event)">
+</app-book-list>

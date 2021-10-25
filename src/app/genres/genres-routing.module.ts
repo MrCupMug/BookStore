@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { GenreComponent } from './components/container/genre-list/genre.component';
+import { GenreListContainerComponent } from './containers/genre-list-container/genre-list-container.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: GenreComponent
+    component: GenreListContainerComponent
   },
 ];
 

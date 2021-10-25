@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } f
 
 import { Observable } from 'rxjs';
 
-import { AddBookPageComponent } from '../components/add-book/add-book-page/add-book-page.component';
+import { AddBookPageComponent } from '../components/add-book-page/add-book-page.component';
 
 
 @Injectable()
