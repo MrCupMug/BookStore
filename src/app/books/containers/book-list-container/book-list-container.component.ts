@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { pluck, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { pluck, share, switchMap, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/books.interface';
@@ -12,17 +12,16 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { IMeta } from '../../../interfaces/meta.interface';
 
 @Component({
-  selector: 'app-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.scss']
+  selector: 'app-book-list-container',
+  templateUrl: './book-list-container.component.html',
+  styleUrls: ['./book-list-container.component.scss']
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
-  public hotBooks = new Subject<Observable<IBook[]>>();
+  public readonly meta$: Observable<IMeta>;
+  public readonly books$: Observable<IBook[]>;
 
   public dialogRef: MatDialogRef<FilterComponent>;
-
-  public books$: Observable<IBook[]>;
 
   public pageSizeOptions = [5, 10, 15];
 
@@ -32,27 +31,34 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public bookInfo: IBook;
 
-  private _meta$ = new Subject<IMeta>();
+  private _booksResponse$ = this._fetchBooksResponse();
 
   constructor(
     private readonly _booksService: BooksService,
     private readonly _router: Router,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _dialog: MatDialog,
-  ) { }
+  ) {
+    this.books$ = this._booksResponse$
+    .pipe(
+      pluck('books')
+    );
 
-  public get meta$(): Observable<IMeta> {
-    return this._meta$.asObservable();
+    this.meta$ = this._booksResponse$
+    .pipe(
+      pluck('meta')
+    );
+   }
+
+  public ngOnInit(): void {}
+
+  private _fetchBooksResponse(): Observable<IBooksResponse> {
+    return this._activatedRoute.queryParams
+    .pipe(
+      switchMap((data) => this._getBooks(data)),
+      share(),
+    );
   }
-
-  public ngOnInit(): void {
-    this.books$ = this._activatedRoute.queryParams
-      .pipe(
-        switchMap((data) => this._getBooks(data)),
-        tap((data) => this._meta$.next(data.meta)),
-        pluck('books')
-      );
-}
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -83,51 +89,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   private _getBooks(params: object): Observable<IBooksResponse> {
-    // this.books$ = this._booksService.getBooks(params)
-    //   .pipe(
-    //     pluck('books'),
-    //   );
-
     return this._booksService.getBooks(params);
   }
-
-  // private _loadBooks(): void {
-  //   this._activatedRoute
-  //   .queryParams
-  //     .pipe(
-  //       switchMap((data) => {
-  //         return this._getBooks(data);
-  //       }),
-  //       takeUntil(this.destroy$),
-  //     )
-  //     .subscribe((data: IBooksResponse) => {
-  //       this.booksMeta.length = data.meta.records;
-  //       this.booksMeta.pageSize = data.meta.limit;
-  //       this.booksMeta.pageIndex = data.meta.page;
-  //     });
-  // }
-
-  // private _loadBooks(): void {
-  //   this._activatedRoute.queryParams
-  //     .subscribe((params) => {
-  //     this.hotBooks.next(this._getBooks(params).pipe(pluck('books')));
-  //     this.hotMeta.next(this._getBooks(params).pipe(pluck('meta')));
-  //     });
-  // }
-
-  // private _loadHotBooks(): void {
-  //   this.hotBooks
-  //   .subscribe((data) => {
-  //     this.books$ = data;
-  //   });
-  // }
-
-  // private _loadHotMeta(): void {
-  //   this.hotMeta
-  //   .subscribe((data) => {
-  //     this.booksMeta$ = data;
-  //   });
-  // }
 
   private _listenFiltration(): void {
     this.dialogRef.afterClosed()

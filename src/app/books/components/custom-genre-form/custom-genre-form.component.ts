@@ -11,7 +11,6 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IGenre } from '../../../genres/interfaces/genres.interface';
 
 
-// Review
 @Component({
   selector: 'app-custom-genre-form',
   templateUrl: './custom-genre-form.component.html',

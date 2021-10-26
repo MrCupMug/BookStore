@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BooksComponent } from './containers/book-list-container/books.component';
+import { BooksComponent } from './containers/book-list-container/book-list-container.component';
 
 import { BooksRoutingModule } from './books-routing.module';
 
@@ -30,6 +30,9 @@ import { BooksResolverService } from './services/books-resolver.service';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { BookInfoComponent } from './components/book-info/book-info.component';
 import { BooksViewComponent } from './views/books-view/books-view.component';
+import { ImageFormComponent } from './components/image-form/image-form.component';
+
+
 
 
 @NgModule({
@@ -43,6 +46,8 @@ import { BooksViewComponent } from './views/books-view/books-view.component';
     BookListComponent,
     BookInfoComponent,
     BooksViewComponent,
+    ImageFormComponent,
+
   ],
   imports: [
     CommonModule,

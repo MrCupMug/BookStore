@@ -7,7 +7,7 @@ import { AuthorsService } from '../../../authors/services/authors.service';
 import { IBook } from '../../../books/interfaces/books.interface';
 
 @Component({
-  selector: 'app-author-inf-container',
+  selector: 'app-author-info-container',
   templateUrl: './author-inf-container.component.html',
   styleUrls: ['./author-inf-container.component.scss']
 })

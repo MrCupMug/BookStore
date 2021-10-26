@@ -9,7 +9,7 @@ import { AuthorsService } from 'src/app/authors/services/authors.service';
 import { AddAuthorComponent } from '../../components/add-author/add-author.component';
 
 @Component({
-  selector: 'app-authors',
+  selector: 'app-author-list-container',
   templateUrl: './author-list-container.component.html',
   styleUrls: ['./author-list-container.component.scss']
 })

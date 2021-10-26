@@ -1,7 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { IAuthor } from '../../interfaces/authors.interface';
 
 

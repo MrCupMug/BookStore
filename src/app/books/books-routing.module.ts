@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { BooksComponent } from './containers/book-list-container/books.component';
+import { BooksComponent } from './containers/book-list-container/book-list-container.component';
 import { BooksResolverService } from './services/books-resolver.service';
 import { AddBookPageComponent } from './components/add-book-page/add-book-page.component';
 import { FormGuard } from './guards/form.guard';

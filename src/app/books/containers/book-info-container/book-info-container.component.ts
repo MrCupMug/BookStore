@@ -8,7 +8,7 @@ import { IBook } from '../../interfaces/books.interface';
 
 
 @Component({
-  selector: 'app-book-info-page',
+  selector: 'app-book-info-container',
   templateUrl: './book-info-container.component.html',
   styleUrls: ['./book-info-container.component.scss']
 })

@@ -11,6 +11,7 @@ export class FormService {
     title: [null, titleValidator()],
     price: [null, Validators.required],
     genre: [null, Validators.required],
+    image: [null, Validators.required],
     description: [null, Validators.required],
     author: [null, Validators.required],
   });

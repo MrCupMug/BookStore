@@ -94,6 +94,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       title: formValue.title,
       price: formValue.price,
       genres: formValue.genre,
+      image: formValue.image,
     };
 
     this._bookService.addBook(book)

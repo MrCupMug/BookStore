@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { IBook } from '../interfaces/books.interface';
 import { IBooksResponse } from '../interfaces/books-response.interface';
@@ -32,8 +32,6 @@ export class BooksService {
           limit: queryParams.limit,
           page: queryParams.page
         }});
-
-        
 
       return this._http.get<IBooksResponse>(this.booksUrl, {params});
     }

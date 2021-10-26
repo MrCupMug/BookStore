@@ -6,17 +6,18 @@ import { IGenre } from '../../interfaces/genres.interface';
 import { GenresService } from '../../services/genres.service';
 
 @Component({
-  selector: 'app-genre',
+  selector: 'app-genre-list-container',
   templateUrl: './genre-list-container.component.html',
   styleUrls: ['./genre-list-container.component.scss']
 })
 export class GenreListContainerComponent {
 
-  public readonly genres$: Observable<IGenre[]> = this._loadGenres();
-
   constructor(
+    public readonly genres$: Observable<IGenre[]>,
     private readonly _genresService: GenresService,
-  ) {}
+  ) {
+    genres$ = this._loadGenres();
+  }
 
   private _loadGenres(): Observable<IGenre[]> {
     return this._genresService.getGenres()

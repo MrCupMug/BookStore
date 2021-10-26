@@ -6,7 +6,7 @@ export interface IBook {
   price: number;
   genres: Array<object>;
   previews?: Array<null>;
-  image?: null;
+  image: null;
   writing_date?: string;
   release_date?: string;
 }
