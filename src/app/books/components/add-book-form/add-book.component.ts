@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil, map, pluck } from 'rxjs/operators';
+import { debounceTime, takeUntil, map, pluck, tap } from 'rxjs/operators';
+
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { GenresService } from '../../../genres/services/genres.service';
@@ -11,6 +13,7 @@ import { IGenre } from '../../../genres/interfaces/genres.interface';
 import { FormService } from '../../services/book-form.service';
 import { IGenresResponse } from '../../../genres/interfaces/genres-response.interface';
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -28,11 +31,15 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   public fetchGenres$: Observable<IGenre[]>;
 
+  private _ref: AngularFireStorageReference;
+
   constructor(
     private readonly _authorsService: AuthorsService,
     private readonly _genresService: GenresService,
     private readonly _bookService: BooksService,
     private readonly _formService: FormService,
+    private readonly _dialog: MatDialog,
+    private readonly _storage: AngularFireStorage,
   ) { }
 
   public get bookForm(): FormGroup {
@@ -101,13 +108,23 @@ export class AddBookComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
       )
-      .subscribe();
+      .subscribe((data: IBook) => {
+        this._uploadFile(data.id);
+        this._dialog.closeAll();
+      });
   }
 
   public displayFn(author): string {
     return author
       ? `${author.first_name} ${author.last_name}`
       : '';
+  }
+
+  private _uploadFile(bookId: number): void {
+    const id = bookId.toString();
+    const image = this.bookForm.get('image').value;
+    this._ref = this._storage.ref(id);
+    this._ref.put(image);
   }
 
   private _loadAuthors(): void {

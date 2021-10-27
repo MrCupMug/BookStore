@@ -32,9 +32,6 @@ import { BookInfoComponent } from './components/book-info/book-info.component';
 import { BooksViewComponent } from './views/books-view/books-view.component';
 import { ImageFormComponent } from './components/image-form/image-form.component';
 
-
-
-
 @NgModule({
   declarations: [
     BooksComponent,

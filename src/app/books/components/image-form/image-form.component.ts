@@ -9,7 +9,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ImageFormComponent),
-      multi: true 
+      multi: true
     }
   ]
 })

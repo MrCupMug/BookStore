@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
 import { IBook } from 'src/app/books/interfaces/books.interface';
 
@@ -10,7 +11,10 @@ import { IBook } from 'src/app/books/interfaces/books.interface';
 export class BookInfoComponent {
 
   @Input()
-  public book: IBook;
+  public url: string;
+
+  @Input()
+  public book!: IBook;
 
   @Input()
   public author!: IAuthor;

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "imagedb-d7dca": {
+      "hosting": {
+        "BookStore": [
+          "imagedb-d7dca"
+        ]
+      }
+    }
+  }
+}

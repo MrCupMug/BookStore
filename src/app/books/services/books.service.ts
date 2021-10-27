@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IBook } from '../interfaces/books.interface';
 import { IBooksResponse } from '../interfaces/books-response.interface';
 import { AuthorsService } from '../../authors/services/authors.service';
+import { AngularFireUploadTask } from '@angular/fire/storage';
 
 
 @Injectable({
@@ -41,8 +42,8 @@ export class BooksService {
       return this._http.get<IBook>(`${this.booksUrl}/${id}`);
   }
 
-  public addBook(book: Partial<IBook>): Observable<object> {
-    return this._http.post(`/api/authors/${book.author_id}/books`, book);
+  public addBook(book: IBook): Observable<IBook> {
+    return this._http.post<IBook>(`/api/authors/${book.author_id}/books`, book);
   }
 
 }

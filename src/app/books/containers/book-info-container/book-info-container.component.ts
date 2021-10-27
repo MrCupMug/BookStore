@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { IBook } from '../../interfaces/books.interface';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -19,13 +20,17 @@ export class BookInfoContainerComponent implements OnInit {
 
   public author$: Observable<IAuthor>;
 
+  public downloadedUrl$: Observable<string>;
+
   constructor(
     private readonly _authorsService: AuthorsService,
     private readonly _location: Location,
+    private readonly _storage: AngularFireStorage,
   ) { }
 
   public ngOnInit(): void {
     this._getAuthor(this.book.author_id);
+    this._loadImage();
   }
 
   public goBack(): void {
@@ -34,6 +39,12 @@ export class BookInfoContainerComponent implements OnInit {
 
   private _getAuthor(id: number): void {
     this.author$ =  this._authorsService.getAuthor(id);
+  }
+
+  private _loadImage(): void {
+    this.downloadedUrl$ = this.book.id > 178
+    ? this._storage.ref(`/${this.book.id}`).getDownloadURL()
+    : this.downloadedUrl$ = null;
   }
 
 }
