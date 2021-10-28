@@ -52,7 +52,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   public focused = false;
   public required: boolean;
   public disabled: boolean;
-  public errorState = false;
+  public errorState: boolean;
   public controlType = 'app-custom-genre-form';
 
   public describedBy = '';

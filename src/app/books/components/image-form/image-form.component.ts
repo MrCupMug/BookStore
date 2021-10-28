@@ -17,7 +17,7 @@ export class ImageFormComponent implements OnInit, ControlValueAccessor {
 
   public image: FormControl;
 
-  private file: File | null = null;
+  public file: File | null = null;
 
   constructor() { }
 

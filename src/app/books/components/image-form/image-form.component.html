@@ -1,1 +1,12 @@
-<input [formControl]="image" type="file">
+<button mat-raised-button color="primary" (click)="uploader.click()">
+  Upload
+</button>
+<ng-container *ngIf="file">
+  {{file?.name.substring(0, [10]) + '...'}}
+</ng-container>
+<input 
+  hidden
+  type="file" 
+  id="file" 
+  [formControl]="image"
+  #uploader><br>

@@ -4,7 +4,7 @@
     <mat-form-field class="example-full-width">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title">
-      <mat-error *ngIf="titleControl.errors?.invalidTitle && (titleControl.dirty || titleControl.touched)">
+      <mat-error *ngIf="titleControl.errors?.invalidTitle">
         Title should be more then 5 characters
       </mat-error>
     </mat-form-field>

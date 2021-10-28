@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { IBook } from '../../interfaces/books.interface';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { map, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
   templateUrl: './book-info-container.component.html',
   styleUrls: ['./book-info-container.component.scss']
 })
-export class BookInfoContainerComponent implements OnInit {
+export class BookInfoContainerComponent implements OnInit, OnDestroy {
 
   @Input()
   public book: IBook;
@@ -21,6 +22,8 @@ export class BookInfoContainerComponent implements OnInit {
   public author$: Observable<IAuthor>;
 
   public downloadedUrl$: Observable<string>;
+
+  public destroy$ = new Subject<void>();
 
   constructor(
     private readonly _authorsService: AuthorsService,
@@ -33,6 +36,11 @@ export class BookInfoContainerComponent implements OnInit {
     this._loadImage();
   }
 
+  public ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public goBack(): void {
     this._location.back();
   }
@@ -42,9 +50,19 @@ export class BookInfoContainerComponent implements OnInit {
   }
 
   private _loadImage(): void {
-    this.downloadedUrl$ = this.book.id > 178
-    ? this._storage.ref(`/${this.book.id}`).getDownloadURL()
-    : this.downloadedUrl$ = null;
+    this._storage.ref('').listAll()
+      .pipe(
+        map((data) => {
+          return data.items
+            .find((el) => el.name === this.book.id.toString());
+        }),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((data) => {
+        this.downloadedUrl$ = data?.name
+          ? this._storage.ref(`/${this.book.id}`).getDownloadURL()
+          : null;
+      });
   }
 
 }

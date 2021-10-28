@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil, map, pluck, tap } from 'rxjs/operators';
+import { debounceTime, takeUntil, map, pluck } from 'rxjs/operators';
 
 import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 
@@ -13,7 +14,6 @@ import { IGenre } from '../../../genres/interfaces/genres.interface';
 import { FormService } from '../../services/book-form.service';
 import { IGenresResponse } from '../../../genres/interfaces/genres-response.interface';
 import { IAuthor } from '../../../authors/interfaces/authors.interface';
-import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -110,6 +110,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: IBook) => {
         this._uploadFile(data.id);
+        this.bookForm.reset();
         this._dialog.closeAll();
       });
   }
