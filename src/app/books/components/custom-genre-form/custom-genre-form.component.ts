@@ -37,7 +37,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
 
   public genreOptions$: Observable<IGenre[]>;
 
-  public genres: IGenre[] = [];
+  public genres: IGenre[];
 
   public destroy$ = new Subject<void>();
 
@@ -52,7 +52,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   public focused = false;
   public required: boolean;
   public disabled: boolean;
-  public errorState: boolean;
+  // public errorState: boolean;
   public controlType = 'app-custom-genre-form';
 
   public describedBy = '';
@@ -69,30 +69,34 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
       this.ngControl.valueAccessor = this;
     }
 
-    public get empty(): boolean {
-      return !this.genreForm.value;
-    }
+  public get errorState(): boolean {
+    return this.genreForm.touched && this.genres.length === 0;
+  }
 
-    public get shouldLabelFloat(): boolean {
-      return this.focused || !this.empty || !!this.genres.length;
-    }
+  public get empty(): boolean {
+    return !this.genreForm.value;
+  }
 
-    @Input()
-    public get placeholder(): string {
-      return this._placeholder;
-    }
-    public set placeholder(placeholder: string) {
-      this._placeholder = placeholder;
-      this.stateChanges.next();
-    }
+  public get shouldLabelFloat(): boolean {
+    return this.focused || !this.empty || !!this.genres.length;
+  }
 
-    @Input()
-    public get value(): IGenre[] {
-      return this.genres;
-    }
-    public set value(genres: IGenre[] | null) {
-      this.genres = genres;
-    }
+  @Input()
+  public get placeholder(): string {
+    return this._placeholder;
+  }
+  public set placeholder(placeholder: string) {
+    this._placeholder = placeholder;
+    this.stateChanges.next();
+  }
+
+  @Input()
+  public get value(): IGenre[] {
+    return this.genres;
+  }
+  public set value(genres: IGenre[] | null) {
+    this.genres = genres;
+  }
 
   public ngOnInit(): void {
     this._initForm();
