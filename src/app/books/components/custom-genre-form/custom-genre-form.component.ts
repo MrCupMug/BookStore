@@ -50,6 +50,7 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   public focused = false;
+  public touched = false;
   public required: boolean;
   public disabled: boolean;
   // public errorState: boolean;
@@ -64,13 +65,14 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private readonly _fm: FocusMonitor,
+    private _elementRef: ElementRef<HTMLElement>,
     private readonly _elRef: ElementRef<HTMLElement>
   ) {
       this.ngControl.valueAccessor = this;
     }
 
   public get errorState(): boolean {
-    return this.genreForm.touched && this.genres.length === 0;
+    return this.touched && this.genres.length === 0;
   }
 
   public get empty(): boolean {
@@ -109,6 +111,22 @@ export class CustomGenreFormComponent implements OnInit, OnDestroy, MatFormField
     this._fm.stopMonitoring(this._elRef.nativeElement);
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public onFocusIn(event: FocusEvent): void {
+    if (!this.focused) {
+      this.focused = true;
+      this.stateChanges.next();
+    }
+  }
+
+  public onFocusOut(event: FocusEvent): void {
+    if (!this._elementRef.nativeElement.contains(event.relatedTarget as Element)) {
+      this.touched = true;
+      this.focused = false;
+      this.onTouch();
+      this.stateChanges.next();
+    }
   }
 
   public setDisabledState?(isDisabled: boolean): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,8 @@ import { IBook } from '../../interfaces/books.interface';
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss']
+  styleUrls: ['./book-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookListComponent {
 
@@ -29,7 +30,7 @@ export class BookListComponent {
   @Output()
   public pagination = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
   public setBookInfo(book: IBook): void {
     this.bookInfo.emit(book);

@@ -41,7 +41,7 @@
       [fetchFn]="fetchGenres$"
       formControlName="genre">
       </app-custom-genre-form>
-      <mat-error *ngIf="genreControl.invalid">
+      <mat-error *ngIf="genreControl?.invalid">
         Genres field can't be empty
       </mat-error>
     </mat-form-field>
@@ -49,6 +49,8 @@
       <app-image-form
         formControlName="image">
       </app-image-form>
+
+
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>

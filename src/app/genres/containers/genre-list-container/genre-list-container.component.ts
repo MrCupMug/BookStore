@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
@@ -11,12 +11,13 @@ import { GenresService } from '../../services/genres.service';
   styleUrls: ['./genre-list-container.component.scss']
 })
 export class GenreListContainerComponent {
+  
+  public readonly genres$: Observable<IGenre[]>
 
   constructor(
-    public readonly genres$: Observable<IGenre[]>,
     private readonly _genresService: GenresService,
   ) {
-    genres$ = this._loadGenres();
+    this.genres$ = this._loadGenres();
   }
 
   private _loadGenres(): Observable<IGenre[]> {

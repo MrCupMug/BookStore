@@ -1,12 +1,12 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
 import { IBook } from 'src/app/books/interfaces/books.interface';
 
 @Component({
   selector: 'app-book-info-view',
   templateUrl: './book-info.component.html',
-  styleUrls: ['./book-info.component.scss']
+  styleUrls: ['./book-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookInfoComponent {
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { IGenre } from '../../interfaces/genres.interface';
 
@@ -6,16 +6,14 @@ import { IGenre } from '../../interfaces/genres.interface';
 @Component({
   selector: 'app-genre-list',
   templateUrl: './genre-list.component.html',
-  styleUrls: ['./genre-list.component.scss']
+  styleUrls: ['./genre-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenreListComponent implements OnInit {
+export class GenreListComponent {
 
   @Input()
   public genres: IGenre[];
 
   constructor() { }
-
-  public ngOnInit(): void {
-  }
 
 }

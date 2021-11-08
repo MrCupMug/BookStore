@@ -7,7 +7,9 @@
   <input
           [formControl]="genreForm"
           [matChipInputFor]="genreList"
-          [matAutocomplete]="genreAutocomplete">       
+          [matAutocomplete]="genreAutocomplete"
+          (focusin)="onFocusIn($event)"
+          (focusout)="onFocusOut($event)">       
   <mat-autocomplete #genreAutocomplete="matAutocomplete">
     <mat-option *ngFor="let genre of genreOptions$ | async" (click)="addGenre(genre.name)">
       {{ genre.name }}
