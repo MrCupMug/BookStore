@@ -1,6 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-
-import { IBook } from '../../books/interfaces/books.interface';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -9,17 +7,5 @@ import { IBook } from '../../books/interfaces/books.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-
-  @Input()
-  public book!: IBook;
-
-  @Output()
-  private readonly bookInfo = new EventEmitter<IBook>();
-
-  constructor() { }
-
-  public showAdditionalInfo(book: IBook): void {
-    this.bookInfo.emit(book);
-  }
 
 }

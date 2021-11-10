@@ -32,10 +32,6 @@ export class BookListComponent {
 
   constructor() {}
 
-  public setBookInfo(book: IBook): void {
-    this.bookInfo.emit(book);
-  }
-
   public openFilter(): void {
     this.filter.emit();
   }

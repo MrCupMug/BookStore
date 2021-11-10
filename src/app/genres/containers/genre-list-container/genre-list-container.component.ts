@@ -11,8 +11,8 @@ import { GenresService } from '../../services/genres.service';
   styleUrls: ['./genre-list-container.component.scss']
 })
 export class GenreListContainerComponent {
-  
-  public readonly genres$: Observable<IGenre[]>
+
+  public readonly genres$: Observable<IGenre[]>;
 
   constructor(
     private readonly _genresService: GenresService,

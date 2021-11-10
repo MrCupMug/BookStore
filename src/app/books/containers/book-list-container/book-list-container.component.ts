@@ -19,6 +19,7 @@ import { IMeta } from '../../../interfaces/meta.interface';
 export class BooksComponent implements OnInit, OnDestroy {
 
   public readonly meta$: Observable<IMeta>;
+
   public readonly books$: Observable<IBook[]>;
 
   public dialogRef: MatDialogRef<FilterComponent>;

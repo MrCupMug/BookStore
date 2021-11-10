@@ -31,6 +31,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { BookInfoComponent } from './components/book-info/book-info.component';
 import { BooksViewComponent } from './views/books-view/books-view.component';
 import { ImageFormComponent } from './components/image-form/image-form.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ImageFormComponent } from './components/image-form/image-form.component
     MatSelectModule,
     MatPaginatorModule,
     MatSliderModule,
+    MatCardModule,
   ],
   entryComponents: [ AddBookComponent, FilterComponent ],
   providers: [

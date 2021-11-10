@@ -1,5 +1,8 @@
 <div class="container">
   <div class="genre-card" *ngFor="let genre of genres">
-    <h3>{{ genre.name }}</h3>
+    <app-card>
+      <img src="../../../assets/floppa.jpg" alt="floppa" height="200">
+      <h3>{{ genre.name }}</h3>
+    </app-card>
   </div>
 </div>

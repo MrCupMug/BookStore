@@ -1,8 +1,6 @@
-<mat-card (click)="showAdditionalInfo(book)" class="card">
-  <img src="../../../assets/bookjpg" height="210">
-
-  <div class="book-main-data">
-    <mat-card-title>{{ book.title }}</mat-card-title>
-    <mat-card-subtitle>{{ book.price }}</mat-card-subtitle>
+<mat-card class="card">
+    <ng-content select="img"></ng-content>
+  <div class="main-body">
+    <ng-content></ng-content>
   </div>
 </mat-card>
