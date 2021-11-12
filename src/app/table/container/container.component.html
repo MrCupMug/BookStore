@@ -1,0 +1,8 @@
+<app-table [config]="config">
+  <ng-template appMyCell let-name="name">
+    {{ name }}
+  </ng-template>
+  <ng-template appMyCell let-age="age">
+    {{ age | age }}
+  </ng-template>
+</app-table>

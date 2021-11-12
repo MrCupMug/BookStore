@@ -1,0 +1,11 @@
+<table>
+  <tbody>
+    <tr *ngFor="let item of personList | async">
+      <td *ngFor="let cell of cells">
+        <ng-container *ngTemplateOutlet="cell; context: item">
+          
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>  
+</table>

@@ -1,0 +1,16 @@
+th, td {
+  border-radius: 10px;
+  width: 50%;
+  height: 50px;
+  background-color: rgba(18, 15, 160, 0.5);
+  cursor: pointer;
+}
+
+td:hover {
+  background-color: rgba(51, 49, 202, 0.5)
+}
+
+table {
+  text-align: center;
+  width: 100%;
+}

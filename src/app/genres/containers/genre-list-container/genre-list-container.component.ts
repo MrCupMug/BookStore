@@ -5,6 +5,7 @@ import { pluck } from 'rxjs/operators';
 import { IGenre } from '../../interfaces/genres.interface';
 import { GenresService } from '../../services/genres.service';
 
+
 @Component({
   selector: 'app-genre-list-container',
   templateUrl: './genre-list-container.component.html',

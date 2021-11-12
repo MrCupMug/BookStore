@@ -9,10 +9,6 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-import { AngularFireModule } from '@angular/fire/';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
-
 
 @NgModule({
   declarations: [
@@ -24,8 +20,6 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     LayoutModule,
     RouterModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

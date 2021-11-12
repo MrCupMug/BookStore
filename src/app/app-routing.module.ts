@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule),
   },
   {
+    path: 'table',
+    loadChildren: () => import('./table/table.module').then((m) => m.TableModule),
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

@@ -8,6 +8,7 @@ import { GenresRoutingModule } from './genres-routing.module';
 import { GenreListContainerComponent } from './containers/genre-list-container/genre-list-container.component';
 import { MatCardModule } from '@angular/material/card';
 import { CardModule } from '../card/card.module';
+import { TableModule } from '../table/table.module';
 
 @NgModule({
   declarations: [GenreListComponent, GenreListContainerComponent],
@@ -17,6 +18,7 @@ import { CardModule } from '../card/card.module';
     FormsModule,
     CardModule,
     MatCardModule,
+    TableModule
   ]
 })
 export class GenresModule { }

@@ -33,6 +33,10 @@ import { BooksViewComponent } from './views/books-view/books-view.component';
 import { ImageFormComponent } from './components/image-form/image-form.component';
 import { MatCardModule } from '@angular/material/card';
 
+import { AngularFireModule } from '@angular/fire/';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../../environments/environment';
+
 @NgModule({
   declarations: [
     BooksComponent,
@@ -45,7 +49,6 @@ import { MatCardModule } from '@angular/material/card';
     BookInfoComponent,
     BooksViewComponent,
     ImageFormComponent,
-
   ],
   imports: [
     CommonModule,
@@ -64,6 +67,8 @@ import { MatCardModule } from '@angular/material/card';
     MatPaginatorModule,
     MatSliderModule,
     MatCardModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
   ],
   entryComponents: [ AddBookComponent, FilterComponent ],
   providers: [
