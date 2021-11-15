@@ -1,0 +1,18 @@
+<table>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td *ngFor="let cell of cells">
+        <ng-container *ngTemplateOutlet="cell; context: item">
+          
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>  
+</table>
+
+<mat-paginator [length]="data.length"
+              [pageSize]="9"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="setPagination($event)"
+              aria-label="Select page">
+</mat-paginator>

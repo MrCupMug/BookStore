@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { of } from 'rxjs';
 
 import { ITableConfig } from '../interfaces/config-interface';
@@ -10,7 +11,7 @@ import { ITableConfig } from '../interfaces/config-interface';
 })
 export class ContainerComponent {
 
-  public config: ITableConfig = {
+  public config$: ITableConfig = {
     fetch: () => {
       return of([{
         name: 'John',
@@ -52,5 +53,9 @@ export class ContainerComponent {
   };
 
   constructor() { }
+
+  public setPagination(event: PageEvent): void {
+    
+  }
 
 }

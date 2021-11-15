@@ -1,4 +1,4 @@
-<app-table [config]="config">
+<app-table [data]="config$.fetch() | async" (paginationSettings)=setPagination($event)>
   <ng-template appMyCell let-name="name">
     {{ name }}
   </ng-template>
