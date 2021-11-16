@@ -1,5 +1,8 @@
 import { Observable } from 'rxjs';
 
 export interface ITableConfig {
-  fetch(): Observable<object[]>;
+  fetch(start: number, end: number): Observable<{
+    data: object[],
+    total: number,
+  }>;
 }

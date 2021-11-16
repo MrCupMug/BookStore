@@ -1,6 +1,6 @@
 <table>
   <tbody>
-    <tr *ngFor="let item of data | paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
+    <tr *ngFor="let item of data">
       <td *ngFor="let cell of cells">
         <ng-container *ngTemplateOutlet="cell; context: item">
           
@@ -10,11 +10,8 @@
   </tbody>  
 </table>
 
-<div class="paginator">
-  <mat-paginator [length]="data.length"
-              [pageSize]="pageSize"
+<app-paginator
+              [total]="total"
               [pageSizeOptions]="pageSizeOptions"
-              (page)="setPagination($event)"
-              aria-label="Select page">
-  </mat-paginator>
-</div>
+              (pagination)="setPagination($event)">
+</app-paginator>

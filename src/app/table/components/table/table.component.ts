@@ -1,6 +1,8 @@
-import { Component, ContentChildren, Input, Output, QueryList, TemplateRef, EventEmitter, OnInit } from '@angular/core';
+import { Component, ContentChildren, Input, OnInit, QueryList, TemplateRef } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 import { MycellDirective } from '../../directives/mycell.directive';
+import { ITableConfig } from '../../interfaces/config-interface';
 
 
 @Component({
@@ -8,10 +10,14 @@ import { MycellDirective } from '../../directives/mycell.directive';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
 
   @Input()
-  public data;
+  public config: ITableConfig;
+
+  public data: object[];
+
+  public total: number;
 
   public pageSize = 9;
 
@@ -24,9 +30,22 @@ export class TableComponent {
 
   constructor() { }
 
-  public setPagination(event: PageEvent): void {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex + 1;
+  public ngOnInit(): void {
+    this._loadData(0, this.pageSize);
+  }
+
+  public setPagination(options: any): void {
+    const first = (options.pageIndex) * options.pageSize - options.pageSize;
+    const last = (options.pageIndex) * options.pageSize;
+    this._loadData(first, last);
+  }
+
+  private _loadData(start: number, end: number): void {
+    this.config.fetch(start, end)
+    .subscribe((response) => {
+      this.data = response.data;
+      this.total = response.total;
+    });
   }
 
 }

@@ -1,0 +1,21 @@
+<div class="paginator">
+  <div>
+    <button [disabled]="currentPage == 1" mat-fab color="primary" class="paginator-button" (click)="firstPage()">First</button>
+    <button [disabled]="currentPage == 1" mat-fab color="primary" class="paginator-button" (click)="previousPage()">Previous</button>
+  </div>
+  <mat-form-field>
+    <mat-select name="paginator" id="select-paginator" class="select-center" [value]="9">
+      <mat-option class="select-center" *ngFor="let option of pageSizeOptions" [value]="option" (click)="setSize(option)">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>
+    <button [disabled]="currentPage == pages" mat-fab color="primary" class="paginator-button" (click)="nextPage()">Next</button>
+    <button [disabled]="currentPage == pages" mat-fab color="primary" class="paginator-button" (click)="lastPage()">Last</button>
+  </div>
+</div>
+
+<div class="pages">
+  {{currentPage + ' of ' + pages}}
+</div>

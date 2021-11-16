@@ -1,4 +1,4 @@
-<app-table [data]="config$.fetch() | async">
+<app-table [config]="config">
   <ng-template appMyCell let-name="name">
     {{ name }}
   </ng-template>
