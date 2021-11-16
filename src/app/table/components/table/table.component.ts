@@ -1,4 +1,4 @@
-import { Component, ContentChildren, Input, OnChanges, Output, QueryList, TemplateRef, EventEmitter } from '@angular/core';
+import { Component, ContentChildren, Input, Output, QueryList, TemplateRef, EventEmitter, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MycellDirective } from '../../directives/mycell.directive';
 
@@ -13,13 +13,9 @@ export class TableComponent {
   @Input()
   public data;
 
-  @Input()
-  public length: number;
+  public pageSize = 9;
 
-  @Output()
-  public paginationSettings = new EventEmitter<any>();
-
-  public pageSize: number;
+  public currentPage = 1;
 
   public pageSizeOptions = [3, 6, 9];
 
@@ -29,8 +25,8 @@ export class TableComponent {
   constructor() { }
 
   public setPagination(event: PageEvent): void {
-    this.paginationSettings.emit(event);
-
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex + 1;
   }
 
 }

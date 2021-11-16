@@ -54,8 +54,4 @@ export class ContainerComponent {
 
   constructor() { }
 
-  public setPagination(event: PageEvent): void {
-    
-  }
-
 }
