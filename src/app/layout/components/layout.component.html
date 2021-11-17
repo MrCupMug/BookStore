@@ -1,22 +1,30 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button class="icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
-    <mat-icon matRipple [matRippleUnbounded]="true" class="white-content">menu</mat-icon>
-  </button>
-  BookStore
-  <span class="spacer"></span>
-  <button matRipple [matRippleUnbounded]="true" mat-icon-button class="icon favorite-icon white-content" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button matRipple [matRippleUnbounded]="true" mat-icon-button class="icon white-content" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
-
-<mat-drawer-container [hasBackdrop]="true" class="container">
-   <mat-drawer #drawer class="sidenav" mode="side">
-    <h2 routerLink="/books" class="sidebar-link" (click)="drawer.toggle()">Books</h2>
-    <h2 routerLink="/authors" class="sidebar-link" (click)="drawer.toggle()">Authors</h2>
-    <h2 routerLink="/genres" class="sidebar-link" (click)="drawer.toggle()">Genres</h2>
-    <h2 routerLink="/table" class="sidebar-link" (click)="drawer.toggle()">Table</h2>
-  </mat-drawer>
-</mat-drawer-container>
+<div class="mutual-container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+      <mat-icon matRipple [matRippleUnbounded]="true" class="white-content">menu</mat-icon>
+    </button>
+    BookStore
+    <span class="spacer"></span>
+    <button matRipple [matRippleUnbounded]="true" mat-icon-button class="icon favorite-icon white-content" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button matRipple [matRippleUnbounded]="true" mat-icon-button class="icon white-content" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+  
+  <mat-drawer-container [hasBackdrop]="true" class="container">
+     <mat-drawer #drawer class="sidenav" mode="over">
+      <h2 routerLink="/books" class="sidebar-link" (click)="drawer.toggle()">Books</h2>
+      <h2 routerLink="/authors" class="sidebar-link" (click)="drawer.toggle()">Authors</h2>
+      <h2 routerLink="/genres" class="sidebar-link" (click)="drawer.toggle()">Genres</h2>
+      <h2 routerLink="/table" class="sidebar-link" (click)="drawer.toggle()">Table</h2>
+    </mat-drawer>
+  
+    <mat-drawer-content class="content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  
+  
+  </mat-drawer-container>
+</div>

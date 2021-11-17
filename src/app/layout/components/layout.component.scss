@@ -9,14 +9,16 @@
   cursor: pointer;
 }
 
+.sidebar-link:hover {
+  background-color: rgba(0, 19, 255, 0.3);
+}
+
 .white-content {
   color: white;
 }
 
 .container {
-  position: absolute;
   height: 100%;
-  text-align: center;
 }
 
 .sidenav {
@@ -25,9 +27,16 @@
 
 .sidebar-link {
   cursor: pointer;
+  margin: 0;
+  padding: 20px 0;
 }
 
 h2 {
+  text-align: center;
   outline: none;
   border: 0;
+}
+
+.content {
+  padding: 50px;
 }

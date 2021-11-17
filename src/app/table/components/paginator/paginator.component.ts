@@ -15,7 +15,7 @@ export class PaginatorComponent implements OnChanges {
   public pageSizeOptions: number[];
 
   @Output()
-  public pagination = new EventEmitter<object>();
+  public pagination = new EventEmitter<IPaginationOptions>();
 
   public currentPage = 1;
 
@@ -35,8 +35,9 @@ export class PaginatorComponent implements OnChanges {
   }
 
   public setSize(value: number): void {
-    if (value === 9) {
-      this.currentPage = 1;
+    const currentPages = Math.ceil(this.total / value);
+    if (this.currentPage > currentPages) {
+      this.currentPage = currentPages;
     }
     this.pageSize = value;
     this.setPagination();

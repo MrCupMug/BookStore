@@ -1,6 +1,6 @@
 <table>
   <tbody>
-    <tr *ngFor="let item of data">
+    <tr *ngFor="let item of data | async">
       <td *ngFor="let cell of cells">
         <ng-container *ngTemplateOutlet="cell; context: item">
           
@@ -11,7 +11,7 @@
 </table>
 
 <app-paginator
-              [total]="total"
+              [total]="total | async"
               [pageSizeOptions]="pageSizeOptions"
               (pagination)="setPagination($event)">
 </app-paginator>

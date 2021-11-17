@@ -1,4 +1,6 @@
 import { Component, ContentChildren, Input, OnInit, QueryList, TemplateRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 import { MycellDirective } from '../../directives/mycell.directive';
 import { ITableConfig } from '../../interfaces/config-interface';
 import { IPaginationOptions } from '../../interfaces/pagination-options-interface';
@@ -14,9 +16,9 @@ export class TableComponent implements OnInit {
   @Input()
   public config: ITableConfig;
 
-  public data: object[];
+  public data: Observable<object[]>;
 
-  public total: number;
+  public total: Observable<number>;
 
   public pageSize = 9;
 
@@ -38,11 +40,16 @@ export class TableComponent implements OnInit {
   }
 
   private _loadData(start: number, end: number): void {
-    this.config.fetch(start, end)
-    .subscribe((response) => {
-      this.data = response.data;
-      this.total = response.total;
-    });
+    this.data = this.config.fetch(start, end)
+      .pipe(
+        pluck('data'),
+      );
+
+    this.total = this.config.fetch(start, end)
+      .pipe(
+        pluck('total'),
+      );
   }
+
 
 }
