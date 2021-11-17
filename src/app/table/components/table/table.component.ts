@@ -1,8 +1,7 @@
 import { Component, ContentChildren, Input, OnInit, QueryList, TemplateRef } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Observable } from 'rxjs';
 import { MycellDirective } from '../../directives/mycell.directive';
 import { ITableConfig } from '../../interfaces/config-interface';
+import { IPaginationOptions } from '../../interfaces/pagination-options-interface';
 
 
 @Component({
@@ -21,8 +20,6 @@ export class TableComponent implements OnInit {
 
   public pageSize = 9;
 
-  public currentPage = 1;
-
   public pageSizeOptions = [3, 6, 9];
 
   @ContentChildren(MycellDirective, {descendants: true, read: TemplateRef})
@@ -34,7 +31,7 @@ export class TableComponent implements OnInit {
     this._loadData(0, this.pageSize);
   }
 
-  public setPagination(options: any): void {
+  public setPagination(options: IPaginationOptions): void {
     const first = (options.pageIndex) * options.pageSize - options.pageSize;
     const last = (options.pageIndex) * options.pageSize;
     this._loadData(first, last);
