@@ -18,7 +18,7 @@ import { TableModule } from '../table/table.module';
     FormsModule,
     CardModule,
     MatCardModule,
-    TableModule
+    TableModule,
   ]
 })
 export class GenresModule { }

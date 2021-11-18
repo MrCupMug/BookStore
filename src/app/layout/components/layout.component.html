@@ -15,14 +15,16 @@
   
   <mat-drawer-container [hasBackdrop]="true" class="container">
      <mat-drawer #drawer class="sidenav" mode="over">
-      <h2 routerLink="/books" class="sidebar-link" (click)="drawer.toggle()">Books</h2>
-      <h2 routerLink="/authors" class="sidebar-link" (click)="drawer.toggle()">Authors</h2>
-      <h2 routerLink="/genres" class="sidebar-link" (click)="drawer.toggle()">Genres</h2>
-      <h2 routerLink="/table" class="sidebar-link" (click)="drawer.toggle()">Table</h2>
+       <div class="buttons-container">
+        <h2 routerLink="/books" class="sidebar-link" (click)="drawer.toggle()">Books</h2>
+        <h2 routerLink="/authors" class="sidebar-link" (click)="drawer.toggle()">Authors</h2>
+        <h2 routerLink="/genres" class="sidebar-link" (click)="drawer.toggle()">Genres</h2>
+        <h2 routerLink="/table" class="sidebar-link" (click)="drawer.toggle()">Table</h2>
+       </div>
     </mat-drawer>
   
     <mat-drawer-content class="content">
-      <router-outlet></router-outlet>
+      <ng-content></ng-content>
     </mat-drawer-content>
   
   

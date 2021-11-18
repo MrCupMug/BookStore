@@ -1,6 +1,7 @@
-import { Component, ContentChildren, Input, OnInit, QueryList, TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { pluck, switchMap } from 'rxjs/operators';
+
 import { MycellDirective } from '../../directives/mycell.directive';
 import { ITableConfig } from '../../interfaces/config-interface';
 import { IPaginationOptions } from '../../interfaces/pagination-options-interface';
@@ -11,7 +12,7 @@ import { IPaginationOptions } from '../../interfaces/pagination-options-interfac
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent{
 
   @Input()
   public config: ITableConfig;
@@ -25,31 +26,32 @@ export class TableComponent implements OnInit {
   public pageSizeOptions = [3, 6, 9];
 
   @ContentChildren(MycellDirective, {descendants: true, read: TemplateRef})
-  cells: QueryList<TemplateRef<MycellDirective>>;
+  public cells: QueryList<TemplateRef<MycellDirective>>;
 
-  constructor() { }
+  private readonly paginationChange$ = new BehaviorSubject<{start: number, end: number}>({start: 0, end: 9});
 
-  public ngOnInit(): void {
-    this._loadData(0, this.pageSize);
+  constructor() {
+    const fetchData = this.paginationChange$
+      .pipe(
+        switchMap((data) => this.config.fetch(data.start, data.end)),
+        // share(),
+      );
+
+    this.data = fetchData
+      .pipe(
+        pluck('data')
+      );
+
+    this.total = fetchData
+      .pipe(
+        pluck('total')
+      );
   }
 
   public setPagination(options: IPaginationOptions): void {
     const first = (options.pageIndex) * options.pageSize - options.pageSize;
     const last = (options.pageIndex) * options.pageSize;
-    this._loadData(first, last);
+    this.paginationChange$.next({start: first, end: last});
   }
-
-  private _loadData(start: number, end: number): void {
-    this.data = this.config.fetch(start, end)
-      .pipe(
-        pluck('data'),
-      );
-
-    this.total = this.config.fetch(start, end)
-      .pipe(
-        pluck('total'),
-      );
-  }
-
 
 }
