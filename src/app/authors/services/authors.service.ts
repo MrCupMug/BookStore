@@ -5,6 +5,7 @@ import { IAuthor } from '../interfaces/authors.interface';
 import { IAuthorsResponse } from '../interfaces/authors-response.interface';
 import { Observable } from 'rxjs';
 import { IBooksResponse } from '../../books/interfaces/books-response.interface';
+import { IPaginationOptions } from 'src/app/table/interfaces/pagination-options-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,14 @@ export class AuthorsService {
     private readonly _http: HttpClient,
   ) { }
 
-    public getAuthors(): Observable<IAuthorsResponse> {
-      return this._http.get<IAuthorsResponse>(this.authorUrl);
+    public getAuthors(options: IPaginationOptions): Observable<IAuthorsResponse> {
+      const params = new HttpParams({
+        fromObject: {
+          page: options.pageIndex,
+          limit: options.pageSize
+        }
+      });
+      return this._http.get<IAuthorsResponse>(this.authorUrl, {params});
     }
 
     public getAuthor(authorId: number): Observable<IAuthor> {

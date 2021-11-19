@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="authors" class="mat-elevation-z8">
+<!-- <table mat-table [dataSource]="authors" class="mat-elevation-z8">
 
   <ng-container matColumnDef="first_name">
     <th mat-header-cell *matHeaderCellDef>First name</th>
@@ -33,6 +33,22 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>
+
+<div class="add-author">
+  <button mat-raised-button color="primary" (click)="openDialog()">Add author</button>
+</div> -->
+
+<app-table [config]="config" [headers]="headers">
+  <ng-template appMyCell let-first_name="first_name">
+    {{ first_name }}
+  </ng-template>
+  <ng-template appMyCell let-last_name="last_name">
+    {{ last_name }}
+  </ng-template>
+  <ng-template appMyCell let-id="id">
+    <a [routerLink]="['./', id]"><button>knopka</button></a>
+  </ng-template>
+</app-table>
 
 <div class="add-author">
   <button mat-raised-button color="primary" (click)="openDialog()">Add author</button>

@@ -19,10 +19,17 @@ import { AuthorsResolverService } from './services/authors-resolver.service';
 import { AuthorListContainerComponent } from './containers/author-list-container/author-list-container.component';
 import { AuthorInfContainerComponent } from './containers/author-info-container/author-inf-container.component';
 import { AuthorViewComponent } from './views/author-view/author-view.component';
+import { TableModule } from '../table/table.module';
 
 
 @NgModule({
-  declarations: [AuthorListComponent, AddAuthorComponent, AuthorInfoComponent, AuthorListContainerComponent, AuthorInfContainerComponent, AuthorViewComponent],
+  declarations: [
+    AuthorListComponent,
+    AddAuthorComponent,
+    AuthorInfoComponent,
+    AuthorListContainerComponent,
+    AuthorInfContainerComponent,
+    AuthorViewComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -35,6 +42,7 @@ import { AuthorViewComponent } from './views/author-view/author-view.component';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    TableModule,
   ],
   providers: [AuthorsResolverService],
   entryComponents: [AddAuthorComponent],

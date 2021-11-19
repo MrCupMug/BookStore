@@ -41,14 +41,14 @@ export class BooksComponent implements OnInit, OnDestroy {
     private readonly _dialog: MatDialog,
   ) {
     this.books$ = this._booksResponse$
-    .pipe(
-      pluck('books')
-    );
+      .pipe(
+        pluck('books')
+      );
 
     this.meta$ = this._booksResponse$
-    .pipe(
-      pluck('meta')
-    );
+      .pipe(
+        pluck('meta')
+      );
    }
 
   public ngOnInit(): void {}

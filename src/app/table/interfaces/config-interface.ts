@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
+import { IPaginationOptions } from './pagination-options-interface';
 
 export interface ITableConfig {
-  fetch: (start: number, end: number) => Observable<{
+  fetch: (options: IPaginationOptions) => Observable<{
     data: object[],
     total: number,
   }>;

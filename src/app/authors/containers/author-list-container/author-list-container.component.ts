@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IAuthor } from 'src/app/authors/interfaces/authors.interface';
 import { AuthorsService } from 'src/app/authors/services/authors.service';
+import { IPaginationOptions } from 'src/app/table/interfaces/pagination-options-interface';
 import { AddAuthorComponent } from '../../components/add-author/add-author.component';
 
 @Component({
@@ -13,7 +14,13 @@ import { AddAuthorComponent } from '../../components/add-author/add-author.compo
   templateUrl: './author-list-container.component.html',
   styleUrls: ['./author-list-container.component.scss']
 })
-export class AuthorListContainerComponent implements OnInit {
+export class AuthorListContainerComponent {
+
+  public headers = ['first name', 'last name', 'Additional info'];
+
+  public config = {
+    fetch: this.getAuthors.bind(this),
+  };
 
   public authors$: Observable<IAuthor[]>;
 
@@ -22,14 +29,15 @@ export class AuthorListContainerComponent implements OnInit {
     private readonly _authorsService: AuthorsService,
   ) { }
 
-  ngOnInit(): void {
-    this._loadAuthors();
-  }
-
-  private _loadAuthors(): void {
-    this.authors$ = this._authorsService.getAuthors()
+  public getAuthors(options: IPaginationOptions): Observable<{data: object[], total: number}> {
+    return this._authorsService.getAuthors(options)
       .pipe(
-        pluck('authors'),
+        map((data) => {
+          return {
+            data: data.authors,
+            total: data.meta.records,
+          };
+        })
       );
   }
 

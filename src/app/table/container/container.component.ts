@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs';
 
 import { ITableConfig } from '../interfaces/config-interface';
+import { IPaginationOptions } from '../interfaces/pagination-options-interface';
 
 @Component({
   selector: 'app-container',
@@ -9,6 +10,8 @@ import { ITableConfig } from '../interfaces/config-interface';
   styleUrls: ['./container.component.scss']
 })
 export class ContainerComponent {
+
+  public headers = ['name', 'age'];
 
   public dataArray = [{
     name: 'John',
@@ -48,9 +51,11 @@ export class ContainerComponent {
   }];
 
   public config: ITableConfig = {
-    fetch: (start: number, end: number) => {
+    fetch: (options: IPaginationOptions) => {
+      const first = (options.pageIndex) * options.pageSize - options.pageSize;
+      const last = (options.pageIndex) * options.pageSize;
       const response = {
-        data: this.dataArray.slice(start, end),
+        data: this.dataArray.slice(first, last),
         total: this.dataArray.length,
       };
       return of(response);

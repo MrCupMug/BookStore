@@ -1,6 +1,6 @@
 import { Component, ContentChildren, Input, QueryList, TemplateRef } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { pluck, shareReplay, switchMap } from 'rxjs/operators';
 
 import { MycellDirective } from '../../directives/mycell.directive';
 import { ITableConfig } from '../../interfaces/config-interface';
@@ -12,10 +12,13 @@ import { IPaginationOptions } from '../../interfaces/pagination-options-interfac
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent{
+export class TableComponent {
 
   @Input()
   public config: ITableConfig;
+
+  @Input()
+  public headers: string[];
 
   public data: Observable<object[]>;
 
@@ -28,13 +31,13 @@ export class TableComponent{
   @ContentChildren(MycellDirective, {descendants: true, read: TemplateRef})
   public cells: QueryList<TemplateRef<MycellDirective>>;
 
-  private readonly paginationChange$ = new BehaviorSubject<{start: number, end: number}>({start: 0, end: 9});
+  private readonly paginationChange$ = new BehaviorSubject<IPaginationOptions>({pageIndex: 1, pageSize: 9});
 
   constructor() {
     const fetchData = this.paginationChange$
       .pipe(
-        switchMap((data) => this.config.fetch(data.start, data.end)),
-        // share(),
+        switchMap((data) => this.config.fetch(data)),
+        shareReplay(),
       );
 
     this.data = fetchData
@@ -49,9 +52,10 @@ export class TableComponent{
   }
 
   public setPagination(options: IPaginationOptions): void {
-    const first = (options.pageIndex) * options.pageSize - options.pageSize;
-    const last = (options.pageIndex) * options.pageSize;
-    this.paginationChange$.next({start: first, end: last});
+    // const first = (options.pageIndex) * options.pageSize - options.pageSize;
+    // const last = (options.pageIndex) * options.pageSize;
+    // this.paginationChange$.next({start: first, end: last});
+    this.paginationChange$.next(options);
   }
 
 }
