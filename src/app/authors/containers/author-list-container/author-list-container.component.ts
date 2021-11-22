@@ -18,6 +18,12 @@ export class AuthorListContainerComponent {
 
   public headers = ['first name', 'last name', 'Additional info'];
 
+  public pageSize = 10;
+
+  public currentPage = 1;
+
+  public pageSizeOptions = [5, 10, 15];
+
   public config = {
     fetch: this.getAuthors.bind(this),
   };

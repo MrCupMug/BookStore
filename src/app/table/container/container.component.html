@@ -1,4 +1,4 @@
-<app-table [config]="config" [headers]="headers">
+<app-table [config]="config" [headers]="headers" [currentPage]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
   <ng-template appMyCell let-name="name">
     {{ name }}
   </ng-template>

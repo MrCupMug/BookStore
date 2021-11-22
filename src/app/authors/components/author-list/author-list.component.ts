@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { ITableConfig } from 'src/app/table/interfaces/config-interface';
 
 
@@ -8,7 +8,13 @@ import { ITableConfig } from 'src/app/table/interfaces/config-interface';
   styleUrls: ['./author-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorListComponent implements OnChanges {
+export class AuthorListComponent {
+
+  @Input()
+  public pageSize: number;
+
+  @Input()
+  public pageSizeOptions: number[];
 
   @Input()
   public config: ITableConfig;
@@ -16,17 +22,13 @@ export class AuthorListComponent implements OnChanges {
   @Input()
   public headers: string[];
 
-  // @Input()
-  // public authors: IAuthor[];
+  @Input()
+  public currentPage: number;
 
   @Output()
   public addBook = new EventEmitter<void>();
 
-  // public displayedColumns: string[] = ['first_name', 'last_name', 'additional_info'];
-
   constructor() {}
-
-  public ngOnChanges(): void {}
 
   public openDialog(): void {
     this.addBook.emit();

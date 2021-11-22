@@ -13,6 +13,12 @@ export class ContainerComponent {
 
   public headers = ['name', 'age'];
 
+  public pageSize = 9;
+
+  public pageSizeOptions = [3, 6, 9];
+
+  public currentPage = 1;
+
   public dataArray = [{
     name: 'John',
     age: 24

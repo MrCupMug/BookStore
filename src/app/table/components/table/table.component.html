@@ -16,7 +16,9 @@
 </table>
 
 <app-paginator
-              [total]="total | async"
-              [pageSizeOptions]="pageSizeOptions"
-              (changePagination)="setPagination($event)">
+[total]="total | async"
+[pageSizeOptions]="pageSizeOptions"
+[pageSize]="pageSize"
+[currentPage]="currentPage"
+(changePagination)="setPagination($event)">
 </app-paginator>

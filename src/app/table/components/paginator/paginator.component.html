@@ -4,7 +4,7 @@
     <button [disabled]="currentPage == 1" mat-fab color="primary" class="paginator-button" (click)="previousPage()">Previous</button>
   </div>
   <mat-form-field>
-    <mat-select name="paginator" class="select-center" [value]="9">
+    <mat-select name="paginator" class="select-center" [value]="pageSize">
       <mat-option class="select-center" *ngFor="let option of pageSizeOptions" [value]="option" (click)="setSize(option)">
         {{ option }}
       </mat-option>

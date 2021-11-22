@@ -1,10 +1,8 @@
-<!-- <app-author-list
-  [authors]="authors$ | async"
-  (addBook)=addBook()>
-</app-author-list> -->
-
 <app-author-list
 [config]="config"
 [headers]="headers"
+[pageSize]="pageSize"
+[currentPage]="currentPage"
+[pageSizeOptions]="pageSizeOptions"
 (addBook)=addBook()>
 </app-author-list>

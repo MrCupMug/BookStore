@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { IPaginationOptions } from '../../interfaces/pagination-options-interface';
 
+
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
@@ -9,17 +10,19 @@ import { IPaginationOptions } from '../../interfaces/pagination-options-interfac
 export class PaginatorComponent implements OnChanges {
 
   @Input()
-  public total!: number;
+  public total: number;
 
   @Input()
   public pageSizeOptions: number[];
 
+  @Input()
+  public pageSize: number;
+
+  @Input()
+  public currentPage: number;
+
   @Output()
   public changePagination = new EventEmitter<IPaginationOptions>();
-
-  public currentPage = 1;
-
-  public pageSize = 9;
 
   public pages: number;
 
